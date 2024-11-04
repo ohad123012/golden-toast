@@ -1,1 +1,15 @@
-/* Your styles goes here. */
+:root {
+  --black-frosted-palette: #29353c;
+  --dark-blue-frosted-palette: #44576d;
+  --green-frosted-palette: #76ba96;
+  --till-frosted-palette: #aac7d8;
+  --light-til-frosted-palette: #dfebf6;
+  --weight-frosted-palette: #e6e6e6;
+}
+* {
+  background-color: var(--dark-blue-frosted-palette);
+}
+
+.app {
+  display: grid;
+}

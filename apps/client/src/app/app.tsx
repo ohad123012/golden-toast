@@ -3,7 +3,5 @@ import styles from './app.module.css';
 import { FC } from 'react';
 
 export const App: FC = () => {
-  return <div>HEY</div>;
+  return <div className={styles.app}>HEY</div>;
 };
-
-export default App;
