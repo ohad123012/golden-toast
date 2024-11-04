@@ -1,14 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.css';
+import { FC } from 'react';
 
-import NxWelcome from './nx-welcome';
-
-export function App() {
-  return (
-    <div>
-      <NxWelcome title="client" />
-    </div>
-  );
-}
+export const App: FC = () => {
+  return <div>HEY</div>;
+};
 
 export default App;
