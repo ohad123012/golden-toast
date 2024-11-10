@@ -1,5 +1,4 @@
-import React from 'react';
-
-const Board = () => {
-  return <div></div>;
+import styles from './board.module.css';
+export const Board = () => {
+  return <div className={styles.board}>aa</div>;
 };
