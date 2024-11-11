@@ -35,6 +35,9 @@ export class Toasts extends Model<Partial<Toasts>> {
   @Column({ type: DataTypes.STRING })
   description: string;
 
+  @Column({ type: DataTypes.BOOLEAN })
+  hasDone: boolean;
+
   @HasMany(() => ToastParticipants)
   toastParticipant: ToastParticipants[];
 }

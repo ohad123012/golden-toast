@@ -1,7 +1,3 @@
-/* .item-1 {
-  grid-area: 'a';
-} */
-
 :root {
   --black-frosted-palette: #29353c;
   --dark-blue-frosted-palette: #44576d;
@@ -16,8 +12,7 @@
 
 .app {
   display: grid;
-  /* grid-template-columns: repeat(3, 1fr); */
- /* grid-template-rows: repeat(3, 1fr); */
+
   grid-template-areas:
     'a a a'
     'a a a'

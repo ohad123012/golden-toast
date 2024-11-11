@@ -1,11 +1,9 @@
 .board {
   background-color: var(--black-frosted-palette);
-  /* height: 20vh;
-  width: 30vw; */
+
   grid-area: a;
-  /* height: 1fr;
-  width:1fr; */
+
   border-radius: 1rem;
-  /* background-color: transparent; */  
+
   border-color: var(--black-frosted-palette);
 }

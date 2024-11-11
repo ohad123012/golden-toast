@@ -23,13 +23,6 @@ export class Criminals extends Model<Partial<Criminals>> {
   @BelongsTo(() => Users)
   user: Users;
 
-  @ForeignKey(() => Toasts)
-  @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
-  incriminatingToastId: string;
-
-  @BelongsTo(() => Users)
-  incriminatingToast: Toasts;
-
   @Column({ type: DataTypes.BOOLEAN })
   isAdmin: boolean;
 }
