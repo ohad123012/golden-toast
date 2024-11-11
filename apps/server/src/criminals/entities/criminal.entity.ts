@@ -7,22 +7,21 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
-import { Users } from '../../users/entites/users.entities';
-import { Toasts } from '../../toasts/entities/toasts.entities';
+import { User } from '../../users/entites/user.entities';
 
 @Table
-export class Criminals extends Model<Partial<Criminals>> {
+export class Criminal extends Model<Partial<Criminal>> {
   @PrimaryKey
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   id: string;
 
-  @ForeignKey(() => Users)
+  @ForeignKey(() => User)
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   userId: string;
 
-  @BelongsTo(() => Users)
-  user: Users;
+  @BelongsTo(() => User)
+  user: User;
 
   @Column({ type: DataTypes.BOOLEAN })
-  isAdmin: boolean;
+  isPersonaNonGrata: boolean;
 }

@@ -7,8 +7,8 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
-import { Toasts } from '../../toasts/entities/toasts.entities';
-import { Users } from '../../users/entites/users.entities';
+import { Toast } from '../../toasts/entities/toast.entities';
+import { User } from '../../users/entites/user.entities';
 
 @Table
 export class ToastParticipants extends Model<Partial<ToastParticipants>> {
@@ -16,17 +16,17 @@ export class ToastParticipants extends Model<Partial<ToastParticipants>> {
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   id: string;
 
-  @ForeignKey(() => Users)
+  @ForeignKey(() => User)
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   userId: string;
 
-  @BelongsTo(() => Users)
-  users: Users[];
+  @BelongsTo(() => User)
+  users: User[];
 
-  @ForeignKey(() => Toasts)
+  @ForeignKey(() => Toast)
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   toastId: string;
 
-  @BelongsTo(() => Toasts)
-  toasts: Toasts[];
+  @BelongsTo(() => Toast)
+  toasts: Toast[];
 }

@@ -8,23 +8,27 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
-import { Users } from '../../users/entites/users.entities';
+import { User } from '../../users/entites/user.entities';
 import { ToastParticipants } from '../../toast-participants/entities/toast-participants.entity';
 
 @Table
-export class Toasts extends Model<Partial<Toasts>> {
+export class Toast extends Model<Partial<Toast>> {
+  @PrimaryKey
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   id: string;
 
-  @ForeignKey(() => Users)
+  @ForeignKey(() => User)
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   userId: string;
 
-  @BelongsTo(() => Users)
-  user: Users[];
+  @BelongsTo(() => User)
+  user: User[];
+
+  @Column({ type: DataTypes.DATE })
+  toastDate: Date;
 
   @Column({ type: DataTypes.STRING })
-  reasonForToast: string;
+  reason: string;
 
   @Column({ type: DataTypes.STRING })
   drinks: string;

@@ -1,14 +1,28 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../users/users.module';
-import { CriminalsModule } from '../criminals/criminals.module';
-import { ToastsModule } from '../toasts/toasts.module';
+import { UserModule } from '../users/user.module';
+import { CriminalModule } from '../criminals/criminal.module';
+import { ToastModule } from '../toasts/toast.module';
 import { ToastParticipantsModule } from '../toast-participants/toast-participants.module';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    UsersModule,
-    CriminalsModule,
-    ToastsModule,
+    ConfigModule.forRoot(),
+    SequelizeModule.forRoot({
+      dialect: 'postgres',
+      host: process.env.NX_DB_HOST,
+      port: +(process.env.NX_DB_PORT ?? 5432), // port ? port : 5432
+      username: process.env.NX_DB_CREDENTIALS,
+      password: process.env.NX_DB_CREDENTIALS,
+      database: 'trunk-management',
+      autoLoadModels: true,
+      synchronize: true,
+      define: { schema: 'golden-toast', paranoid: true },
+    }),
+    UserModule,
+    CriminalModule,
+    ToastModule,
     ToastParticipantsModule,
   ],
   exports: [],

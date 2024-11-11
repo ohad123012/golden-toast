@@ -7,12 +7,12 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
-import { Toasts } from '../../toasts/entities/toasts.entities';
-import { Criminals } from '../../criminals/entities/criminal.entity';
+import { Toast } from '../../toasts/entities/toast.entities';
+import { Criminal } from '../../criminals/entities/criminal.entity';
 import { ToastParticipants } from '../../toast-participants/entities/toast-participants.entity';
 
 @Table
-export class Users extends Model<Partial<Users>> {
+export class User extends Model<Partial<User>> {
   @PrimaryKey
   @Column({ type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 })
   id: string;
@@ -26,11 +26,11 @@ export class Users extends Model<Partial<Users>> {
   @Column({ type: DataTypes.BOOLEAN })
   isAdmin: boolean;
 
-  @HasOne(() => Criminals)
-  criminal: Criminals;
+  @HasOne(() => Criminal)
+  criminal: Criminal;
 
-  @HasMany(() => Toasts)
-  toasts: Toasts[];
+  @HasMany(() => Toast)
+  toasts: Toast[];
 
   @HasMany(() => ToastParticipants)
   toastParticipant: ToastParticipants[];
