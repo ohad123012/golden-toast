@@ -13,7 +13,18 @@ export class ToastParticipantsService {
     return this.toastParticipantsModel.findAll();
   }
 
+  findAllParticipantsForToastId(toastId: string) {
+    return this.toastParticipantsModel.findAll({
+      where: { toastId: toastId },
+      attributes: ['userId'],
+    });
+  }
+
   createToastParticipant(newToastParticipantDto: CreateToastParticipantDto) {
     return this.toastParticipantsModel.create(newToastParticipantDto);
+  }
+
+  deleteToastParticipant(id: string) {
+    return this.toastParticipantsModel.destroy({ where: { id } });
   }
 }

@@ -12,4 +12,12 @@ export class CriminalService {
   createCriminal(newCriminalDto: CreateCriminalDto) {
     return this.criminalModel.create(newCriminalDto);
   }
+  updateCriminal(criminalToUpdate: CreateCriminalDto, id: string) {
+    this.criminalModel.update(criminalToUpdate, {
+      where: { id },
+    });
+  }
+  deleteCriminal(id: string) {
+    return this.criminalModel.destroy({ where: { id } });
+  }
 }

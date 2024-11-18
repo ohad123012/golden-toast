@@ -13,4 +13,14 @@ export class UserService {
   createUser(newUserDto: CreateUserDto) {
     return this.userModel.create(newUserDto);
   }
+
+  updateUser(userToUpdate: CreateUserDto, id: string) {
+    return this.userModel.update(userToUpdate, {
+      where: { id },
+    });
+  }
+
+  deleteUser(id: string) {
+    return this.userModel.destroy({ where: { id } });
+  }
 }
