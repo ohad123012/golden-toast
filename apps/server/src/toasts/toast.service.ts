@@ -123,13 +123,9 @@ export class ToastService {
 
   getAmountToastsForCurrentPeriodPerUser() {
     const currentDate = new Date();
-    const firstDateForPeriod = new Date(currentDate.getFullYear(), 0, 1);
-    const secondDateForPeriod = new Date(currentDate.getFullYear(), 6, 1);
-    const secondEndDateForPeriod = new Date(
-      currentDate.getFullYear() + 1,
-      0,
-      1
-    );
+    const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
+    const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
+    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
     const currentMonth = currentDate.getMonth() + 1;
     const juneNumber = 7;
     if (currentMonth < juneNumber) {
@@ -137,8 +133,8 @@ export class ToastService {
         attributes: ['userId'],
         where: {
           toastDate: {
-            [Op.gt]: firstDateForPeriod,
-            [Op.lt]: secondDateForPeriod,
+            [Op.gt]: beginningDateJanuary,
+            [Op.lt]: endingDateJuly,
           },
         },
         group: ['userId'],
@@ -148,8 +144,8 @@ export class ToastService {
         attributes: ['userId'],
         where: {
           toastDate: {
-            [Op.gt]: secondDateForPeriod,
-            [Op.lt]: secondEndDateForPeriod,
+            [Op.gt]: endingDateJuly,
+            [Op.lt]: endingDateJanuary,
           },
         },
         group: ['userId'],
