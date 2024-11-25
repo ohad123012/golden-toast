@@ -16,12 +16,13 @@ export class ToastParticipantsController {
   findAllParticipantsForToastId(@Param('toastId') toastId: string) {
     return this.toastParticipantsService.findAllParticipantsForToastId(toastId);
   }
+
   @Post()
-  createToastParticipant(
-    @Body() newToastParticipant: CreateToastParticipantDto
+  createToastParticipants(
+    @Body() newToastParticipants: CreateToastParticipantDto[]
   ) {
-    return this.toastParticipantsService.createToastParticipant(
-      newToastParticipant
+    return this.toastParticipantsService.createToastParticipants(
+      newToastParticipants
     );
   }
   @Delete(':id')

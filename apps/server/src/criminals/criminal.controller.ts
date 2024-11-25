@@ -15,11 +15,10 @@ export class CriminalController {
   constructor(private readonly criminalService: CriminalService) {}
   @Get()
   findAll() {
-    console.log(this.criminalService.findAll());
     return this.criminalService.findAll();
   }
   @Post()
-  CreateCriminal(@Body() newCriminalDto: CreateCriminalDto) {
+  createCriminal(@Body() newCriminalDto: CreateCriminalDto) {
     return this.criminalService.createCriminal(newCriminalDto);
   }
   @Put('update-criminal/:criminalId')
