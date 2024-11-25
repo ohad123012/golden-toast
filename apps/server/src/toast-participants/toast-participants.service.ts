@@ -20,8 +20,10 @@ export class ToastParticipantsService {
     });
   }
 
-  createToastParticipant(newToastParticipantDto: CreateToastParticipantDto) {
-    return this.toastParticipantsModel.create(newToastParticipantDto);
+  createToastParticipants(
+    newToastParticipantsDto: CreateToastParticipantDto[]
+  ) {
+    return this.toastParticipantsModel.bulkCreate(newToastParticipantsDto);
   }
 
   deleteToastParticipant(id: string) {
