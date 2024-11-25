@@ -1,5 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CriminalService } from './criminal.service';
+import { CreateCriminalDto } from './dto/create-criminal.dto';
 
 @Controller('criminal')
 export class CriminalController {
@@ -8,5 +17,21 @@ export class CriminalController {
   findAll() {
     console.log(this.criminalService.findAll());
     return this.criminalService.findAll();
+  }
+  @Post()
+  CreateCriminal(@Body() newCriminalDto: CreateCriminalDto) {
+    return this.criminalService.createCriminal(newCriminalDto);
+  }
+  @Put('update-criminal/:criminalId')
+  updateCriminal(
+    @Body() criminalToUpdate: CreateCriminalDto,
+    @Param('criminalId') criminalId: string
+  ) {
+    this.criminalService.updateCriminal(criminalToUpdate, criminalId);
+  }
+
+  @Delete(':id')
+  deleteCriminal(@Param('id') id: string) {
+    return this.criminalService.deleteCriminal(id);
   }
 }
