@@ -1,0 +1,18 @@
+button {
+  text-align: center;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--dark-blue-frosted-palette);
+  color: white;
+  box-shadow: 0rem 0.75rem 1rem var(--dark-blue-frosted-palette),
+    0 1rem 3rem 0 var(--button-hover-second);
+}
+
+.icon {
+  color: white;
+  height: 3rem;
+  width: 3rem;
+  cursor: pointer;
+}

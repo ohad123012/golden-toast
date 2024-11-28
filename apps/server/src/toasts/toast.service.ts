@@ -4,11 +4,6 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateToastDto } from './dto/create-toast.dto';
 import { Op, Sequelize } from 'sequelize';
 
-// const currentDate = new Date();
-
-// const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
-// const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
-// const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
 @Injectable()
 export class ToastService {
   constructor(@InjectModel(Toast) public toastModel: typeof Toast) {}

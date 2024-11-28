@@ -4,19 +4,38 @@
   --green-frosted-palette: #76ba96;
   --till-frosted-palette: #aac7d8;
   --light-til-frosted-palette: #dfebf6;
-  --weight-frosted-palette: #e6e6e6;
+  --white-frosted-palette: #e6e6e6;
+  --button-hover-first: rgba(0, 0, 0, 0.24);
+  --button-hover-second: rgba(0, 0, 0, 0.19);
+  --button-container-background-color: rgb(187, 187, 187);
 }
 * {
   background-color: var(--dark-blue-frosted-palette);
+  font-size: 1.2rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: bold;
+
+  color: var(--white-frosted-palette);
+  text-align: center;
+}
+
+.searchBar {
+  grid-area: search;
 }
 
 .app {
   display: grid;
 
+  grid-template-rows: repeat(8, 1fr);
+  overflow: hidden;
+  grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
-    'a a a'
-    'a a a'
-    'a a a';
-  gap: 2;
-  margin-bottom: 1rem;
+    'search search search search'
+    'results toasts toasts criminals'
+    'results toasts toasts criminals'
+    'results toasts toasts criminals'
+    'results toasts toasts criminals'
+    'results toasts toasts personaNonGrata'
+    'results toasts toasts personaNonGrata'
+    'button toasts toasts personaNonGrata';
 }

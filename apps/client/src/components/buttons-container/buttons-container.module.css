@@ -1,0 +1,6 @@
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  gap: 0.5rem;
+}
