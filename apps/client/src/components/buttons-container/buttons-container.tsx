@@ -1,22 +1,13 @@
-import React, { PropsWithChildren } from 'react';
 import { MeetingRoom } from '@mui/icons-material';
-import { FuncButton } from '../func-button';
+import { ActionIconButton } from '../action-icon-button';
 import styles from './buttons-container.module.css';
 
-interface Props {
-  gridArea: string;
-}
-
-console.log(styles.ButtonsContainer);
-export const ButtonsContainer: React.FC<Props & PropsWithChildren> = ({
-  gridArea,
-}) => {
+export const ButtonsContainer: React.FC = ({}) => {
   return (
     <div className={styles.buttonsContainer}>
-      <FuncButton Icon={MeetingRoom} />
-      <FuncButton Icon={MeetingRoom} />
-
-      <FuncButton Icon={MeetingRoom} />
+      <ActionIconButton Icon={MeetingRoom} />
+      <ActionIconButton Icon={MeetingRoom} />
+      <ActionIconButton Icon={MeetingRoom} />
     </div>
   );
 };

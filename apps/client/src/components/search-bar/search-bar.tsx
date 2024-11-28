@@ -8,12 +8,8 @@ export const SearchBar: FC = () => {
         options={[{ name: 'aa' }, { name: 'bb' }]}
         getOptionLabel={({ name }) => name}
         sx={{ padding: '1rem' }}
-        // value={value}
         renderInput={(params) => <TextField {...params} label="toasts" />}
       />
-      {/* <Combobox> 
-
-      </Combobox> */}
     </div>
   );
 };

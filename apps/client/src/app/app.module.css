@@ -19,9 +19,12 @@
   text-align: center;
 }
 
+.searchBar {
+  grid-area: search;
+}
+
 .app {
   display: grid;
-  height: 100vh;
 
   grid-template-rows: repeat(8, 1fr);
   overflow: hidden;
