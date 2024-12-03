@@ -1,7 +1,10 @@
 .board {
-  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
   border-radius: 1rem;
-  padding: 1.5%;
-  background-color: var(--black-frosted-palette);
-  border-color: var(--black-frosted-palette);
+  gap: 5%;
+  padding: 1%;
+  background-color: var(--black-frosted-board-background);
+  border-color: var(--black-frosted-board-background);
+  align-items: center;
 }

@@ -1,16 +1,20 @@
 button {
   text-align: center;
   cursor: pointer;
+  height: 50%;
+  text-align: center;
 }
 
 button:hover {
   background-color: var(--dark-blue-frosted-palette);
   color: white;
-  box-shadow: 0rem 0.75rem 1rem var(--dark-blue-frosted-palette),
+  box-shadow: 0rem 0.75rem 1rem var(--dark-blue-frosted-app-background),
     0 1rem 3rem 0 var(--button-hover-second);
 }
 
 .icon {
+  height: 50%;
+
   color: white;
   height: 3rem;
   width: 3rem;

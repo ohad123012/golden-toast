@@ -1,0 +1,47 @@
+.toast {
+  /* background-color: var(--till-frosted-palette); */
+  background: var(--toast-background-gradient);
+  border-color: #29353c9e;
+  border-width: 0.2rem;
+  border-style: solid;
+  border-radius: 1rem;
+  overflow: hidden;
+  width: 90%;
+  box-shadow: 0rem 0rem 3rem var(--toast-shadow);
+  /* box-shadow: 0rem 0rem 10rem black; */
+}
+/* make name icon closer,  shadow around all   */
+.user {
+  /* background-color: var(--till-frosted-palette); */
+  background-color: transparent;
+  color: var(--black-frosted-board-background);
+  display: flex;
+  flex-direction: row;
+  padding: 1%;
+  gap: 0.5rem;
+}
+
+p {
+  /* background-color: var(--till-frosted-palette); */
+  background-color: transparent;
+  font-weight: 300;
+  color: var(--black-frosted-board-background);
+  margin: 0;
+}
+.date p {
+  background: var(--toast-background-gradient);
+  font-size: 0.6rem;
+  margin-bottom: 1rem;
+  color: var(--date-in-toast-grey);
+}
+
+.icons {
+  /* background-color: var(--till-frosted-palette); */
+  background-color: transparent;
+
+  color: var(--till-frosted-palette);
+  fill: var(--till-frosted-palette);
+}
+.icons:hover {
+  cursor: pointer;
+}

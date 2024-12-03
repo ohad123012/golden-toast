@@ -1,4 +1,5 @@
 .buttonsContainer {
+  grid-area: button;
   display: flex;
   flex-direction: row;
   align-items: left;
