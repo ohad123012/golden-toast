@@ -1,1 +1,1 @@
-export * from './toasts-container';
+export * from './toasts-board';

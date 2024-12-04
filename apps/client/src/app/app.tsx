@@ -1,9 +1,4 @@
-import {
-  Board,
-  ButtonsContainer,
-  SearchBar,
-  ToastsContainer,
-} from '../components';
+import { Board, ButtonsContainer, SearchBar, ToastsBoard } from '../components';
 import styles from './app.module.css';
 import { FC } from 'react';
 
@@ -14,10 +9,10 @@ export const App: FC = () => {
         <SearchBar />
       </div>
       <Board gridArea="results" title="Results" />
-      <ToastsContainer />
+      <ToastsBoard />
       <Board gridArea="criminals" title="Criminals" />
       <ButtonsContainer />
-      <Board gridArea="personaNonGrata" title="Persona non grata" />
+      <Board gridArea="personaNonGrata" title="persona non grata" />
     </div>
   );
 };

@@ -21,10 +21,10 @@ interface Props {
 
 export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
   const backgroundColor = 'transparent';
-
+  const iconColor = '#29353c';
   const iconStyles = {
     backgroundColor: backgroundColor,
-    fill: '#29353c',
+    fill: iconColor,
     '&:hover': { cursor: 'pointer' },
     paddingRight: '0.6rem',
     paddingLeft: '0.6rem',
@@ -32,7 +32,7 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
   return (
     <div className={styles.toast}>
       <div className={styles.user}>
-        <PersonIcon sx={{ backgroundColor: 'transparent', fill: '#29353c' }} />
+        <PersonIcon sx={{ backgroundColor: 'transparent', fill: iconColor }} />
         {'username'}
       </div>
 

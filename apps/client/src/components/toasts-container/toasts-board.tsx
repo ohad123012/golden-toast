@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import { Board } from '../board';
-import styles from './toasts-container.module.css';
+import styles from './toasts-board.module.css';
 import { Toast, ToastType } from '../toast';
 
-export const ToastsContainer: FC = (PropsWithChildren) => {
-  //every toast has an info button
+export const ToastsBoard: FC = (PropsWithChildren) => {
   const mockToast: ToastType = {
     id: '11',
     userId: '22',
