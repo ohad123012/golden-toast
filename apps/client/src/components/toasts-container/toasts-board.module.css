@@ -1,0 +1,4 @@
+.toastsContainer {
+  display: flex;
+  flex-direction: column;
+}
