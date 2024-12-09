@@ -17,13 +17,17 @@
 
   --toast-shadow: #1e272d;
 }
-* {
+
+body {
   background-color: var(--dark-blue-frosted-app-background);
+  text-align: center;
   font-size: 1.2rem;
+}
+* {
   font-family: 'Segoe UI', Arial, sans-serif;
   font-weight: bold;
   color: var(--white-frosted-title);
-  text-align: center;
+  /* text-align: center; */
 }
 
 .searchBar {
