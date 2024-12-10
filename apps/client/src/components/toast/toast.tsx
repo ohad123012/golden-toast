@@ -5,16 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box } from '@mui/material';
-export interface ToastType {
-  id: string;
-  userId: string;
-  toastDate: Date;
-  reason: string;
-  drinks: string;
-  foods: string;
-  description: string;
-  hasDone: boolean;
-}
+import { ToastType } from '../../store';
 interface Props {
   toast: ToastType;
 }
