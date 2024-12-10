@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FC, useEffect, useState } from 'react';
-import { ActionIconButton } from '../../components';
 import { LogInModal } from '../log-in-modal';
 
 export const SignUpModal: FC = () => {
@@ -50,10 +49,6 @@ export const SignUpModal: FC = () => {
   const allNotnull = !!username && !!password;
   const handleSubmit = () => {
     if (allFieldsTyped && allNotnull) {
-      // createUser({
-      //   username,
-      //   password,
-      // });
       handleMoveToLogIn();
     }
   };
@@ -149,7 +144,7 @@ export const SignUpModal: FC = () => {
                 }}
                 type="password"
                 label="same password"
-                endAdornment={<InputAdornment position="end"></InputAdornment>}
+                endAdornment={<InputAdornment position="end" />}
                 onChange={(
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
@@ -166,7 +161,7 @@ export const SignUpModal: FC = () => {
               display: 'flex',
               gridTemplateColumns: { sm: '1fr 1fr ' },
               gap: 2,
-              margin: '1rem',
+              paddingTop: '0.5rem',
 
               justifyContent: 'flex-end',
               boxShadow: 'none',
@@ -185,7 +180,7 @@ export const SignUpModal: FC = () => {
           </Box>
         </DialogContent>
       </Dialog>
-      {openLogIn ? <LogInModal /> : 0}
+      {openLogIn && <LogInModal />}
     </>
   );
 };

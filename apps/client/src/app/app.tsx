@@ -1,8 +1,7 @@
 import { Board, ButtonsContainer, SearchBar, ToastsBoard } from '../components';
-import { LogInModal } from '../modals/log-in-modal';
-import { SignUpModal } from '../modals/sign-up-modal';
+import { LogInModal } from '../modals';
 import styles from './app.module.css';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 export const App: FC = () => {
   return (
@@ -13,7 +12,7 @@ export const App: FC = () => {
         <SearchBar />
       </div>
 
-      <Board gridArea="results" title="Results" />
+      <Board gridArea="results" title="Leaderboard" />
       <ToastsBoard />
       <Board gridArea="criminals" title="Criminals" />
       <ButtonsContainer />

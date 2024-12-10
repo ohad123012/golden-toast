@@ -30,9 +30,6 @@ export const LogInModal = () => {
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleConfirm = () => {
     setOpen(false);
   };
@@ -52,20 +49,6 @@ export const LogInModal = () => {
   const allNotnull = !!username && !!password;
   const gradineBackgroundColor =
     'linear-gradient(90deg, rgba(127, 163, 185, 1) 0%, rgba(170, 199, 216, 1) 100%)';
-
-  //   useEffect(() => {
-  //     if (allFieldsTyped && allNotnull) {
-  //       users?.find((user) => {
-  //         if (user.password === password && user.username === username) {
-  //           dispatch(updateUser(user));
-  //           setDoesUserExist(true);
-  //           return user;
-  //         } else {
-  //           setDoesUserExist(false);
-  //         }
-  //       });
-  //     }
-  //   }, [username, password]);
 
   return (
     <>
@@ -87,7 +70,6 @@ export const LogInModal = () => {
         <DialogContent sx={{ overflow: 'initial' }}>
           <DialogContentText>Please log in</DialogContentText>
           <Box
-            dir="ltr"
             sx={{
               display: 'flex',
               gridTemplateColumns: { sm: '1fr 1fr ' },
@@ -139,8 +121,7 @@ export const LogInModal = () => {
               display: 'flex',
               gridTemplateColumns: { sm: '1fr 1fr ' },
               gap: 2,
-              margin: '1rem',
-
+              paddingTop: '0.5rem',
               justifyContent: 'flex-end',
               boxShadow: 'none',
             }}
@@ -158,7 +139,7 @@ export const LogInModal = () => {
           </Box>
         </DialogContent>
       </Dialog>
-      {openSignUp ? <SignUpModal /> : 0}
+      {openSignUp && <SignUpModal />}
     </>
   );
 };
