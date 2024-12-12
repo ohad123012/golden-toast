@@ -1,4 +1,5 @@
 import {
+  Alert,
   Backdrop,
   Box,
   Button,
@@ -8,6 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -15,11 +17,20 @@ import {
   TextField,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import {
+  updateUser,
+  useGetAllUsersQuery,
+  useAppDispatch,
+  gradinetBackgroundColor,
+  formHelperTextRedColor,
+} from '../../store';
 import { SignUpModal } from '../sign-up-modal';
+import { toast } from 'react-toastify';
 
 export const LogInModal = () => {
+  const { data: users } = useGetAllUsersQuery();
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUsername] = useState<string | null>(null);
@@ -27,11 +38,41 @@ export const LogInModal = () => {
   const [allFieldsTyped, setAllFieldsTyped] = useState<boolean | null>(null);
   const [doesUserExist, setDoesUserExist] = useState<boolean | null>(null);
 
+  const [userExistPasswordWrong, setUserExistPasswordWrong] = useState<
+    boolean | null
+  >(null);
+
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
-
-  const handleConfirm = () => {
+  const handleClose = () => {
     setOpen(false);
+  };
+  const handleConfirm = (username: string | null, password: string | null) => {
+    const usernames = users?.map((user) => {
+      return user.username;
+    });
+    if (usernames?.includes(username ?? '')) {
+      users?.find((user) => {
+        if (user.username === username && user.password === password) {
+          setDoesUserExist(true);
+          toast.success('Logged in successfully! ', {
+            position: 'top-right',
+            pauseOnHover: false,
+            theme: 'dark',
+          });
+          dispatch(updateUser(user));
+          setOpen(false);
+        } else if (user.username === username && user.password !== password) {
+          setPassword('');
+          setUserExistPasswordWrong(true);
+          setDoesUserExist(true);
+        }
+      });
+    } else {
+      setPassword('');
+      setDoesUserExist(false);
+      setUserExistPasswordWrong(false);
+    }
   };
   const handleMoveToSignUp = () => {
     setOpen(false);
@@ -47,16 +88,15 @@ export const LogInModal = () => {
     }
   };
   const allNotnull = !!username && !!password;
-  const gradineBackgroundColor =
-    'linear-gradient(90deg, rgba(127, 163, 185, 1) 0%, rgba(170, 199, 216, 1) 100%)';
 
   return (
     <>
       <Dialog
         open={open}
+        onClose={() => handleClose()}
         PaperProps={{
           sx: {
-            background: gradineBackgroundColor,
+            background: gradinetBackgroundColor,
           },
         }}
       >
@@ -68,18 +108,20 @@ export const LogInModal = () => {
           Welcome to golden-toast by Ohad Lazar
         </DialogTitle>
         <DialogContent sx={{ overflow: 'initial' }}>
-          <DialogContentText>Please log in</DialogContentText>
           <Box
             sx={{
               display: 'flex',
-              gridTemplateColumns: { sm: '1fr 1fr ' },
+              gridTemplateColumns: { sm: '1fr 1fr' },
               gap: 2,
-              margin: '1rem',
+              margin: '0.2rem',
             }}
           >
             <TextField
+              id="outlined"
+              error={doesUserExist === false}
               type="text"
               label="username"
+              helperText={doesUserExist === false ? 'invalid username' : ' '}
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -94,7 +136,11 @@ export const LogInModal = () => {
                 password
               </InputLabel>
               <OutlinedInput
+                id={userExistPasswordWrong ? 'component-error' : 'outlined'}
                 type={showPassword ? 'text' : 'password'}
+                error={
+                  doesUserExist === false || userExistPasswordWrong === true
+                }
                 label="password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -114,6 +160,11 @@ export const LogInModal = () => {
                 }}
                 value={password}
               />
+              <FormHelperText sx={{ color: formHelperTextRedColor }}>
+                {doesUserExist === false || userExistPasswordWrong === true
+                  ? 'invalid password'
+                  : ' '}
+              </FormHelperText>
             </FormControl>
           </Box>
           <Box
@@ -133,7 +184,14 @@ export const LogInModal = () => {
             >
               sign up
             </Button>
-            <Button size="small" variant="contained">
+            <Button
+              disabled={!allNotnull || !allFieldsTyped}
+              size="small"
+              variant="contained"
+              onClick={() => {
+                handleConfirm(username, password);
+              }}
+            >
               confirm
             </Button>
           </Box>

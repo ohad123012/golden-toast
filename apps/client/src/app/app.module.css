@@ -41,7 +41,7 @@ body {
   overflow: hidden;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
-    'search search search search'
+    'search search search logInButton'
     'results toasts toasts criminals'
     'results toasts toasts criminals'
     'results toasts toasts criminals'
