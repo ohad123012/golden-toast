@@ -14,7 +14,7 @@ export const userApi = serverApi.injectEndpoints({
         body: user,
         invalidatesTags: ['Users'],
       }),
-      // invalidatesTags: ['Users'],
+      invalidatesTags: ['Users'],
     }),
 
     updateUser: builder.mutation<UserType, UserType>({

@@ -22,8 +22,9 @@ import {
   updateUser,
   useGetAllUsersQuery,
   useAppDispatch,
-  gradinetBackgroundColor,
+  gradientBackgroundColor,
   formHelperTextRedColor,
+  UserType,
 } from '../../store';
 import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
@@ -35,12 +36,11 @@ export const LogInModal = () => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean | null>(null);
-  const [doesUserExist, setDoesUserExist] = useState<boolean | null>(null);
+  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(false);
+  const [doesUserExist, setDoesUserExist] = useState<boolean>(true);
 
-  const [userExistPasswordWrong, setUserExistPasswordWrong] = useState<
-    boolean | null
-  >(null);
+  const [userExistPasswordWrong, setUserExistPasswordWrong] =
+    useState<boolean>();
 
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
@@ -48,10 +48,10 @@ export const LogInModal = () => {
     setOpen(false);
   };
   const handleConfirm = (username: string | null, password: string | null) => {
-    const usernames = users?.map((user) => {
+    const existingUsernames = users?.map((user) => {
       return user.username;
     });
-    if (usernames?.includes(username ?? '')) {
+    if (existingUsernames?.includes(username ?? '')) {
       users?.find((user) => {
         if (user.username === username && user.password === password) {
           setDoesUserExist(true);
@@ -96,7 +96,7 @@ export const LogInModal = () => {
         onClose={() => handleClose()}
         PaperProps={{
           sx: {
-            background: gradinetBackgroundColor,
+            background: gradientBackgroundColor,
           },
         }}
       >
@@ -117,11 +117,10 @@ export const LogInModal = () => {
             }}
           >
             <TextField
-              id="outlined"
-              error={doesUserExist === false}
+              error={!doesUserExist}
               type="text"
               label="username"
-              helperText={doesUserExist === false ? 'invalid username' : ' '}
+              helperText={!doesUserExist ? 'Invalid username' : ' '}
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -136,11 +135,8 @@ export const LogInModal = () => {
                 password
               </InputLabel>
               <OutlinedInput
-                id={userExistPasswordWrong ? 'component-error' : 'outlined'}
                 type={showPassword ? 'text' : 'password'}
-                error={
-                  doesUserExist === false || userExistPasswordWrong === true
-                }
+                error={!doesUserExist || userExistPasswordWrong}
                 label="password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -161,8 +157,8 @@ export const LogInModal = () => {
                 value={password}
               />
               <FormHelperText sx={{ color: formHelperTextRedColor }}>
-                {doesUserExist === false || userExistPasswordWrong === true
-                  ? 'invalid password'
+                {!doesUserExist || userExistPasswordWrong
+                  ? 'Invalid password'
                   : ' '}
               </FormHelperText>
             </FormControl>

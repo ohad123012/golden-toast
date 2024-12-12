@@ -10,7 +10,6 @@ import { FC } from 'react';
 export const App: FC = () => {
   const user = useAppSelector((state: RootState) => state.user).value;
 
-  console.log(user?.password, user?.username);
   return (
     <div className={styles.app}>
       <LogInModal />
@@ -23,7 +22,7 @@ export const App: FC = () => {
       <Board gridArea="criminals" title="Criminals" />
       <ButtonsContainer />
       <Board gridArea="personaNonGrata" title="persona non grata" />
-      <button> please log in </button>
+      <button> Please log in </button>
     </div>
   );
 };
