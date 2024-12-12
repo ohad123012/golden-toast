@@ -18,7 +18,7 @@ import { LogInModal } from '../log-in-modal';
 import {
   useCreateUserMutation,
   useGetAllUsersQuery,
-  gradinetBackgroundColor,
+  gradientBackgroundColor,
   formHelperTextRedColor,
 } from '../../store';
 
@@ -30,10 +30,10 @@ export const SignUpModal: FC = () => {
     null
   );
 
-  const [areSamePasswords, setAreSamePasswords] = useState<boolean | null>();
-  const [usernameExists, setUsernameExists] = useState<boolean | null>();
+  const [areSamePasswords, setAreSamePasswords] = useState<boolean>(true);
+  const [usernameExists, setUsernameExists] = useState<boolean>(false);
 
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean | null>();
+  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(true);
   const { data: users } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
 
@@ -69,19 +69,19 @@ export const SignUpModal: FC = () => {
     password: string | null,
     validationPassword: string | null
   ) => {
-    const usernames = users?.map((user) => {
+    const existingUsernames = users?.map((user) => {
       return user.username;
     });
     if (username && password && validationPassword) {
       if (
-        usernames?.includes(username ?? '') &&
+        existingUsernames?.includes(username ?? '') &&
         password !== validationPassword
       ) {
         setPassword('');
         setValidationPassword('');
         setUsernameExists(true);
         setAreSamePasswords(false);
-      } else if (usernames?.includes(username ?? '')) {
+      } else if (existingUsernames?.includes(username ?? '')) {
         setPassword('');
         setValidationPassword('');
         setUsernameExists(true);
@@ -94,7 +94,7 @@ export const SignUpModal: FC = () => {
       }
 
       if (
-        !usernames?.includes(username ?? '') &&
+        !existingUsernames?.includes(username ?? '') &&
         password === validationPassword
       ) {
         createUser({ username, password, isAdmin: false });
@@ -110,7 +110,7 @@ export const SignUpModal: FC = () => {
         onClose={() => handleClose()}
         PaperProps={{
           sx: {
-            background: gradinetBackgroundColor,
+            background: gradientBackgroundColor,
           },
         }}
       >
@@ -135,10 +135,8 @@ export const SignUpModal: FC = () => {
               type="text"
               label="username"
               variant="outlined"
-              error={usernameExists === true}
-              helperText={
-                usernameExists === true ? 'username already exists' : ' '
-              }
+              error={usernameExists}
+              helperText={usernameExists ? 'Username already exists' : ' '}
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
@@ -156,7 +154,7 @@ export const SignUpModal: FC = () => {
                   gridArea: 'password',
                 }}
                 type={showPassword ? 'text' : 'password'}
-                error={areSamePasswords === false}
+                error={!areSamePasswords}
                 label="password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -177,7 +175,7 @@ export const SignUpModal: FC = () => {
                 value={password}
               />
               <FormHelperText sx={{ color: formHelperTextRedColor }}>
-                {areSamePasswords === false ? 'passwords are the same' : ' '}
+                {!areSamePasswords ? 'Passwords are the same' : ' '}
               </FormHelperText>
             </FormControl>
             <FormControl variant="outlined">
@@ -190,7 +188,7 @@ export const SignUpModal: FC = () => {
                 }}
                 type="password"
                 label="same password"
-                error={areSamePasswords === false}
+                error={!areSamePasswords}
                 endAdornment={<InputAdornment position="end" />}
                 onChange={(
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -201,7 +199,7 @@ export const SignUpModal: FC = () => {
                 value={validationPassword}
               />
               <FormHelperText sx={{ color: formHelperTextRedColor }}>
-                {areSamePasswords === false ? 'passwords are the same' : ' '}
+                {!areSamePasswords ? 'Passwords are the same' : ' '}
               </FormHelperText>
             </FormControl>
           </Box>
