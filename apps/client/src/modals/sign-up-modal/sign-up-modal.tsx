@@ -1,13 +1,11 @@
 import {
-  Backdrop,
   Box,
   Button,
-  ButtonGroup,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -15,8 +13,14 @@ import {
   TextField,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { LogInModal } from '../log-in-modal';
+import {
+  useCreateUserMutation,
+  useGetAllUsersQuery,
+  gradinetBackgroundColor,
+  formHelperTextRedColor,
+} from '../../store';
 
 export const SignUpModal: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,11 +30,12 @@ export const SignUpModal: FC = () => {
     null
   );
 
-  const [areSamePasswords, setAreSamePasswords] = useState<boolean | null>(
-    null
-  );
+  const [areSamePasswords, setAreSamePasswords] = useState<boolean | null>();
+  const [usernameExists, setUsernameExists] = useState<boolean | null>();
 
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean | null>(null);
+  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean | null>();
+  const { data: users } = useGetAllUsersQuery();
+  const [createUser] = useCreateUserMutation();
 
   const checkAllFields = (
     username: string | null,
@@ -47,31 +52,65 @@ export const SignUpModal: FC = () => {
   };
 
   const allNotnull = !!username && !!password;
-  const handleSubmit = () => {
-    if (allFieldsTyped && allNotnull) {
-      handleMoveToLogIn();
-    }
-  };
+
   const [open, setOpen] = useState<boolean>(true);
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
 
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleMoveToLogIn = () => {
     setOpen(false);
     setOpenLogIn(true);
   };
-  const gradineBackgroundColor =
-    'linear-gradient(90deg, rgba(127, 163, 185, 1) 0%, rgba(170, 199, 216, 1) 100%)';
+
+  const handleSignUp = (
+    username: string | null,
+    password: string | null,
+    validationPassword: string | null
+  ) => {
+    const usernames = users?.map((user) => {
+      return user.username;
+    });
+    if (username && password && validationPassword) {
+      if (
+        usernames?.includes(username ?? '') &&
+        password !== validationPassword
+      ) {
+        setPassword('');
+        setValidationPassword('');
+        setUsernameExists(true);
+        setAreSamePasswords(false);
+      } else if (usernames?.includes(username ?? '')) {
+        setPassword('');
+        setValidationPassword('');
+        setUsernameExists(true);
+        setAreSamePasswords(true);
+      } else if (password !== validationPassword) {
+        setPassword('');
+        setValidationPassword('');
+        setUsernameExists(false);
+        setAreSamePasswords(false);
+      }
+
+      if (
+        !usernames?.includes(username ?? '') &&
+        password === validationPassword
+      ) {
+        createUser({ username, password, isAdmin: false });
+        handleMoveToLogIn();
+      }
+    }
+  };
+
   return (
     <>
       <Dialog
         open={open}
+        onClose={() => handleClose()}
         PaperProps={{
           sx: {
-            background: gradineBackgroundColor,
+            background: gradinetBackgroundColor,
           },
         }}
       >
@@ -86,7 +125,7 @@ export const SignUpModal: FC = () => {
           'username username'
           'password confirmPassword'`,
               gap: 2,
-              marginBottom: '1rem',
+              marginBottom: '0.2rem',
             }}
           >
             <TextField
@@ -96,6 +135,10 @@ export const SignUpModal: FC = () => {
               type="text"
               label="username"
               variant="outlined"
+              error={usernameExists === true}
+              helperText={
+                usernameExists === true ? 'username already exists' : ' '
+              }
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
@@ -113,6 +156,7 @@ export const SignUpModal: FC = () => {
                   gridArea: 'password',
                 }}
                 type={showPassword ? 'text' : 'password'}
+                error={areSamePasswords === false}
                 label="password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -127,12 +171,14 @@ export const SignUpModal: FC = () => {
                 onChange={(
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
-                  setAreSamePasswords(e.target.value === validationPassword);
                   setPassword(e.target.value);
                   checkAllFields(username, e.target.value, validationPassword);
                 }}
                 value={password}
               />
+              <FormHelperText sx={{ color: formHelperTextRedColor }}>
+                {areSamePasswords === false ? 'passwords are the same' : ' '}
+              </FormHelperText>
             </FormControl>
             <FormControl variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
@@ -144,16 +190,19 @@ export const SignUpModal: FC = () => {
                 }}
                 type="password"
                 label="same password"
+                error={areSamePasswords === false}
                 endAdornment={<InputAdornment position="end" />}
                 onChange={(
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
-                  setAreSamePasswords(e.target.value === password);
                   setValidationPassword(e.target.value);
                   checkAllFields(username, password, e.target.value);
                 }}
                 value={validationPassword}
               />
+              <FormHelperText sx={{ color: formHelperTextRedColor }}>
+                {areSamePasswords === false ? 'passwords are the same' : ' '}
+              </FormHelperText>
             </FormControl>
           </Box>
           <Box
@@ -174,7 +223,14 @@ export const SignUpModal: FC = () => {
             >
               log in
             </Button>
-            <Button size="small" variant="contained">
+            <Button
+              size="small"
+              variant="contained"
+              disabled={!allFieldsTyped || !allNotnull}
+              onClick={() =>
+                handleSignUp(username, password, validationPassword)
+              }
+            >
               create
             </Button>
           </Box>

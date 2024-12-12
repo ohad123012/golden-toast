@@ -30,7 +30,7 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
       <p> {toast.reason} </p>
 
       <div className={styles.date}>
-        <p> {toast.toastDate.toUTCString()}</p>
+        <p> {toast.toastDate.toUTCString().replace('GMT', '')}</p>
       </div>
 
       <DeleteIcon sx={iconStyles} />
