@@ -1,12 +1,8 @@
 import {
-  Alert,
-  Backdrop,
   Box,
   Button,
-  ButtonGroup,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControl,
   FormHelperText,
@@ -17,7 +13,7 @@ import {
   TextField,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
+import { Dispatch, FC, useState } from 'react';
 import {
   updateUser,
   useGetAllUsersQuery,
@@ -29,7 +25,11 @@ import {
 import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
 
-export const LogInModal = () => {
+interface Props {
+  OpenFromApp?: boolean;
+  setOpenFromApp?: Dispatch<React.SetStateAction<boolean>>;
+}
+export const LogInModal: FC<Props> = ({ OpenFromApp, setOpenFromApp }) => {
   const { data: users } = useGetAllUsersQuery();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -45,8 +45,12 @@ export const LogInModal = () => {
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const handleClose = () => {
+    if (OpenFromApp && setOpenFromApp) {
+      setOpenFromApp(() => (OpenFromApp = false));
+    }
     setOpen(false);
   };
+
   const handleConfirm = (username: string | null, password: string | null) => {
     const existingUsernames = users?.map((user) => {
       return user.username;
@@ -55,7 +59,7 @@ export const LogInModal = () => {
       users?.find((user) => {
         if (user.username === username && user.password === password) {
           setDoesUserExist(true);
-          toast.success('Logged in successfully! ', {
+          toast.success('Logged in ', {
             position: 'top-right',
             pauseOnHover: false,
             theme: 'dark',
@@ -141,6 +145,12 @@ export const LogInModal = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: 'rgba(0,0,0,0.2)',
+                          boxShadow: '0 0 0 transparent',
+                        },
+                      }}
                       aria-label="toggle password visibility"
                       onClick={() => setShowPassword((show) => !show)}
                     >
@@ -178,7 +188,7 @@ export const LogInModal = () => {
               variant="contained"
               onClick={() => handleMoveToSignUp()}
             >
-              sign up
+              Sign up
             </Button>
             <Button
               disabled={!allNotnull || !allFieldsTyped}

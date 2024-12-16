@@ -7,5 +7,5 @@ export const serverApi = createApi({
   }),
 
   endpoints: () => ({}),
-  tagTypes: ['Users'],
+  tagTypes: ['Users', 'Toasts', 'Criminals', 'ToastParticipants'],
 });

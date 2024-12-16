@@ -159,6 +159,12 @@ export const SignUpModal: FC = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: 'rgba(0,0,0,0.2)',
+                          boxShadow: '0 0 0 transparent',
+                        },
+                      }}
                       aria-label="toggle password visibility"
                       onClick={() => setShowPassword((show) => !show)}
                     >

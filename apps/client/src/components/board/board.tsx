@@ -11,7 +11,7 @@ export const Board: React.FC<Props & PropsWithChildren> = ({
 }) => {
   return (
     <div className={styles.board} style={{ gridArea }}>
-      {title}
+      <div className={styles.title}>{title}</div>
       {children}
     </div>
   );

@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box } from '@mui/material';
-import { ToastType } from '../../store';
+import { RootState, ToastType, useAppSelector } from '../../store';
 interface Props {
   toast: ToastType;
 }
@@ -20,6 +20,7 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
     paddingRight: '0.6rem',
     paddingLeft: '0.6rem',
   };
+  const user = useAppSelector((state: RootState) => state.user).value;
   return (
     <div className={styles.toast}>
       <div className={styles.user}>

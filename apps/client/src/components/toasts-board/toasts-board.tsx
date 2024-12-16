@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Board } from '../board';
-import styles from './toasts-board.module.css';
-import { Toast, ToastType } from '../toast';
+import { Toast } from '../toast';
+import { ToastType } from '../../store';
 
 export const ToastsBoard: FC = (PropsWithChildren) => {
   const mockToast: ToastType = {
@@ -17,6 +17,11 @@ export const ToastsBoard: FC = (PropsWithChildren) => {
 
   return (
     <Board gridArea="toasts" title="Toasts">
+      <Toast toast={mockToast} />
+      <Toast toast={mockToast} />
+      <Toast toast={mockToast} />
+      <Toast toast={mockToast} />
+      <Toast toast={mockToast} />
       <Toast toast={mockToast} />
       <Toast toast={mockToast} />
     </Board>

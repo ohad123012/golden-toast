@@ -18,6 +18,10 @@ export class ToastController {
     return this.toastService.findAll();
   }
 
+  @Get(':toastId')
+  getToastByToastId(@Param('toastId') toastId: string) {
+    return this.toastService.getToastByToastId(toastId);
+  }
   @Get('past-toasts/:userId')
   getPastToastForUser(@Param('userId') userId: string) {
     return this.toastService.getPastToastForUser(userId);
@@ -39,7 +43,7 @@ export class ToastController {
   }
 
   @Get('all-time-record')
-  getOldestToast() {
+  getAllTimeRecord() {
     return this.toastService.getAllTimeRecord();
   }
 

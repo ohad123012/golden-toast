@@ -6,7 +6,7 @@ interface Props {
 
 export const ActionIconButton: React.FC<Props> = ({ Icon, onClick }) => {
   return (
-    <button onClick={onClick}>
+    <button className={styles.upperButton} onClick={onClick}>
       <Icon styles={styles.icon} />
     </button>
   );
