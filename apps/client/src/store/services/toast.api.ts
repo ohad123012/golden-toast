@@ -65,6 +65,7 @@ export const toastApi = serverApi.injectEndpoints({
 
 export const {
   useGetAllToastsQuery,
+  useGetToastByToastIdQuery,
   useGetPastToastForUserQuery,
   useGetAllPastToastsQuery,
   useGetAllFutureToastsQuery,

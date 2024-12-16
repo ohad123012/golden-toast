@@ -1,8 +1,6 @@
 import { Board, ButtonsContainer, SearchBar, ToastsBoard } from '../components';
 import { LogInModal } from '../modals';
-
 import 'react-toastify/dist/ReactToastify.css';
-
 import styles from './app.module.css';
 import { FC } from 'react';
 

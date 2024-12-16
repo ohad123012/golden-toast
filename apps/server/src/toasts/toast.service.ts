@@ -12,8 +12,8 @@ export class ToastService {
     return this.toastModel.findAll();
   }
 
-  getToastByToastId(toastId: string) {
-    return this.toastModel.findOne({ where: { id: toastId } });
+  getToastByToastId(id: string) {
+    return this.toastModel.findOne({ where: { id } });
   }
   getPastToastForUser(userId: string) {
     const currentDate = new Date();

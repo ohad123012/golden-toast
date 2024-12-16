@@ -20,6 +20,8 @@ import {
   useGetAllUsersQuery,
   gradientBackgroundColor,
   formHelperTextRedColor,
+  visibilityHoverColor,
+  visibilityHoverShadow,
 } from '../../store';
 
 export const SignUpModal: FC = () => {
@@ -161,8 +163,8 @@ export const SignUpModal: FC = () => {
                     <IconButton
                       sx={{
                         '&:hover': {
-                          backgroundColor: 'rgba(0,0,0,0.2)',
-                          boxShadow: '0 0 0 transparent',
+                          backgroundColor: visibilityHoverColor,
+                          boxShadow: visibilityHoverShadow,
                         },
                       }}
                       aria-label="toggle password visibility"

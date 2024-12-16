@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
-import { Combobox } from '@headlessui/react';
+
 export const SearchBar: FC = () => {
   return (
     <div>

@@ -41,3 +41,10 @@ export const toastParticipantApi = serverApi.injectEndpoints({
     }),
   }),
 });
+export const {
+  useGetAllToastParticipantsQuery,
+  useGetAllToastsForUserQuery,
+  useLazyGetAllParticipantsForToastIdQuery,
+  useGetAllParticipantsForToastIdQuery,
+  useDeleteToastParticipantMutation,
+} = toastParticipantApi;

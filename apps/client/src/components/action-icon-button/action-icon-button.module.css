@@ -1,29 +1,7 @@
-/* button {
-  border: 0;
-  text-align: center;
-  cursor: pointer;
-  height: 67%;
-  margin-bottom: 7%;
-  margin-top: 5%;
-  text-align: center;
-  width: 100%;
-  border-radius: 2rem;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-button:hover {
-  background-color: var(--dark-blue-frosted-palette);
-
-  box-shadow: 0rem 0.75rem 1rem var(--button-hover-first),
-    0 1rem 3rem 0 var(--button-hover-second);
-} */
-
 .upperButton {
   border: 0;
   text-align: center;
   cursor: pointer;
-  height: 67%;
   margin-bottom: 7%;
   margin-top: 5%;
   text-align: center;

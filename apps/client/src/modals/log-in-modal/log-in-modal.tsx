@@ -20,7 +20,8 @@ import {
   useAppDispatch,
   gradientBackgroundColor,
   formHelperTextRedColor,
-  UserType,
+  visibilityHoverShadow,
+  visibilityHoverColor,
 } from '../../store';
 import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
@@ -147,8 +148,8 @@ export const LogInModal: FC<Props> = ({ OpenFromApp, setOpenFromApp }) => {
                     <IconButton
                       sx={{
                         '&:hover': {
-                          backgroundColor: 'rgba(0,0,0,0.2)',
-                          boxShadow: '0 0 0 transparent',
+                          backgroundColor: visibilityHoverColor,
+                          boxShadow: visibilityHoverShadow,
                         },
                       }}
                       aria-label="toggle password visibility"

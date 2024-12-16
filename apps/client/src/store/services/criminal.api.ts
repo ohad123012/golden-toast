@@ -32,3 +32,10 @@ export const criminalApi = serverApi.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useGetAllCriminalsQuery,
+  useCreateCriminalMutation,
+  useUpdateCriminalMutation,
+  useDeleteCriminalMutation,
+} = criminalApi;
