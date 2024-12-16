@@ -1,15 +1,10 @@
-import { ToastContainer } from 'react-toastify';
 import { Board, ButtonsContainer, SearchBar, ToastsBoard } from '../components';
 import { LogInModal } from '../modals';
-import { RootState, useAppSelector } from '../store';
 import 'react-toastify/dist/ReactToastify.css';
-
 import styles from './app.module.css';
 import { FC } from 'react';
 
 export const App: FC = () => {
-  const user = useAppSelector((state: RootState) => state.user).value;
-
   return (
     <div className={styles.app}>
       <LogInModal />
@@ -21,8 +16,7 @@ export const App: FC = () => {
       <ToastsBoard />
       <Board gridArea="criminals" title="Criminals" />
       <ButtonsContainer />
-      <Board gridArea="personaNonGrata" title="persona non grata" />
-      <button> Please log in </button>
+      <Board gridArea="personaNonGrata" title="Persona non grata" />
     </div>
   );
 };

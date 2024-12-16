@@ -4,8 +4,7 @@ import styles from './toast.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
-import { Box } from '@mui/material';
-import { ToastType } from '../../store';
+import { RootState, ToastType, useAppSelector } from '../../store';
 interface Props {
   toast: ToastType;
 }
@@ -17,9 +16,10 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
     backgroundColor: backgroundColor,
     fill: iconColor,
     '&:hover': { cursor: 'pointer' },
-    paddingRight: '0.6rem',
-    paddingLeft: '0.6rem',
+
+    padding: '0 0.6rem',
   };
+
   return (
     <div className={styles.toast}>
       <div className={styles.user}>

@@ -6,7 +6,7 @@
   --light-til-frosted-palette: #dfebf6;
   --white-frosted-title: #e6e6e6;
   --date-in-toast-grey: #767b8d;
-  --button-hover-first: rgba(0, 0, 0, 0.24);
+  --button-hover-first: #242a31;
   --button-hover-second: rgba(0, 0, 0, 0.19);
   --toast-background-gradient: linear-gradient(
     90deg,
@@ -27,7 +27,6 @@ body {
   font-family: 'Segoe UI', Arial, sans-serif;
   font-weight: bold;
   color: var(--white-frosted-title);
-  /* text-align: center; */
 }
 
 .searchBar {
@@ -38,7 +37,6 @@ body {
   display: grid;
   grid-gap: 0.7rem;
   grid-template-rows: repeat(7, 1fr);
-  overflow: hidden;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     'search search search logInButton'
@@ -47,5 +45,10 @@ body {
     'results toasts toasts criminals'
     'results toasts toasts criminals'
     'results toasts toasts personaNonGrata'
-    'button toasts toasts personaNonGrata';
+    'results toasts toasts personaNonGrata';
+}
+
+.logInButton {
+  grid-area: logInButton;
+  height: 2rem;
 }

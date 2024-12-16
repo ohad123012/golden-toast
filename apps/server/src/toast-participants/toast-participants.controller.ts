@@ -12,7 +12,12 @@ export class ToastParticipantsController {
     return this.toastParticipantsService.findAll();
   }
 
-  @Get('allUsers/:toastId')
+  @Get('/all-toasts-for-user/:userId')
+  findAllToastsForUser(@Param('userId') userId: string) {
+    return this.toastParticipantsService.findAllToastsForUser(userId);
+  }
+
+  @Get('all-users/:toastId')
   findAllParticipantsForToastId(@Param('toastId') toastId: string) {
     return this.toastParticipantsService.findAllParticipantsForToastId(toastId);
   }

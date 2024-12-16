@@ -13,6 +13,15 @@ export class ToastParticipantsService {
     return this.toastParticipantsModel.findAll();
   }
 
+  findAllToastsForUser(userId: string) {
+    return this.toastParticipantsModel.findAll({
+      where: {
+        userId,
+      },
+      attributes: ['toastId'],
+    });
+  }
+
   findAllParticipantsForToastId(toastId: string) {
     return this.toastParticipantsModel.findAll({
       where: { toastId: toastId },
