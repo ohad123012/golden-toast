@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ToastParticipants } from './entities/toast-participants.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateToastParticipantDto } from './dto/create-toast-participant.dto';
+import { ToastService } from '../toasts/toast.service';
 
 @Injectable()
 export class ToastParticipantsService {

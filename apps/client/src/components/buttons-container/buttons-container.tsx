@@ -1,15 +1,10 @@
-import { Settings } from '@mui/icons-material';
-import { ActionIconButton } from '../action-icon-button';
+import { Settings, Person } from '@mui/icons-material';
 import styles from './buttons-container.module.css';
-import {
-  RootState,
-  useAppSelector,
-  visibilityHoverColor,
-  visibilityHoverShadow,
-} from '../../store';
+import { RootState, useAppSelector } from '../../store';
 import { LogInModal } from '../../modals';
 import { useState } from 'react';
 import { IconButton } from '@mui/material';
+import { settingsStyle, userStyle } from '../../store';
 
 export const ButtonsContainer: React.FC = ({}) => {
   const user = useAppSelector((state: RootState) => state.user).value;
@@ -18,24 +13,18 @@ export const ButtonsContainer: React.FC = ({}) => {
 
   return (
     <div className={styles.buttonsContainer}>
-      {/* {user ? <<ActionIconButton Icon={Settings} /> >: ''} */}
       {user ? (
-        <IconButton
-          sx={{
-            width: '50%',
-            '&:hover': {
-              backgroundColor: visibilityHoverColor,
-              boxShadow: visibilityHoverShadow,
-            },
-          }}
-        >
-          <Settings />
+        <IconButton sx={settingsStyle} size="large">
+          <Settings fontSize={'large'} />
         </IconButton>
       ) : (
         ''
       )}
       {user ? (
-        <button className={styles.upperButton}> {user.username} </button>
+        <IconButton sx={userStyle}>
+          <Person />
+          {user.username}
+        </IconButton>
       ) : (
         <button
           className={styles.upperButton}

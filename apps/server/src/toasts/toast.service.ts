@@ -3,10 +3,13 @@ import { Toast } from './entities/toast.entities';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateToastDto } from './dto/create-toast.dto';
 import { Op, Sequelize } from 'sequelize';
-
+import { ToastParticipants } from '../toast-participants/entities/toast-participants.entity';
 @Injectable()
 export class ToastService {
-  constructor(@InjectModel(Toast) public toastModel: typeof Toast) {}
+  constructor(
+    @InjectModel(Toast)
+    public toastModel: typeof Toast
+  ) {}
 
   findAll() {
     return this.toastModel.findAll();
@@ -28,6 +31,7 @@ export class ToastService {
     const allPast = this.toastModel.findAll({
       where: { toastDate: { [Op.lt]: currentDate } },
     });
+    console.log(allPast.catch());
     return allPast;
   }
 
@@ -35,6 +39,22 @@ export class ToastService {
     const currentDate = new Date();
     return this.toastModel.findAll({
       where: { toastDate: { [Op.gt]: currentDate } },
+    });
+  }
+
+  getAllFutureToastsForUser(userIdToCheck: string) {
+    const currentDate = new Date();
+    return this.toastModel.findAll({
+      include: {
+        model: ToastParticipants,
+        attributes: [],
+        where: {
+          userId: userIdToCheck,
+        },
+      },
+      where: {
+        toastDate: { [Op.gt]: currentDate },
+      },
     });
   }
 
