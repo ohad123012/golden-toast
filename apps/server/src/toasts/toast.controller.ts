@@ -18,10 +18,11 @@ export class ToastController {
     return this.toastService.findAll();
   }
 
-  @Get(':toastId')
+  @Get('getToast/:toastId')
   getToastByToastId(@Param('toastId') toastId: string) {
     return this.toastService.getToastByToastId(toastId);
   }
+
   @Get('past-toasts/:userId')
   getPastToastForUser(@Param('userId') userId: string) {
     return this.toastService.getPastToastForUser(userId);
@@ -35,6 +36,11 @@ export class ToastController {
   @Get('all-future-toasts')
   getAllFutureToasts() {
     return this.toastService.getAllFutureToasts();
+  }
+
+  @Get('all-future-toasts/:userId')
+  getAllFutureToastsForUser(@Param('userId') userId: string) {
+    return this.toastService.getAllFutureToastsForUser(userId);
   }
 
   @Get('amount-toasts-period')

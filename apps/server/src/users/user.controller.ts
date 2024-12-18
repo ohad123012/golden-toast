@@ -17,7 +17,10 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-
+  @Get('get-user/:userId')
+  findUserByUserId(@Param('userId') userId: string) {
+    return this.userService.findUserByUserId(userId);
+  }
   @Post()
   createUser(@Body() newUserDto: CreateUserDto) {
     return this.userService.createUser(newUserDto);

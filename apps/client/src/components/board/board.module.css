@@ -3,11 +3,11 @@
   flex-direction: column;
   border-radius: 1rem;
   gap: 5%;
+
   padding: 1%;
   background-color: var(--black-frosted-board-background);
   border-color: var(--black-frosted-board-background);
   align-items: center;
-  overflow: auto;
 }
 
 .title {
@@ -15,3 +15,12 @@
   height: 1rem;
   text-align: center;
 }
+/* 
+.title {
+  position: sticky;
+  top: 0;
+  z-index: 1; 
+  padding: 1%;
+  text-align: center;
+  background-color: transparent;
+} */

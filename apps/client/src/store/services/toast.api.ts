@@ -24,6 +24,10 @@ export const toastApi = serverApi.injectEndpoints({
       query: () => '/toast/all-future-toasts',
       providesTags: ['Toasts'],
     }),
+    getAllFutureToastsForUser: builder.query<ToastType[], string>({
+      query: (userId) => `/toast/all-future-toasts/${userId}`,
+      providesTags: ['Toasts'],
+    }),
     getAmountToastsForCurrentPeriod: builder.query<ToastType[], void>({
       query: () => '/toast/amount-toasts-period',
       providesTags: ['Toasts'],
@@ -69,6 +73,7 @@ export const {
   useGetPastToastForUserQuery,
   useGetAllPastToastsQuery,
   useGetAllFutureToastsQuery,
+  useGetAllFutureToastsForUserQuery,
   useGetAmountToastsForCurrentPeriodQuery,
   useGetAllTimeRecordQuery,
   useGetAmountToastsForCurrentPeriodPerUserQuery,

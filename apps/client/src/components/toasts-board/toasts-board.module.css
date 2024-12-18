@@ -1,4 +1,13 @@
 .toastsContainer {
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  height: 100%;
+  padding-left: 10%;
+  width: 90%;
+  gap: 5%;
+}
+
+.noToastsHeader {
+  padding-top: 10%;
 }

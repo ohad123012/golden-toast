@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './entites/user.entities';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
+import { where } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -10,6 +11,9 @@ export class UserService {
     return this.userModel.findAll();
   }
 
+  findUserByUserId(id: string) {
+    return this.userModel.findOne({ where: { id } });
+  }
   createUser(newUserDto: CreateUserDto) {
     return this.userModel.create(newUserDto);
   }

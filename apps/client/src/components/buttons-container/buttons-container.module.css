@@ -3,25 +3,29 @@
   display: flex;
   flex-direction: row;
   align-items: left;
+  justify-content: center;
   gap: 0.5rem;
 }
 
 .upperButton {
   border: 0;
-  text-align: center;
+  font-size: 1.5rem;
+  text-align: centers;
   cursor: pointer;
-  margin-bottom: 7%;
-  margin-top: 5%;
+  margin-left: 5%;
+  /* margin-bottom: 7%;
+  margin-top: 10%; */
   text-align: center;
-  width: 100%;
+  width: 70%;
+  height: 100%;
   border-radius: 2rem;
   background-color: transparent;
   box-shadow: none;
 }
 
 .upperButton:hover {
-  background-color: var(--dark-blue-frosted-palette);
-
+  /* background-color: var(--dark-blue-frosted-palette); */
+  background-color: var(--dark-blue-frosted-app-background);
   box-shadow: 0rem 0.75rem 1rem var(--button-hover-first),
     0 1rem 3rem 0 var(--button-hover-second);
 }
