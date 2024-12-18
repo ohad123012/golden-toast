@@ -31,7 +31,7 @@ export class ToastService {
     const allPast = this.toastModel.findAll({
       where: { toastDate: { [Op.lt]: currentDate } },
     });
-    console.log(allPast.catch());
+
     return allPast;
   }
 
