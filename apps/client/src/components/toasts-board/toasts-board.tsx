@@ -20,7 +20,6 @@ export const ToastsBoard: FC = (PropsWithChildren) => {
   } = useGetAllFutureToastsForUserQuery(user?.id ?? '');
 
   if (isLoadingToasts) {
-    console.log('loading');
     return <div> ....Loading</div>;
   }
   if (isSuccessfulToasts && futureToasts) {
@@ -34,7 +33,6 @@ export const ToastsBoard: FC = (PropsWithChildren) => {
           </div>
         ) : (
           <div className={styles.noToastsHeader}>
-            {' '}
             Please log in to see toasts!
           </div>
         )}
