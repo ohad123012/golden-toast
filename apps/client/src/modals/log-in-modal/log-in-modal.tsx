@@ -27,10 +27,10 @@ import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
 
 interface Props {
-  OpenFromApp?: boolean;
+  openFromApp?: boolean;
   setOpenFromApp?: Dispatch<React.SetStateAction<boolean>>;
 }
-export const LogInModal: FC<Props> = ({ OpenFromApp, setOpenFromApp }) => {
+export const LogInModal: FC<Props> = ({ openFromApp, setOpenFromApp }) => {
   const { data: users } = useGetAllUsersQuery();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -46,8 +46,8 @@ export const LogInModal: FC<Props> = ({ OpenFromApp, setOpenFromApp }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const handleClose = () => {
-    if (OpenFromApp && setOpenFromApp) {
-      setOpenFromApp(() => (OpenFromApp = false));
+    if (openFromApp && setOpenFromApp) {
+      setOpenFromApp(() => (openFromApp = false));
     }
     setOpen(false);
   };

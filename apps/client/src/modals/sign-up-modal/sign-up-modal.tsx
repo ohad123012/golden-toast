@@ -53,7 +53,7 @@ export const SignUpModal: FC = () => {
     }
   };
 
-  const allNotnull = !!username && !!password;
+  const allNotnull = !!username && !!password && !!validationPassword;
 
   const [open, setOpen] = useState<boolean>(true);
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);

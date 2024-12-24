@@ -27,8 +27,8 @@ export const toastParticipantApi = serverApi.injectEndpoints({
         url: '/toast-participants',
         method: 'POST',
         body: toastParticipants,
-        invalidatesTags: ['ToastParticipants'],
       }),
+      invalidatesTags: ['ToastParticipants'],
     }),
 
     deleteToastParticipant: builder.mutation<ToastParticipantType, string>({
@@ -36,8 +36,8 @@ export const toastParticipantApi = serverApi.injectEndpoints({
         url: `toast-participants/${id}`,
         method: 'DELETE',
         body: id,
-        invalidatesTags: ['ToastParticipants'],
       }),
+      invalidatesTags: ['ToastParticipants'],
     }),
   }),
 });

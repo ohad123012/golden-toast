@@ -1,8 +1,12 @@
 import { Settings, Person } from '@mui/icons-material';
 import styles from './buttons-container.module.css';
 import { RootState, useAppSelector } from '../../store';
-import { LogInModal } from '../../modals';
-import { useState } from 'react';
+import {
+  ChangeCredentialsModal,
+  LogInModal,
+  SettingsModal,
+} from '../../modals';
+import { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { settingsStyle, userStyle } from '../../store';
 
@@ -10,18 +14,28 @@ export const ButtonsContainer: React.FC = ({}) => {
   const user = useAppSelector((state: RootState) => state.user).value;
 
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
+  const [openChangeCredentials, setOpenChangeCredentials] =
+    useState<boolean>(false);
 
+  const [openSettings, setOpenSettings] = useState<boolean>(false);
   return (
     <div className={styles.buttonsContainer}>
       {user ? (
-        <IconButton sx={settingsStyle} size="large">
+        <IconButton
+          sx={settingsStyle}
+          size="large"
+          onClick={() => setOpenSettings(true)}
+        >
           <Settings fontSize={'large'} />
         </IconButton>
       ) : (
         ''
       )}
       {user ? (
-        <IconButton sx={userStyle}>
+        <IconButton
+          sx={userStyle}
+          onClick={() => setOpenChangeCredentials(true)}
+        >
           <Person />
           {user.username}
         </IconButton>
@@ -34,7 +48,21 @@ export const ButtonsContainer: React.FC = ({}) => {
         </button>
       )}
       {openLogIn && (
-        <LogInModal OpenFromApp={openLogIn} setOpenFromApp={setOpenLogIn} />
+        <LogInModal openFromApp={openLogIn} setOpenFromApp={setOpenLogIn} />
+      )}
+      {openChangeCredentials && (
+        <ChangeCredentialsModal
+          openFromApp={openChangeCredentials}
+          setOpenFromApp={setOpenChangeCredentials}
+        />
+      )}
+      {openSettings && (
+        <SettingsModal
+          openFromApp={openSettings}
+          setOpenFromApp={setOpenSettings}
+          logInState={openLogIn}
+          setLogInState={setOpenLogIn}
+        />
       )}
     </div>
   );

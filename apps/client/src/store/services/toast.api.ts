@@ -45,24 +45,24 @@ export const toastApi = serverApi.injectEndpoints({
         url: '/toast',
         method: 'POST',
         body: toast,
-        invalidatesTags: ['Toasts'],
       }),
+      invalidatesTags: ['Toasts'],
     }),
     updateToast: builder.mutation<ToastType, ToastType>({
       query: (toast) => ({
         url: `/toast/update-toast/${toast.id}`,
         method: 'PUT',
         body: toast,
-        invalidatesTags: ['Toasts'],
       }),
+      invalidatesTags: ['Toasts'],
     }),
     deleteToast: builder.mutation<ToastType, string>({
       query: (id) => ({
         url: `toast/${id}`,
         method: 'DELETE',
         body: id,
-        invalidatesTags: ['Toasts'],
       }),
+      invalidatesTags: ['Toasts'],
     }),
   }),
 });
