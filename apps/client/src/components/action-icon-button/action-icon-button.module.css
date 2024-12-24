@@ -13,8 +13,8 @@
 
 .upperButton:hover {
   background-color: var(--dark-blue-frosted-palette);
-  box-shadow: 0rem 0.75rem 1rem var(--button-hover-first),
-    0 1rem 3rem 0 var(--button-hover-second);
+  box-shadow: 0 0 1rem var(--button-first-shadow-color),
+    0 1rem 3rem 0 var(--button-second-shadow-color);
 }
 
 .icon {

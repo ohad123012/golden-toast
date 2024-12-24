@@ -14,7 +14,8 @@
     rgba(170, 199, 216, 1) 100%
   );
   --button-container-background-color: rgb(187, 187, 187);
-
+  --button-first-shadow-color: #242a31;
+  --button-second-shadow-color: rgba(0, 0, 0, 0.19);
   --toast-shadow: #1e272d;
 }
 

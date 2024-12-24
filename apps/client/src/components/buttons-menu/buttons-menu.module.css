@@ -2,9 +2,10 @@
   grid-area: logInButton;
   display: flex;
   flex-direction: row;
-  align-items: left;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  margin-left: 20%;
+  align-items: center;
+  gap: 2.5rem;
 }
 
 .upperButton {
@@ -13,7 +14,8 @@
   cursor: pointer;
   margin-left: 5%;
   text-align: center;
-  width: 70%;
+  width: 80%;
+
   height: 100%;
   border-radius: 2rem;
   background-color: transparent;
@@ -22,6 +24,6 @@
 
 .upperButton:hover {
   background-color: var(--dark-blue-frosted-app-background);
-  box-shadow: 0rem 0.75rem 1rem var(--button-hover-first),
-    0 1rem 3rem 0 var(--button-hover-second);
+  box-shadow: 0 0 1rem var(--button-first-shadow-color),
+    0 1rem 3rem 0 var(--button-second-shadow-color);
 }

@@ -11,24 +11,24 @@ export const criminalApi = serverApi.injectEndpoints({
         url: '/criminal',
         method: 'POST',
         body: criminal,
-        invalidatesTags: ['Criminals'],
       }),
+      invalidatesTags: ['Criminals'],
     }),
     updateCriminal: builder.mutation<CriminalType, CriminalType>({
       query: (criminal) => ({
         url: `/user/update-criminal/${criminal.id}`,
         method: 'PUT',
         body: criminal,
-        invalidatesTags: ['Criminals'],
       }),
+      invalidatesTags: ['Criminals'],
     }),
     deleteCriminal: builder.mutation<CriminalType, string>({
       query: (id) => ({
         url: `criminal/${id}`,
         method: 'DELETE',
         body: id,
-        invalidatesTags: ['Criminals'],
       }),
+      invalidatesTags: ['Criminals'],
     }),
   }),
 });
