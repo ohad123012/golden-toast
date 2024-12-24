@@ -28,13 +28,13 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
 interface Props {
-  openFromApp?: boolean;
-  setOpenFromApp?: Dispatch<React.SetStateAction<boolean>>;
+  openModal?: boolean;
+  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ChangeCredentialsModal: FC<Props> = ({
-  openFromApp,
-  setOpenFromApp,
+  openModal,
+  setOpenModal,
 }) => {
   const { data: users } = useGetAllUsersQuery();
 
@@ -49,34 +49,28 @@ export const ChangeCredentialsModal: FC<Props> = ({
   const [password, setPassword] = useState<string | null>(
     user?.password ?? null
   );
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(true);
+  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
   const checkAllFields = (username: string | null, password: string | null) => {
-    const allFieldValues = !!username && !!password;
+    const areAllFieldValuesTyped = !!username && !!password;
 
-    if (allFieldValues) {
-      setAllFieldsTyped(true);
+    if (areAllFieldValuesTyped) {
+      setAreAllFieldsTyped(true);
     } else {
-      setAllFieldsTyped(false);
+      setAreAllFieldsTyped(false);
     }
   };
-  const allNotnull = !!username && !!password;
+  const areAllNotnull = !!username && !!password;
   const handleClose = () => {
-    if (openFromApp && setOpenFromApp) {
-      setOpenFromApp(() => (openFromApp = false));
+    if (openModal && setOpenModal) {
+      setOpenModal(false);
     }
   };
 
   const handleConfirm = (username: string | null, password: string | null) => {
     if (username && password && user) {
-      toast.success('changed user credentials', {
-        position: 'top-right',
-        pauseOnHover: false,
-        theme: 'dark',
-      });
-
       updateUserCredentials({
         id: user?.id,
         username,
@@ -91,8 +85,13 @@ export const ChangeCredentialsModal: FC<Props> = ({
           isAdmin: user?.isAdmin,
         })
       );
-
       handleClose();
+
+      toast.success('changed user credentials', {
+        position: 'top-right',
+        pauseOnHover: false,
+        theme: 'dark',
+      });
     }
   };
 
@@ -100,7 +99,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
     <div>
       <>
         <Dialog
-          open={openFromApp ?? false}
+          open={openModal ?? false}
           onClose={() => handleClose()}
           PaperProps={{
             sx: {
@@ -173,7 +172,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
               </FormControl>
             </Box>
             <Button
-              disabled={!allNotnull || !allFieldsTyped}
+              disabled={!areAllNotnull || !areAllFieldsTyped}
               size="small"
               variant="contained"
               onClick={() => {

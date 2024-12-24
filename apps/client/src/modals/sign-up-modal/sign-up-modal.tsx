@@ -35,7 +35,7 @@ export const SignUpModal: FC = () => {
   const [areSamePasswords, setAreSamePasswords] = useState<boolean>(true);
   const [usernameExists, setUsernameExists] = useState<boolean>(false);
 
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(true);
+  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
   const { data: users } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
 
@@ -44,16 +44,17 @@ export const SignUpModal: FC = () => {
     password: string | null,
     validationPassword: string | null
   ) => {
-    const allFieldValues = !!username && !!password && !!validationPassword;
+    const areAllFieldValuesTyped =
+      !!username && !!password && !!validationPassword;
 
-    if (allFieldValues) {
-      setAllFieldsTyped(true);
+    if (areAllFieldValuesTyped) {
+      setAreAllFieldsTyped(true);
     } else {
-      setAllFieldsTyped(false);
+      setAreAllFieldsTyped(false);
     }
   };
 
-  const allNotnull = !!username && !!password && !!validationPassword;
+  const areAllNotnull = !!username && !!password && !!validationPassword;
 
   const [open, setOpen] = useState<boolean>(true);
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
@@ -232,7 +233,7 @@ export const SignUpModal: FC = () => {
             <Button
               size="small"
               variant="contained"
-              disabled={!allFieldsTyped || !allNotnull}
+              disabled={!areAllFieldsTyped || !areAllNotnull}
               onClick={() =>
                 handleSignUp(username, password, validationPassword)
               }

@@ -7,33 +7,33 @@ import {
 } from '../../store';
 
 interface Props {
-  openFromApp?: boolean;
-  setOpenFromApp?: Dispatch<React.SetStateAction<boolean>>;
+  openModal?: boolean;
+  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
   logInState?: boolean;
   setLogInState?: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SettingsModal: FC<Props> = ({
-  openFromApp,
-  setOpenFromApp,
+  openModal,
+  setOpenModal,
   logInState,
   setLogInState,
 }) => {
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    if (openFromApp && setOpenFromApp) {
-      setOpenFromApp(() => (openFromApp = false));
+    if (openModal && setOpenModal) {
+      setOpenModal(false);
     }
   };
   const handleLogOut = () => {
     dispatch(updateUser(null));
-    if (openFromApp && setOpenFromApp && logInState && setLogInState) {
-      setOpenFromApp(() => (openFromApp = false));
-      setLogInState(() => (logInState = false));
+    if (openModal && setOpenModal && logInState && setLogInState) {
+      setOpenModal(false);
+      setLogInState(false);
     }
   };
 
@@ -41,7 +41,7 @@ export const SettingsModal: FC<Props> = ({
     <div>
       <>
         <Dialog
-          open={openFromApp ?? false}
+          open={openModal ?? false}
           onClose={() => handleClose()}
           PaperProps={{
             sx: {

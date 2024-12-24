@@ -27,17 +27,17 @@ import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
 
 interface Props {
-  openFromApp?: boolean;
-  setOpenFromApp?: Dispatch<React.SetStateAction<boolean>>;
+  openModal?: boolean;
+  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
 }
-export const LogInModal: FC<Props> = ({ openFromApp, setOpenFromApp }) => {
+export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const { data: users } = useGetAllUsersQuery();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [allFieldsTyped, setAllFieldsTyped] = useState<boolean>(false);
+  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(false);
   const [doesUserExist, setDoesUserExist] = useState<boolean>(true);
 
   const [userExistPasswordWrong, setUserExistPasswordWrong] =
@@ -46,8 +46,8 @@ export const LogInModal: FC<Props> = ({ openFromApp, setOpenFromApp }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const handleClose = () => {
-    if (openFromApp && setOpenFromApp) {
-      setOpenFromApp(() => (openFromApp = false));
+    if (openModal && setOpenModal) {
+      setOpenModal(false);
     }
     setOpen(false);
   };
@@ -85,14 +85,14 @@ export const LogInModal: FC<Props> = ({ openFromApp, setOpenFromApp }) => {
   };
 
   const checkAllFields = (username: string | null, password: string | null) => {
-    const allFieldValues = !!username && !!password;
-    if (allFieldValues) {
-      setAllFieldsTyped(true);
+    const areAllFieldValues = !!username && !!password;
+    if (areAllFieldValues) {
+      setAreAllFieldsTyped(true);
     } else {
-      setAllFieldsTyped(false);
+      setAreAllFieldsTyped(false);
     }
   };
-  const allNotnull = !!username && !!password;
+  const areAllNotNull = !!username && !!password;
 
   return (
     <>
@@ -192,7 +192,7 @@ export const LogInModal: FC<Props> = ({ openFromApp, setOpenFromApp }) => {
               Sign up
             </Button>
             <Button
-              disabled={!allNotnull || !allFieldsTyped}
+              disabled={!areAllNotNull || !areAllFieldsTyped}
               size="small"
               variant="contained"
               onClick={() => {

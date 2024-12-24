@@ -1,5 +1,5 @@
 import { Settings, Person } from '@mui/icons-material';
-import styles from './buttons-container.module.css';
+import styles from './buttons-menu.module.css';
 import { RootState, useAppSelector } from '../../store';
 import {
   ChangeCredentialsModal,
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { settingsStyle, userStyle } from '../../store';
 
-export const ButtonsContainer: React.FC = ({}) => {
+export const ButtonsMenu: React.FC = ({}) => {
   const user = useAppSelector((state: RootState) => state.user).value;
 
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
@@ -48,18 +48,18 @@ export const ButtonsContainer: React.FC = ({}) => {
         </button>
       )}
       {openLogIn && (
-        <LogInModal openFromApp={openLogIn} setOpenFromApp={setOpenLogIn} />
+        <LogInModal openModal={openLogIn} setOpenModal={setOpenLogIn} />
       )}
       {openChangeCredentials && (
         <ChangeCredentialsModal
-          openFromApp={openChangeCredentials}
-          setOpenFromApp={setOpenChangeCredentials}
+          openModal={openChangeCredentials}
+          setOpenModal={setOpenChangeCredentials}
         />
       )}
       {openSettings && (
         <SettingsModal
-          openFromApp={openSettings}
-          setOpenFromApp={setOpenSettings}
+          openModal={openSettings}
+          setOpenModal={setOpenSettings}
           logInState={openLogIn}
           setLogInState={setOpenLogIn}
         />
