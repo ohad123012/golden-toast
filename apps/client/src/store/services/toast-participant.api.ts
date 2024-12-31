@@ -21,7 +21,7 @@ export const toastParticipantApi = serverApi.injectEndpoints({
 
     createToastParticipants: builder.mutation<
       ToastParticipantType[],
-      Omit<ToastParticipantType[], 'id'>
+      Omit<ToastParticipantType, 'id'>[]
     >({
       query: (toastParticipants: ToastParticipantType[]) => ({
         url: '/toast-participants',
@@ -39,6 +39,18 @@ export const toastParticipantApi = serverApi.injectEndpoints({
       }),
       invalidatesTags: ['ToastParticipants'],
     }),
+
+    deleteAllToastParticipantsForToastId: builder.mutation<
+      ToastParticipantType,
+      string
+    >({
+      query: (toastId) => ({
+        url: `toast-participants/for-toast-id/${toastId}`,
+        method: 'DELETE',
+        body: toastId,
+      }),
+      invalidatesTags: ['ToastParticipants'],
+    }),
   }),
 });
 export const {
@@ -46,5 +58,7 @@ export const {
   useGetAllToastsForUserQuery,
   useLazyGetAllParticipantsForToastIdQuery,
   useGetAllParticipantsForToastIdQuery,
+  useCreateToastParticipantsMutation,
   useDeleteToastParticipantMutation,
+  useDeleteAllToastParticipantsForToastIdMutation,
 } = toastParticipantApi;

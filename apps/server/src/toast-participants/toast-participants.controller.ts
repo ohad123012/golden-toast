@@ -34,4 +34,11 @@ export class ToastParticipantsController {
   deleteToastParticipant(@Param('id') id: string) {
     return this.toastParticipantsService.deleteToastParticipant(id);
   }
+
+  @Delete('for-toast-id/:toastId')
+  deleteAllToastParticipantsForToastId(@Param('toastId') toastId: string) {
+    return this.toastParticipantsService.deleteAllToastParticipantsForToastId(
+      toastId
+    );
+  }
 }

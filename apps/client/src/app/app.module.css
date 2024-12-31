@@ -23,11 +23,11 @@ body {
   background-color: var(--dark-blue-frosted-app-background);
   text-align: center;
   font-size: 1.2rem;
+  color: var(--white-frosted-title);
 }
 * {
   font-family: 'Segoe UI', Arial, sans-serif;
   font-weight: bold;
-  color: var(--white-frosted-title);
 }
 
 .searchBar {

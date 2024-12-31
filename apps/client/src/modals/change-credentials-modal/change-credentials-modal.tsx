@@ -41,6 +41,8 @@ export const ChangeCredentialsModal: FC<Props> = ({
   const [updateUserCredentials] = useUpdateUserMutation();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [usernameExists, setUsernameExists] = useState<boolean>(false);
+
   const user = useAppSelector((state: RootState) => state.user).value;
 
   const [username, setUsername] = useState<string | null>(
@@ -70,28 +72,36 @@ export const ChangeCredentialsModal: FC<Props> = ({
   };
 
   const handleConfirm = (username: string | null, password: string | null) => {
+    const existingUsernames = users?.map((user) => {
+      return user.username;
+    });
+
     if (username && password && user) {
-      updateUserCredentials({
-        id: user?.id,
-        username,
-        password,
-        isAdmin: user?.isAdmin,
-      });
-      dispatch(
-        updateUser({
+      if (existingUsernames?.includes(username ?? '')) {
+        setUsernameExists(true);
+      } else {
+        updateUserCredentials({
           id: user?.id,
           username,
           password,
           isAdmin: user?.isAdmin,
-        })
-      );
-      handleClose();
+        });
+        dispatch(
+          updateUser({
+            id: user?.id,
+            username,
+            password,
+            isAdmin: user?.isAdmin,
+          })
+        );
+        handleClose();
 
-      toast.success('changed user credentials', {
-        position: 'top-right',
-        pauseOnHover: false,
-        theme: 'dark',
-      });
+        toast.success('changed user credentials', {
+          position: 'top-right',
+          pauseOnHover: false,
+          theme: 'dark',
+        });
+      }
     }
   };
 
@@ -128,6 +138,8 @@ export const ChangeCredentialsModal: FC<Props> = ({
                 defaultValue={user?.username}
                 type="text"
                 label="username"
+                error={usernameExists}
+                helperText={usernameExists ? 'Username already exists' : ' '}
                 variant="outlined"
                 onChange={(
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

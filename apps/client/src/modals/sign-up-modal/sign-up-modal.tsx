@@ -226,19 +226,11 @@ export const SignUpModal: FC = () => {
             <Button
               size="small"
               variant="contained"
-              onClick={() => handleMoveToLogIn()}
-            >
-              log in
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              disabled={!areAllFieldsTyped || !areAllNotnull}
               onClick={() =>
                 handleSignUp(username, password, validationPassword)
               }
             >
-              create
+              log in
             </Button>
           </Box>
         </DialogContent>

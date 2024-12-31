@@ -39,4 +39,8 @@ export class ToastParticipantsService {
   deleteToastParticipant(id: string) {
     return this.toastParticipantsModel.destroy({ where: { id } });
   }
+
+  deleteAllToastParticipantsForToastId(toastId: string) {
+    return this.toastParticipantsModel.destroy({ where: { toastId } });
+  }
 }
