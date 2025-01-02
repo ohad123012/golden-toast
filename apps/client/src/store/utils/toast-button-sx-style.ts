@@ -8,22 +8,18 @@ export const iconStyles = {
   padding: '0 0.6rem',
 };
 export const buttonStyle = {
-  width: 0,
-  height: 0,
-  margin: '0 0.8rem',
+  width: '2rem',
+  height: '2rem',
+  margin: '0 0.2rem',
   marginBottom: '0.85rem',
-  '&:hover': {
-    backgroundColor: backgroundColor,
-    fill: iconColor,
-    cursor: 'pointer',
-  },
+  '&:hover': { transform: 'scale(1.2)' },
 };
 
 export const checkIconStyle = {
   backgroundColor: backgroundColor,
   fill: iconColor,
 
-  '&:hover': { cursor: 'pointer' },
+  '&:hover': { cursor: 'pointer', transform: 'scale(1.5)' },
 };
 
 export const checkButtonStyle = {

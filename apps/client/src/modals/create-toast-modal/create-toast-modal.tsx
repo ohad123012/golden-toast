@@ -17,16 +17,14 @@ import {
   UserType,
 } from '../../store';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { toast } from 'react-toastify';
 import { useCreateToastParticipantsMutation } from '../../store/services/toast-participant.api';
 
 interface Props {
-  openModal?: boolean;
-  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
@@ -35,7 +33,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [drinks, setDrinks] = useState<string | null>(null);
   const [foods, setFoods] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
   const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(null);
 
   const user = useAppSelector((state: RootState) => state.user).value;
@@ -43,29 +40,10 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [createToastParticipants] = useCreateToastParticipantsMutation();
   const [createToast] = useCreateToastMutation();
   const { data: users } = useGetAllUsersQuery();
-  const checkAllFields = (
-    reason: string | null,
-    drinks: string | null,
-    foods: string | null,
-    description: string | null,
-    toastDate: Date | null
-  ) => {
-    const areAllFieldValuesTyped =
-      !!reason && !!drinks && !!foods && !!description && !!toastDate;
 
-    if (areAllFieldValuesTyped) {
-      setAreAllFieldsTyped(true);
-    } else {
-      setAreAllFieldsTyped(false);
-    }
-  };
   const handleClose = () => {
-    if (openModal && setOpenModal) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
   };
-  const areAllNotnull =
-    !!reason && !!drinks && !!foods && !!description && !!toastDate;
 
   const handleCreate = (
     toastDate: Date | null,
@@ -115,7 +93,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   return (
     <>
       <Dialog
-        open={openModal ?? false}
+        open={openModal}
         onClose={() => handleClose()}
         PaperProps={{
           sx: {
@@ -133,7 +111,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
         >
           Create Toast
         </DialogTitle>
-        <DialogContent sx={{ overflow: 'initial' }}>
+        <DialogContent>
           <Box
             sx={{
               display: 'flex',
@@ -152,13 +130,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setReason(e.target.value);
-                checkAllFields(
-                  e.target.value,
-                  drinks,
-                  foods,
-                  description,
-                  toastDate
-                );
               }}
               value={reason}
             />
@@ -170,13 +141,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setDrinks(e.target.value);
-                checkAllFields(
-                  reason,
-                  e.target.value,
-                  foods,
-                  description,
-                  toastDate
-                );
               }}
               value={drinks}
             />
@@ -189,13 +153,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setFoods(e.target.value);
-                checkAllFields(
-                  reason,
-                  drinks,
-                  e.target.value,
-                  description,
-                  toastDate
-                );
               }}
               value={foods}
             />
@@ -208,13 +165,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setDescription(e.target.value);
-                checkAllFields(
-                  reason,
-                  drinks,
-                  foods,
-                  e.target.value,
-                  toastDate
-                );
               }}
               value={description}
             />
@@ -227,7 +177,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 timeSteps={{ minutes: 15 }}
                 onChange={(date: Date | null) => {
                   setToastDate(date);
-                  checkAllFields(reason, drinks, foods, description, date);
                 }}
                 value={toastDate}
               />
@@ -255,7 +204,9 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
           <Button
             size="small"
             variant="contained"
-            disabled={!areAllFieldsTyped || !areAllNotnull}
+            disabled={
+              !reason || !drinks || !foods || !description || !toastDate
+            }
             onClick={() =>
               handleCreate(toastDate, reason, drinks, foods, description)
             }

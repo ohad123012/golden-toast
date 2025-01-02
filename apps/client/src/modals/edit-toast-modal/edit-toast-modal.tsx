@@ -7,10 +7,7 @@ import {
   useGetAllUsersQuery,
   UserType,
   useGetAllParticipantsForToastIdQuery,
-  useGetUserByUserIdQuery,
-  useLazyGetUserByUserIdQuery,
   useUpdateToastMutation,
-  useDeleteToastParticipantMutation,
   useCreateToastParticipantsMutation,
   useDeleteToastParticipantByToastIdAndUserIdMutation,
 } from '../../store';
@@ -26,13 +23,12 @@ import {
 
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import { toast as toastify } from 'react-toastify';
 
 interface Props {
-  openModal?: boolean;
-  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<React.SetStateAction<boolean>>;
   toast: ToastType;
 }
 
@@ -41,49 +37,25 @@ export const EditToastModal: FC<Props> = ({
   setOpenModal,
   toast,
 }) => {
-  const [toastDate, setToastDate] = useState<Date | null>(
-    toast.toastDate ?? Date
-  );
-  const [reason, setReason] = useState<string | null>(toast.reason);
-  const [drinks, setDrinks] = useState<string | null>(toast.drinks);
-  const [foods, setFoods] = useState<string | null>(toast.foods);
-  const [description, setDescription] = useState<string | null>(
-    toast.description
-  );
+  const [toastDate, setToastDate] = useState<Date | null>(toast.toastDate);
+  const [reason, setReason] = useState<string>(toast.reason);
+  const [drinks, setDrinks] = useState<string>(toast.drinks);
+  const [foods, setFoods] = useState<string>(toast.foods);
+  const [description, setDescription] = useState<string>(toast.description);
 
   const user = useAppSelector((state: RootState) => state.user).value;
   const { data: usersInvitedToToast } = useGetAllParticipantsForToastIdQuery(
     toast.id
   );
 
-  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
-  const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(
+  const [invitedUsers, setInvitedUsers] = useState<UserType[]>(
     usersInvitedToToast ?? []
   );
 
-  const checkAllFields = (
-    reason: string | null,
-    drinks: string | null,
-    foods: string | null,
-    description: string | null,
-    toastDate: Date | null
-  ) => {
-    const areAllFieldValuesTyped =
-      !!reason && !!drinks && !!foods && !!description && !!toastDate;
-
-    if (areAllFieldValuesTyped) {
-      setAreAllFieldsTyped(true);
-    } else {
-      setAreAllFieldsTyped(false);
-    }
-  };
   const handleClose = () => {
-    if (openModal && setOpenModal) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
   };
-  const areAllNotnull =
-    !!reason && !!drinks && !!foods && !!description && !!toastDate;
+
   const { data: users } = useGetAllUsersQuery();
   const [updateToast] = useUpdateToastMutation();
   const [deleteToastParticipantByUserToast] =
@@ -113,10 +85,10 @@ export const EditToastModal: FC<Props> = ({
   };
   const handleCreate = (
     toastDate: Date | null,
-    reason: string | null,
-    drinks: string | null,
-    foods: string | null,
-    description: string | null
+    reason: string,
+    drinks: string,
+    foods: string,
+    description: string
   ) => {
     if (
       !!reason &&
@@ -134,19 +106,18 @@ export const EditToastModal: FC<Props> = ({
         drinks,
         foods,
         description,
-        hasDone: false,
       });
 
-      const wasInvitedAndGotDeleted = usersInvitedToToast?.filter(
+      const userWasInvitedAndGotDeleted = usersInvitedToToast?.filter(
         (e) => !invitedUsers?.includes(e)
       );
 
-      const wasNotInvitedAndGotAdded = invitedUsers?.filter(
+      const userWasNotInvitedAndGotAdded = invitedUsers?.filter(
         (e) => !usersInvitedToToast?.includes(e)
       );
 
-      inviteNewUsers(wasNotInvitedAndGotAdded, toast.id);
-      removeInviteFromUsers(wasInvitedAndGotDeleted, toast.id);
+      inviteNewUsers(userWasNotInvitedAndGotAdded, toast.id);
+      removeInviteFromUsers(userWasInvitedAndGotDeleted, toast.id);
 
       handleClose();
       toastify.success('toast edited', {
@@ -161,7 +132,7 @@ export const EditToastModal: FC<Props> = ({
     <div>
       <>
         <Dialog
-          open={openModal ?? false}
+          open={openModal}
           onClose={() => handleClose()}
           PaperProps={{
             sx: {
@@ -179,7 +150,7 @@ export const EditToastModal: FC<Props> = ({
           >
             Create Toast
           </DialogTitle>
-          <DialogContent sx={{ overflow: 'initial' }}>
+          <DialogContent>
             <Box
               sx={{
                 display: 'flex',
@@ -198,13 +169,6 @@ export const EditToastModal: FC<Props> = ({
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setReason(e.target.value);
-                  checkAllFields(
-                    e.target.value,
-                    drinks,
-                    foods,
-                    description,
-                    toastDate
-                  );
                 }}
                 value={reason}
               />
@@ -216,13 +180,6 @@ export const EditToastModal: FC<Props> = ({
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setDrinks(e.target.value);
-                  checkAllFields(
-                    reason,
-                    e.target.value,
-                    foods,
-                    description,
-                    toastDate
-                  );
                 }}
                 value={drinks}
               />
@@ -235,13 +192,6 @@ export const EditToastModal: FC<Props> = ({
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setFoods(e.target.value);
-                  checkAllFields(
-                    reason,
-                    drinks,
-                    e.target.value,
-                    description,
-                    toastDate
-                  );
                 }}
                 value={foods}
               />
@@ -254,13 +204,6 @@ export const EditToastModal: FC<Props> = ({
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setDescription(e.target.value);
-                  checkAllFields(
-                    reason,
-                    drinks,
-                    foods,
-                    e.target.value,
-                    toastDate
-                  );
                 }}
                 value={description}
               />
@@ -274,7 +217,6 @@ export const EditToastModal: FC<Props> = ({
                   timeSteps={{ minutes: 15 }}
                   onChange={(date: Date | null) => {
                     setToastDate(date);
-                    checkAllFields(reason, drinks, foods, description, date);
                   }}
                   value={toastDate}
                 />
@@ -287,7 +229,7 @@ export const EditToastModal: FC<Props> = ({
                 getOptionLabel={({ username }) => username}
                 filterSelectedOptions
                 value={invitedUsers ?? []}
-                onChange={(_, newValue: SetStateAction<UserType[] | null>) => {
+                onChange={(_, newValue: SetStateAction<UserType[]>) => {
                   setInvitedUsers(newValue);
                 }}
                 renderInput={(params) => (
@@ -302,7 +244,9 @@ export const EditToastModal: FC<Props> = ({
             <Button
               size="small"
               variant="contained"
-              disabled={!areAllFieldsTyped || !areAllNotnull}
+              disabled={
+                !reason || !drinks || !foods || !description || !toastDate
+              }
               sx={{ marginTop: '1rem' }}
               onClick={() =>
                 handleCreate(toastDate, reason, drinks, foods, description)

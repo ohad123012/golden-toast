@@ -24,14 +24,14 @@ export const Board: React.FC<Props & PropsWithChildren> = ({
       {title === 'Toasts' && user && (
         <div className={styles.titleButtonBox}>
           <div className={styles.toastTitle}>{title}</div>
-          <IconButton disableRipple onClick={() => setOpenAddToast(true)}>
+          <IconButton onClick={() => setOpenAddToast(true)}>
             <AddCircleOutline
               sx={{
                 color: titleColors,
                 paddingTop: '3.5%',
-                marginLeft: '15rem',
                 height: '2rem',
                 width: '2rem',
+                '&:hover': { transform: 'scale(1.2)' },
               }}
             />
           </IconButton>

@@ -7,41 +7,34 @@ import {
 } from '../../store';
 
 interface Props {
-  openModal?: boolean;
-  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
-  logInState?: boolean;
-  setLogInState?: Dispatch<React.SetStateAction<boolean>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<React.SetStateAction<boolean>>;
+
+  setLogInState: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SettingsModal: FC<Props> = ({
   openModal,
   setOpenModal,
-  logInState,
   setLogInState,
 }) => {
-  const [username, setUsername] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
-
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    if (openModal && setOpenModal) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
   };
   const handleLogOut = () => {
     dispatch(updateUser(null));
-    if (openModal && setOpenModal && logInState && setLogInState) {
-      setOpenModal(false);
-      setLogInState(false);
-    }
+
+    setOpenModal(false);
+    setLogInState(false);
   };
 
   return (
     <div>
       <>
         <Dialog
-          open={openModal ?? false}
+          open={openModal}
           onClose={() => handleClose()}
           PaperProps={{
             sx: {
@@ -56,7 +49,7 @@ export const SettingsModal: FC<Props> = ({
           >
             settings
           </DialogTitle>
-          <DialogContent sx={{ overflow: 'initial' }}>
+          <DialogContent>
             <Box
               sx={{
                 display: 'flex',

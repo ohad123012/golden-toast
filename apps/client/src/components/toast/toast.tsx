@@ -14,7 +14,6 @@ import {
   buttonStyle,
   iconStyles,
   iconColor,
-  checkButtonStyle,
   checkIconStyle,
   useUpdateUserMutation,
   useUpdateToastMutation,
@@ -38,6 +37,18 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
     deleteToast(toast.id);
     deleteToastParticipants(toast.id);
   };
+  const removeSecondsMillis = new Date(
+    new Date(toast.toastDate).setSeconds(0, 0)
+  );
+
+  const dateDispay = new Date(
+    removeSecondsMillis.getTime() + 2 * 60 * 60 * 1000
+  )
+    .toISOString()
+    .replace('Z', '')
+    .replace('T', ' ')
+    .replace(':00.000', '');
+
   return (
     <div className={styles.toast}>
       <div className={styles.user}>
@@ -48,31 +59,18 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
       <p> {toast.reason} </p>
 
       <div className={styles.date}>
-        <p>
-          {new Date(new Date(toast.toastDate).getTime() + 2 * 60 * 60 * 1000)
-            .toISOString()
-            .replace('Z', '')
-            .replace('T', ' ')}
-        </p>
+        <p>{dateDispay}</p>
       </div>
 
-      <IconButton
-        sx={buttonStyle}
-        disableRipple
-        onClick={() => handleDeleteToast()}
-      >
+      <IconButton sx={buttonStyle} onClick={() => handleDeleteToast()}>
         <DeleteIcon sx={iconStyles} />
       </IconButton>
 
-      <IconButton
-        sx={buttonStyle}
-        disableRipple
-        onClick={() => setOpenEditToast(true)}
-      >
+      <IconButton sx={buttonStyle} onClick={() => setOpenEditToast(true)}>
         <EditIcon sx={iconStyles} />
       </IconButton>
 
-      <IconButton sx={buttonStyle} disableRipple>
+      <IconButton sx={buttonStyle}>
         <InfoIcon sx={iconStyles} />
       </IconButton>
 

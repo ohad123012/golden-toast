@@ -91,7 +91,7 @@ export class ToastService {
 
   getAllTimeRecord() {
     const juneMonthNumber = 6;
-    const firstHalfPromise = this.toastModel.findAll({
+    const firstHalfRecord = this.toastModel.findAll({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'amountOfToasts'],
         [
@@ -116,7 +116,7 @@ export class ToastService {
       },
       limit: 1,
     });
-    const secondHalfPromise = this.toastModel.findAll({
+    const secondHalfRecord = this.toastModel.findAll({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'amountOfToasts'],
         [
@@ -140,18 +140,18 @@ export class ToastService {
       limit: 1,
     });
 
-    const record = Promise.all([firstHalfPromise, secondHalfPromise]).then(
-      (values) => {
-        if (!values[0][0]) {
-          return values[1][0].dataValues['amountOfToasts'];
+    const record = Promise.all([firstHalfRecord, secondHalfRecord]).then(
+      (records) => {
+        if (!records[0][0]) {
+          return records[1][0].dataValues['amountOfToasts'];
         }
-        if (!values[1][0]) {
-          return values[0][0].dataValues['amountOfToasts'];
+        if (!records[1][0]) {
+          return records[0][0].dataValues['amountOfToasts'];
         }
 
         return Math.max(
-          values[0][0].dataValues['amountOfToasts'],
-          values[1][0].dataValues['amountOfToasts']
+          records[0][0].dataValues['amountOfToasts'],
+          records[1][0].dataValues['amountOfToasts']
         );
       }
     );

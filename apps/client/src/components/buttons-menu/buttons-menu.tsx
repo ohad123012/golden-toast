@@ -60,7 +60,6 @@ export const ButtonsMenu: React.FC = ({}) => {
         <SettingsModal
           openModal={openSettings}
           setOpenModal={setOpenSettings}
-          logInState={openLogIn}
           setLogInState={setOpenLogIn}
         />
       )}

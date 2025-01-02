@@ -28,8 +28,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
 interface Props {
-  openModal?: boolean;
-  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ChangeCredentialsModal: FC<Props> = ({
@@ -45,30 +45,13 @@ export const ChangeCredentialsModal: FC<Props> = ({
 
   const user = useAppSelector((state: RootState) => state.user).value;
 
-  const [username, setUsername] = useState<string | null>(
-    user?.username ?? null
-  );
-  const [password, setPassword] = useState<string | null>(
-    user?.password ?? null
-  );
-  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
+  const [username, setUsername] = useState<string>(user!.username);
+  const [password, setPassword] = useState<string>(user!.password);
 
   const dispatch = useAppDispatch();
 
-  const checkAllFields = (username: string | null, password: string | null) => {
-    const areAllFieldValuesTyped = !!username && !!password;
-
-    if (areAllFieldValuesTyped) {
-      setAreAllFieldsTyped(true);
-    } else {
-      setAreAllFieldsTyped(false);
-    }
-  };
-  const areAllNotnull = !!username && !!password;
   const handleClose = () => {
-    if (openModal && setOpenModal) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
   };
 
   const handleConfirm = (username: string | null, password: string | null) => {
@@ -124,7 +107,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
           >
             change user credentials
           </DialogTitle>
-          <DialogContent sx={{ overflow: 'initial' }}>
+          <DialogContent>
             <Box
               sx={{
                 display: 'flex',
@@ -145,7 +128,6 @@ export const ChangeCredentialsModal: FC<Props> = ({
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setUsername(e.target.value);
-                  checkAllFields(e.target.value, password);
                 }}
                 value={username}
               />
@@ -177,14 +159,13 @@ export const ChangeCredentialsModal: FC<Props> = ({
                     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                   ) => {
                     setPassword(e.target.value);
-                    checkAllFields(username, e.target.value);
                   }}
                   value={password}
                 />
               </FormControl>
             </Box>
             <Button
-              disabled={!areAllNotnull || !areAllFieldsTyped}
+              disabled={!username || !password}
               size="small"
               variant="contained"
               onClick={() => {
