@@ -38,7 +38,7 @@ export class ToastService {
   getAllFutureToasts() {
     const currentDate = new Date();
     return this.toastModel.findAll({
-      where: { toastDate: { [Op.gt]: currentDate } },
+      where: { toastDate: { [Op.gt]: currentDate }, hasDone: false },
     });
   }
 
@@ -54,12 +54,12 @@ export class ToastService {
       },
       where: {
         toastDate: { [Op.gt]: currentDate },
+        hasDone: false,
       },
     });
   }
 
   getAmountToastsForCurrentPeriod() {
-    /// CRITICAL --> need to add hasDone === true in where
     const currentDate = new Date();
     const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
     const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
@@ -90,7 +90,6 @@ export class ToastService {
   }
 
   getAllTimeRecord() {
-    /// CRITICAL --> need to add hasDone === true in where
     const juneMonthNumber = 6;
     const firstHalfPromise = this.toastModel.findAll({
       attributes: [
@@ -161,7 +160,6 @@ export class ToastService {
   }
 
   getAmountToastsForCurrentPeriodPerUser() {
-    /// CRITICAL --> need to add hasDone === true in where
     const currentDate = new Date();
     const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
     const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);

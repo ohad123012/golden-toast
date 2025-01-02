@@ -1,5 +1,6 @@
 import { serverApi } from './server.api';
 import { ToastParticipantType } from '../types/toast-participant';
+import { UserType } from '../types';
 
 export const toastParticipantApi = serverApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,12 +8,6 @@ export const toastParticipantApi = serverApi.injectEndpoints({
       query: () => '/toast-participants',
       providesTags: ['ToastParticipants'],
     }),
-    getAllParticipantsForToastId: builder.query<ToastParticipantType[], string>(
-      {
-        query: (id: string) => `/toast-participants/all-users/${id}`,
-        providesTags: ['ToastParticipants'],
-      }
-    ),
 
     getAllToastsForUser: builder.query<ToastParticipantType[], string>({
       query: (id: string) => `/toast-participants/all-toasts-for-user/${id}`,
@@ -40,6 +35,18 @@ export const toastParticipantApi = serverApi.injectEndpoints({
       invalidatesTags: ['ToastParticipants'],
     }),
 
+    deleteToastParticipantByToastIdAndUserId: builder.mutation<
+      ToastParticipantType,
+      { userId: string; toastId: string }
+    >({
+      query: ({ userId, toastId }) => ({
+        url: `toast-participants/by-user-toast/${toastId}/${userId}`,
+        method: 'DELETE',
+        body: toastId,
+      }),
+      invalidatesTags: ['ToastParticipants'],
+    }),
+
     deleteAllToastParticipantsForToastId: builder.mutation<
       ToastParticipantType,
       string
@@ -56,9 +63,8 @@ export const toastParticipantApi = serverApi.injectEndpoints({
 export const {
   useGetAllToastParticipantsQuery,
   useGetAllToastsForUserQuery,
-  useLazyGetAllParticipantsForToastIdQuery,
-  useGetAllParticipantsForToastIdQuery,
   useCreateToastParticipantsMutation,
   useDeleteToastParticipantMutation,
+  useDeleteToastParticipantByToastIdAndUserIdMutation,
   useDeleteAllToastParticipantsForToastIdMutation,
 } = toastParticipantApi;

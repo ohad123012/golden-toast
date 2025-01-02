@@ -26,6 +26,10 @@ export class UserController {
     return this.userService.createUser(newUserDto);
   }
 
+  @Get('all-users/:toastId')
+  findAllParticipantsForToastId(@Param('toastId') toastId: string) {
+    return this.userService.findAllParticipantsForToastId(toastId);
+  }
   @Put('update-user/:userId')
   updateUser(
     @Body() userToUpdate: CreateUserDto,

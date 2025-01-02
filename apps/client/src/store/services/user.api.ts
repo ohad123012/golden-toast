@@ -11,6 +11,10 @@ export const userApi = serverApi.injectEndpoints({
       query: (id) => `/user/get-user/${id}`,
       providesTags: ['Users'],
     }),
+    getAllParticipantsForToastId: builder.query<UserType[], string>({
+      query: (id: string) => `/user/all-users/${id}`,
+      providesTags: ['ToastParticipants'],
+    }),
 
     createUser: builder.mutation<UserType, Omit<UserType, 'id'>>({
       query: (user) => ({
@@ -43,6 +47,8 @@ export const userApi = serverApi.injectEndpoints({
 export const {
   useGetAllUsersQuery,
   useGetUserByUserIdQuery,
+  useLazyGetUserByUserIdQuery,
+  useGetAllParticipantsForToastIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

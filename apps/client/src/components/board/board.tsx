@@ -29,7 +29,7 @@ export const Board: React.FC<Props & PropsWithChildren> = ({
               sx={{
                 color: titleColors,
                 paddingTop: '3.5%',
-
+                marginLeft: '15rem',
                 height: '2rem',
                 width: '2rem',
               }}

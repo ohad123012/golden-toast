@@ -9,9 +9,7 @@ import {
 } from '@mui/material';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import {
-  useAppDispatch,
   gradientBackgroundColor,
-  updateUser,
   useCreateToastMutation,
   useAppSelector,
   RootState,
@@ -21,15 +19,10 @@ import {
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-import {
-  DateTimePicker,
-  LocalizationProvider,
-  StaticDateTimePicker,
-} from '@mui/x-date-pickers';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { toast } from 'react-toastify';
 import { useCreateToastParticipantsMutation } from '../../store/services/toast-participant.api';
-import { ToastParticipantType } from '../../store/types/toast-participant';
 
 interface Props {
   openModal?: boolean;
@@ -44,7 +37,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [description, setDescription] = useState<string | null>(null);
   const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
   const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(null);
-  const dispatch = useAppDispatch();
+
   const user = useAppSelector((state: RootState) => state.user).value;
 
   const [createToastParticipants] = useCreateToastParticipantsMutation();
@@ -109,7 +102,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
           }
         );
         createToastParticipants(allToastParticipants ?? []);
-        console.log('created toast participant');
       });
 
       handleClose();
@@ -121,158 +113,158 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
     }
   };
   return (
-    <div>
-      <>
-        <Dialog
-          open={openModal ?? false}
-          onClose={() => handleClose()}
-          PaperProps={{
-            sx: {
-              background: gradientBackgroundColor,
-              width: '70%',
-              minHeight: '80%',
-              maxHeight: '85%',
-            },
+    <>
+      <Dialog
+        open={openModal ?? false}
+        onClose={() => handleClose()}
+        PaperProps={{
+          sx: {
+            background: gradientBackgroundColor,
+            width: '70%',
+            minHeight: '80%',
+            maxHeight: '85%',
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            color: 'black',
           }}
         >
-          <DialogTitle
+          Create Toast
+        </DialogTitle>
+        <DialogContent sx={{ overflow: 'initial' }}>
+          <Box
             sx={{
-              color: 'black',
+              display: 'flex',
+              flexDirection: 'column',
+              gridTemplateColumns: { sm: '1fr ' },
+              gap: 2,
+              margin: '0.4rem',
+              padding: '0 2rem',
             }}
           >
-            Create Toast
-          </DialogTitle>
-          <DialogContent sx={{ overflow: 'initial' }}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gridTemplateColumns: { sm: '1fr ' },
-                gap: 2,
-                margin: '0.4rem',
+            <TextField
+              type="text"
+              label="reason"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setReason(e.target.value);
+                checkAllFields(
+                  e.target.value,
+                  drinks,
+                  foods,
+                  description,
+                  toastDate
+                );
               }}
-            >
-              <TextField
-                type="text"
-                label="reason"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setReason(e.target.value);
-                  checkAllFields(
-                    e.target.value,
-                    drinks,
-                    foods,
-                    description,
-                    toastDate
-                  );
-                }}
-                value={reason}
-              />
-              <TextField
-                type="text"
-                label="drinks"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setDrinks(e.target.value);
-                  checkAllFields(
-                    reason,
-                    e.target.value,
-                    foods,
-                    description,
-                    toastDate
-                  );
-                }}
-                value={drinks}
-              />
+              value={reason}
+            />
+            <TextField
+              type="text"
+              label="drinks"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setDrinks(e.target.value);
+                checkAllFields(
+                  reason,
+                  e.target.value,
+                  foods,
+                  description,
+                  toastDate
+                );
+              }}
+              value={drinks}
+            />
 
-              <TextField
-                type="text"
-                label="foods"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setFoods(e.target.value);
-                  checkAllFields(
-                    reason,
-                    drinks,
-                    e.target.value,
-                    description,
-                    toastDate
-                  );
-                }}
-                value={foods}
-              />
+            <TextField
+              type="text"
+              label="foods"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setFoods(e.target.value);
+                checkAllFields(
+                  reason,
+                  drinks,
+                  e.target.value,
+                  description,
+                  toastDate
+                );
+              }}
+              value={foods}
+            />
 
-              <TextField
-                type="text"
-                label="description"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setDescription(e.target.value);
-                  checkAllFields(
-                    reason,
-                    drinks,
-                    foods,
-                    e.target.value,
-                    toastDate
-                  );
-                }}
-                value={description}
-              />
+            <TextField
+              type="text"
+              label="description"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setDescription(e.target.value);
+                checkAllFields(
+                  reason,
+                  drinks,
+                  foods,
+                  e.target.value,
+                  toastDate
+                );
+              }}
+              value={description}
+            />
 
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  disablePast={!user?.isAdmin}
-                  label="toast date"
-                  sx={{ fontSize: '100rem' }}
-                  timeSteps={{ minutes: 15 }}
-                  onChange={(date: Date | null) => {
-                    setToastDate(date);
-                    checkAllFields(reason, drinks, foods, description, date);
-                  }}
-                  value={toastDate}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                disablePast={!user?.isAdmin}
+                label="toast date"
+                sx={{ fontSize: '100rem' }}
+                timeSteps={{ minutes: 15 }}
+                onChange={(date: Date | null) => {
+                  setToastDate(date);
+                  checkAllFields(reason, drinks, foods, description, date);
+                }}
+                value={toastDate}
+              />
+            </LocalizationProvider>
+
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={users ?? []}
+              getOptionLabel={({ username }) => username}
+              filterSelectedOptions
+              value={invitedUsers ?? []}
+              onChange={(_, newValue: SetStateAction<UserType[] | null>) => {
+                setInvitedUsers(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="invited users"
+                  placeholder="User"
                 />
-              </LocalizationProvider>
-
-              <Autocomplete
-                multiple
-                id="tags-outlined"
-                options={users ?? []}
-                getOptionLabel={({ username }) => username}
-                filterSelectedOptions
-                value={invitedUsers ?? []}
-                onChange={(_, newValue: SetStateAction<UserType[] | null>) => {
-                  setInvitedUsers(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="invited users"
-                    placeholder="User"
-                  />
-                )}
-              />
-            </Box>
-            <Button
-              size="small"
-              variant="contained"
-              disabled={!areAllFieldsTyped || !areAllNotnull}
-              onClick={() =>
-                handleCreate(toastDate, reason, drinks, foods, description)
-              }
-            >
-              create
-            </Button>
-          </DialogContent>
-        </Dialog>
-      </>
-    </div>
+              )}
+            />
+          </Box>
+          <Button
+            size="small"
+            variant="contained"
+            disabled={!areAllFieldsTyped || !areAllNotnull}
+            onClick={() =>
+              handleCreate(toastDate, reason, drinks, foods, description)
+            }
+            sx={{ marginTop: '1rem' }}
+          >
+            create
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

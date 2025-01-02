@@ -3,7 +3,7 @@ import { ToastParticipants } from './entities/toast-participants.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateToastParticipantDto } from './dto/create-toast-participant.dto';
 import { ToastService } from '../toasts/toast.service';
-
+import { User } from '../users/entites/user.entities';
 @Injectable()
 export class ToastParticipantsService {
   constructor(
@@ -23,13 +23,6 @@ export class ToastParticipantsService {
     });
   }
 
-  findAllParticipantsForToastId(toastId: string) {
-    return this.toastParticipantsModel.findAll({
-      where: { toastId: toastId },
-      attributes: ['userId'],
-    });
-  }
-
   createToastParticipants(
     newToastParticipantsDto: CreateToastParticipantDto[]
   ) {
@@ -38,6 +31,10 @@ export class ToastParticipantsService {
 
   deleteToastParticipant(id: string) {
     return this.toastParticipantsModel.destroy({ where: { id } });
+  }
+
+  deleteToastParticipantByToastIdAndUserId(toastId: string, userId: string) {
+    return this.toastParticipantsModel.destroy({ where: { toastId, userId } });
   }
 
   deleteAllToastParticipantsForToastId(toastId: string) {
