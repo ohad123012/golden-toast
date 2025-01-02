@@ -6,5 +6,5 @@ export interface ToastType {
   drinks: string;
   foods: string;
   description: string;
-  hasDone: boolean;
+  hasDone?: boolean;
 }

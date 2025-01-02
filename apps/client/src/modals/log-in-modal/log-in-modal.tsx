@@ -27,8 +27,8 @@ import { SignUpModal } from '../sign-up-modal';
 import { toast } from 'react-toastify';
 
 interface Props {
-  openModal?: boolean;
-  setOpenModal?: Dispatch<React.SetStateAction<boolean>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<React.SetStateAction<boolean>>;
 }
 export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const { data: users } = useGetAllUsersQuery();
@@ -37,7 +37,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(false);
+
   const [doesUserExist, setDoesUserExist] = useState<boolean>(true);
 
   const [userExistPasswordWrong, setUserExistPasswordWrong] =
@@ -46,9 +46,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const handleClose = () => {
-    if (openModal && setOpenModal) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
     setOpen(false);
   };
 
@@ -84,16 +82,6 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
     setOpenSignUp(true);
   };
 
-  const checkAllFields = (username: string | null, password: string | null) => {
-    const areAllFieldValues = !!username && !!password;
-    if (areAllFieldValues) {
-      setAreAllFieldsTyped(true);
-    } else {
-      setAreAllFieldsTyped(false);
-    }
-  };
-  const areAllNotNull = !!username && !!password;
-
   return (
     <>
       <Dialog
@@ -112,7 +100,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
         >
           Welcome to golden-toast by Ohad Lazar
         </DialogTitle>
-        <DialogContent sx={{ overflow: 'initial' }}>
+        <DialogContent>
           <Box
             sx={{
               display: 'flex',
@@ -131,7 +119,6 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setUsername(e.target.value);
-                checkAllFields(e.target.value, password);
               }}
               value={username}
             />
@@ -163,7 +150,6 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setPassword(e.target.value);
-                  checkAllFields(username, e.target.value);
                 }}
                 value={password}
               />
@@ -192,7 +178,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
               Sign up
             </Button>
             <Button
-              disabled={!areAllNotNull || !areAllFieldsTyped}
+              disabled={!username || !password}
               size="small"
               variant="contained"
               onClick={() => {
@@ -204,7 +190,9 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
           </Box>
         </DialogContent>
       </Dialog>
-      {openSignUp && <SignUpModal />}
+      {openSignUp && (
+        <SignUpModal logInState={openModal} setLogInState={setOpenModal} />
+      )}
     </>
   );
 };

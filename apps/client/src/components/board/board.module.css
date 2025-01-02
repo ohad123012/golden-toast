@@ -3,7 +3,6 @@
   flex-direction: column;
   border-radius: 1rem;
   gap: 5%;
-
   padding: 1%;
   background-color: var(--black-frosted-board-background);
   border-color: var(--black-frosted-board-background);
@@ -14,4 +13,18 @@
   padding-top: 2%;
   height: 1rem;
   text-align: center;
+}
+
+.toastTitle {
+  padding-top: 2%;
+  height: 1rem;
+  text-align: center;
+  padding-right: 15rem;
+  padding-left: 40%;
+}
+.titleButtonBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }

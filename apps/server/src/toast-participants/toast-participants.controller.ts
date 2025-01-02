@@ -17,11 +17,6 @@ export class ToastParticipantsController {
     return this.toastParticipantsService.findAllToastsForUser(userId);
   }
 
-  @Get('all-users/:toastId')
-  findAllParticipantsForToastId(@Param('toastId') toastId: string) {
-    return this.toastParticipantsService.findAllParticipantsForToastId(toastId);
-  }
-
   @Post()
   createToastParticipants(
     @Body() newToastParticipants: CreateToastParticipantDto[]
@@ -33,5 +28,22 @@ export class ToastParticipantsController {
   @Delete(':id')
   deleteToastParticipant(@Param('id') id: string) {
     return this.toastParticipantsService.deleteToastParticipant(id);
+  }
+
+  @Delete('/by-user-toast/:toastId/:userId')
+  deleteToastParticipantByToastIdAndUserId(
+    @Param('toastId') toastId: string,
+    @Param('userId') userId: string
+  ) {
+    return this.toastParticipantsService.deleteToastParticipantByToastIdAndUserId(
+      toastId,
+      userId
+    );
+  }
+  @Delete('for-toast-id/:toastId')
+  deleteAllToastParticipantsForToastId(@Param('toastId') toastId: string) {
+    return this.toastParticipantsService.deleteAllToastParticipantsForToastId(
+      toastId
+    );
   }
 }

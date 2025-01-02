@@ -13,7 +13,7 @@ import {
   TextField,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FC, useState } from 'react';
+import { Dispatch, FC, useState } from 'react';
 import { LogInModal } from '../log-in-modal';
 import {
   useCreateUserMutation,
@@ -23,8 +23,14 @@ import {
   visibilityHoverColor,
   visibilityHoverShadow,
 } from '../../store';
+import { toast } from 'react-toastify';
 
-export const SignUpModal: FC = () => {
+interface Props {
+  logInState: boolean;
+  setLogInState: Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -39,29 +45,15 @@ export const SignUpModal: FC = () => {
   const { data: users } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
 
-  const checkAllFields = (
-    username: string | null,
-    password: string | null,
-    validationPassword: string | null
-  ) => {
-    const areAllFieldValuesTyped =
-      !!username && !!password && !!validationPassword;
-
-    if (areAllFieldValuesTyped) {
-      setAreAllFieldsTyped(true);
-    } else {
-      setAreAllFieldsTyped(false);
-    }
-  };
-
-  const areAllNotnull = !!username && !!password && !!validationPassword;
-
   const [open, setOpen] = useState<boolean>(true);
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
 
   const handleClose = () => {
     setOpen(false);
+
+    setLogInState(false);
   };
+  2;
   const handleMoveToLogIn = () => {
     setOpen(false);
     setOpenLogIn(true);
@@ -102,6 +94,12 @@ export const SignUpModal: FC = () => {
       ) {
         createUser({ username, password, isAdmin: false });
         handleMoveToLogIn();
+
+        toast.success('created a user', {
+          position: 'top-right',
+          pauseOnHover: false,
+          theme: 'dark',
+        });
       }
     }
   };
@@ -118,7 +116,7 @@ export const SignUpModal: FC = () => {
         }}
       >
         <DialogTitle sx={{ color: 'black' }}>sign up</DialogTitle>
-        <DialogContent sx={{ overflow: 'initial' }}>
+        <DialogContent>
           <Box
             sx={{
               display: 'grid',
@@ -144,7 +142,6 @@ export const SignUpModal: FC = () => {
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
                 setUsername(e.target.value);
-                checkAllFields(e.target.value, password, validationPassword);
               }}
               value={username}
             />
@@ -179,7 +176,6 @@ export const SignUpModal: FC = () => {
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setPassword(e.target.value);
-                  checkAllFields(username, e.target.value, validationPassword);
                 }}
                 value={password}
               />
@@ -203,7 +199,6 @@ export const SignUpModal: FC = () => {
                   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => {
                   setValidationPassword(e.target.value);
-                  checkAllFields(username, password, e.target.value);
                 }}
                 value={validationPassword}
               />
@@ -226,24 +221,18 @@ export const SignUpModal: FC = () => {
             <Button
               size="small"
               variant="contained"
-              onClick={() => handleMoveToLogIn()}
-            >
-              log in
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              disabled={!areAllFieldsTyped || !areAllNotnull}
               onClick={() =>
                 handleSignUp(username, password, validationPassword)
               }
             >
-              create
+              log in
             </Button>
           </Box>
         </DialogContent>
       </Dialog>
-      {openLogIn && <LogInModal />}
+      {openLogIn && (
+        <LogInModal openModal={logInState} setOpenModal={setLogInState} />
+      )}
     </>
   );
 };

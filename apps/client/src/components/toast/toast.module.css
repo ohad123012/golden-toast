@@ -4,7 +4,7 @@
   border-width: 0.2rem;
   border-style: solid;
   border-radius: 1rem;
-  min-height: 20%;
+  min-height: 22%;
   width: 90%;
   box-shadow: 0rem 0rem 3rem var(--toast-shadow);
 }
@@ -24,6 +24,7 @@ p {
   color: var(--black-frosted-board-background);
   margin: 0;
 }
+
 .date p {
   background: var(--toast-background-gradient);
   font-size: 0.6rem;

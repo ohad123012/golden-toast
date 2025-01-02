@@ -3,6 +3,7 @@ import { User } from './entites/user.entities';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { where } from 'sequelize';
+import { ToastParticipants } from '../toast-participants/entities/toast-participants.entity';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,19 @@ export class UserService {
   findUserByUserId(id: string) {
     return this.userModel.findOne({ where: { id } });
   }
+
+  findAllParticipantsForToastId(toastId: string) {
+    return this.userModel.findAll({
+      include: {
+        model: ToastParticipants,
+        where: {
+          toastId,
+        },
+        attributes: [],
+      },
+    });
+  }
+
   createUser(newUserDto: CreateUserDto) {
     return this.userModel.create(newUserDto);
   }

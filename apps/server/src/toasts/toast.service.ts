@@ -38,7 +38,7 @@ export class ToastService {
   getAllFutureToasts() {
     const currentDate = new Date();
     return this.toastModel.findAll({
-      where: { toastDate: { [Op.gt]: currentDate } },
+      where: { toastDate: { [Op.gt]: currentDate }, hasDone: false },
     });
   }
 
@@ -54,6 +54,7 @@ export class ToastService {
       },
       where: {
         toastDate: { [Op.gt]: currentDate },
+        hasDone: false,
       },
     });
   }
@@ -62,11 +63,13 @@ export class ToastService {
     const currentDate = new Date();
     const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
     const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
-    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
+    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 2);
 
     if (currentDate.getMonth() + 1 < 7) {
       return this.toastModel.count({
         where: {
+          hasDone: true,
+
           toastDate: {
             [Op.gt]: beginningDateJanuary,
             [Op.lt]: endingDateJuly,
@@ -76,6 +79,7 @@ export class ToastService {
     } else {
       return this.toastModel.count({
         where: {
+          hasDone: true,
           toastDate: {
             [Op.gt]: endingDateJuly,
             [Op.lt]: endingDateJanuary,
@@ -87,7 +91,7 @@ export class ToastService {
 
   getAllTimeRecord() {
     const juneMonthNumber = 6;
-    const firstHalfPromise = this.toastModel.findAll({
+    const firstHalfRecord = this.toastModel.findAll({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'amountOfToasts'],
         [
@@ -101,15 +105,18 @@ export class ToastService {
         'date',
       ],
       order: [[Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'DESC']],
-      where: Sequelize.where(
-        Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
-        {
-          [Op.lte]: juneMonthNumber,
-        }
-      ),
+      where: {
+        [Op.and]: [
+          Sequelize.where(
+            Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
+            { [Op.lte]: juneMonthNumber }
+          ),
+          { hasDone: true },
+        ],
+      },
       limit: 1,
     });
-    const secondHalfPromise = this.toastModel.findAll({
+    const secondHalfRecord = this.toastModel.findAll({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'amountOfToasts'],
         [
@@ -120,19 +127,31 @@ export class ToastService {
 
       group: ['toastDate'],
       order: [[Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'DESC']],
-      where: Sequelize.where(
-        Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
-        {
-          [Op.gt]: juneMonthNumber,
-        }
-      ),
+      where: {
+        [Op.and]: [
+          Sequelize.where(
+            Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
+            { [Op.gt]: juneMonthNumber }
+          ),
+          { hasDone: true },
+        ],
+      },
+
       limit: 1,
     });
-    const record = Promise.all([firstHalfPromise, secondHalfPromise]).then(
-      (values) => {
+
+    const record = Promise.all([firstHalfRecord, secondHalfRecord]).then(
+      (records) => {
+        if (!records[0][0]) {
+          return records[1][0].dataValues['amountOfToasts'];
+        }
+        if (!records[1][0]) {
+          return records[0][0].dataValues['amountOfToasts'];
+        }
+
         return Math.max(
-          values[0][0].dataValues['amountOfToasts'],
-          values[1][0].dataValues['amountOfToasts']
+          records[0][0].dataValues['amountOfToasts'],
+          records[1][0].dataValues['amountOfToasts']
         );
       }
     );
@@ -144,13 +163,15 @@ export class ToastService {
     const currentDate = new Date();
     const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
     const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
-    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
+    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 2);
+
     const currentMonth = currentDate.getMonth() + 1;
     const juneNumber = 7;
     if (currentMonth < juneNumber) {
       return this.toastModel.count({
         attributes: ['userId'],
         where: {
+          hasDone: true,
           toastDate: {
             [Op.gt]: beginningDateJanuary,
             [Op.lt]: endingDateJuly,
@@ -162,6 +183,7 @@ export class ToastService {
       return this.toastModel.count({
         attributes: ['userId'],
         where: {
+          hasDone: true,
           toastDate: {
             [Op.gt]: endingDateJuly,
             [Op.lt]: endingDateJanuary,
