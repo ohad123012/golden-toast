@@ -37,14 +37,6 @@ export const EditToastModal: FC<Props> = ({
   setOpenModal,
   toast,
 }) => {
-  const MOCK_USER: UserType[] = [
-    {
-      id: '1',
-      username: 'mock user for test',
-      password: 'string',
-      isAdmin: false,
-    },
-  ];
   const [toastDate, setToastDate] = useState<Date | null>(
     new Date(toast.toastDate)
   );
@@ -236,8 +228,7 @@ export const EditToastModal: FC<Props> = ({
               options={users ?? []}
               getOptionLabel={({ username }) => username}
               filterSelectedOptions
-              // value={invitedUsers ?? []}
-              value={loadingUsers ? MOCK_USER : invitedUsers}
+              value={invitedUsers ?? []}
               onChange={(_, newValue: SetStateAction<UserType[]>) => {
                 setInvitedUsers(newValue);
               }}

@@ -21,15 +21,6 @@ export const InfoToastModal: FC<Props> = ({
   setOpenModal,
   toast,
 }) => {
-  const MOCK_USER: UserType[] = [
-    {
-      id: '1',
-      username: 'mock user for test',
-      password: 'string',
-      isAdmin: false,
-    },
-  ];
-
   const user = useAppSelector((state: RootState) => state.user).value;
   const { data: usersInvitedToToast, isLoading: loadingUsers } =
     useGetAllParticipantsForToastIdQuery(toast.id);

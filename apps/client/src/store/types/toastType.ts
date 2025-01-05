@@ -9,7 +9,7 @@ export interface ToastType {
   hasDone?: boolean;
 }
 
-export interface ToastHasDone {
+export interface ToastUpdateHasDone {
   id: string;
   hasDone: boolean;
 }

@@ -1,5 +1,5 @@
 import { serverApi } from './server.api';
-import { ToastHasDone, ToastType } from '../types';
+import { ToastUpdateHasDone, ToastType } from '../types';
 
 export const toastApi = serverApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -56,7 +56,7 @@ export const toastApi = serverApi.injectEndpoints({
       }),
       invalidatesTags: ['Toasts'],
     }),
-    updateToastHasDone: builder.mutation<ToastType, ToastHasDone>({
+    updateToastHasDone: builder.mutation<ToastType, ToastUpdateHasDone>({
       query: (toast) => ({
         url: `/toast/update-toast/${toast.id}`,
         method: 'PUT',
