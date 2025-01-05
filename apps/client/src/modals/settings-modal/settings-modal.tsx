@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
-import { Dispatch, FC, useState } from 'react';
+import { Dispatch, FC } from 'react';
 import {
   useAppDispatch,
   gradientBackgroundColor,

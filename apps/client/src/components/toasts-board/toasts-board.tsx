@@ -3,7 +3,6 @@ import { Board } from '../board';
 import { Toast } from '../toast';
 import {
   RootState,
-  ToastType,
   useAppSelector,
   useGetAllFutureToastsForUserQuery,
 } from '../../store';
@@ -18,7 +17,6 @@ export const ToastsBoard: FC = (PropsWithChildren) => {
       skip: Boolean(!user),
     });
 
-  console.log(futureToasts);
   if (isLoadingToasts) {
     return <div> ....Loading</div>;
   }

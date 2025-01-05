@@ -1,4 +1,4 @@
-.toast {
+.box {
   background: var(--toast-background-gradient);
   border-color: #29353c9e;
   border-width: 0.2rem;
@@ -7,6 +7,14 @@
   min-height: 22%;
   width: 90%;
   box-shadow: 0rem 0rem 3rem var(--toast-shadow);
+  display: flex;
+  flex-direction: row;
+}
+
+.toast {
+  display: flex;
+  flex-direction: column;
+  width: 94%;
 }
 
 .user {
@@ -23,13 +31,15 @@ p {
   font-weight: 300;
   color: var(--black-frosted-board-background);
   margin: 0;
+  padding-left: 8%;
 }
 
 .date p {
-  background: var(--toast-background-gradient);
+  background: transparent;
   font-size: 0.6rem;
   margin-bottom: 1rem;
   color: var(--date-in-toast-grey);
+  padding-left: 8%;
 }
 
 .icons {
@@ -40,4 +50,8 @@ p {
 }
 .icons:hover {
   cursor: pointer;
+}
+
+.buttonsContainer {
+  padding-left: 10%;
 }

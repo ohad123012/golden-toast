@@ -37,16 +37,25 @@ export const EditToastModal: FC<Props> = ({
   setOpenModal,
   toast,
 }) => {
-  const [toastDate, setToastDate] = useState<Date | null>(toast.toastDate);
+  const MOCK_USER: UserType[] = [
+    {
+      id: '1',
+      username: 'mock user for test',
+      password: 'string',
+      isAdmin: false,
+    },
+  ];
+  const [toastDate, setToastDate] = useState<Date | null>(
+    new Date(toast.toastDate)
+  );
   const [reason, setReason] = useState<string>(toast.reason);
   const [drinks, setDrinks] = useState<string>(toast.drinks);
   const [foods, setFoods] = useState<string>(toast.foods);
   const [description, setDescription] = useState<string>(toast.description);
 
   const user = useAppSelector((state: RootState) => state.user).value;
-  const { data: usersInvitedToToast } = useGetAllParticipantsForToastIdQuery(
-    toast.id
-  );
+  const { data: usersInvitedToToast, isLoading: loadingUsers } =
+    useGetAllParticipantsForToastIdQuery(toast.id);
 
   const [invitedUsers, setInvitedUsers] = useState<UserType[]>(
     usersInvitedToToast ?? []
@@ -129,134 +138,133 @@ export const EditToastModal: FC<Props> = ({
   };
 
   return (
-    <div>
-      <>
-        <Dialog
-          open={openModal}
-          onClose={() => handleClose()}
-          PaperProps={{
-            sx: {
-              background: gradientBackgroundColor,
-              width: '70%',
-              minHeight: '80%',
-              maxHeight: '85%',
-            },
+    <>
+      <Dialog
+        open={openModal}
+        onClose={() => handleClose()}
+        PaperProps={{
+          sx: {
+            background: gradientBackgroundColor,
+            width: '70%',
+            minHeight: '80%',
+            maxHeight: '85%',
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            color: 'black',
           }}
         >
-          <DialogTitle
+          Edit Toast
+        </DialogTitle>
+        <DialogContent>
+          <Box
             sx={{
-              color: 'black',
+              display: 'flex',
+              flexDirection: 'column',
+              gridTemplateColumns: { sm: '1fr ' },
+              gap: 2,
+              margin: '0.4rem',
+              padding: '0 2rem',
             }}
           >
-            Create Toast
-          </DialogTitle>
-          <DialogContent>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gridTemplateColumns: { sm: '1fr ' },
-                gap: 2,
-                margin: '0.4rem',
-                padding: '0 2rem',
+            <TextField
+              type="text"
+              label="reason"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setReason(e.target.value);
               }}
-            >
-              <TextField
-                type="text"
-                label="reason"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setReason(e.target.value);
-                }}
-                value={reason}
-              />
-              <TextField
-                type="text"
-                label="drinks"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setDrinks(e.target.value);
-                }}
-                value={drinks}
-              />
+              value={reason}
+            />
+            <TextField
+              type="text"
+              label="drinks"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setDrinks(e.target.value);
+              }}
+              value={drinks}
+            />
 
-              <TextField
-                type="text"
-                label="foods"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setFoods(e.target.value);
-                }}
-                value={foods}
-              />
+            <TextField
+              type="text"
+              label="foods"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setFoods(e.target.value);
+              }}
+              value={foods}
+            />
 
-              <TextField
-                type="text"
-                label="description"
-                variant="outlined"
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => {
-                  setDescription(e.target.value);
-                }}
-                value={description}
-              />
+            <TextField
+              type="text"
+              label="description"
+              variant="outlined"
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => {
+                setDescription(e.target.value);
+              }}
+              value={description}
+            />
 
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  timezone="system"
-                  disablePast={!user?.isAdmin}
-                  label="toast date"
-                  sx={{ fontSize: '100rem' }}
-                  timeSteps={{ minutes: 15 }}
-                  onChange={(date: Date | null) => {
-                    setToastDate(date);
-                  }}
-                  value={toastDate}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                timezone="system"
+                disablePast={!user?.isAdmin}
+                label="toast date"
+                sx={{ fontSize: '100rem' }}
+                timeSteps={{ minutes: 15 }}
+                onChange={(date: Date | null) => {
+                  setToastDate(date);
+                }}
+                value={toastDate}
+              />
+            </LocalizationProvider>
+
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={users ?? []}
+              getOptionLabel={({ username }) => username}
+              filterSelectedOptions
+              // value={invitedUsers ?? []}
+              value={loadingUsers ? MOCK_USER : invitedUsers}
+              onChange={(_, newValue: SetStateAction<UserType[]>) => {
+                setInvitedUsers(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="invited users"
+                  placeholder="User"
                 />
-              </LocalizationProvider>
-
-              <Autocomplete
-                multiple
-                id="tags-outlined"
-                options={users ?? []}
-                getOptionLabel={({ username }) => username}
-                filterSelectedOptions
-                value={invitedUsers ?? []}
-                onChange={(_, newValue: SetStateAction<UserType[]>) => {
-                  setInvitedUsers(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="invited users"
-                    placeholder="User"
-                  />
-                )}
-              />
-            </Box>
-            <Button
-              size="small"
-              variant="contained"
-              disabled={
-                !reason || !drinks || !foods || !description || !toastDate
-              }
-              sx={{ marginTop: '1rem' }}
-              onClick={() =>
-                handleCreate(toastDate, reason, drinks, foods, description)
-              }
-            >
-              Edit
-            </Button>
-          </DialogContent>
-        </Dialog>
-      </>
-    </div>
+              )}
+            />
+          </Box>
+          <Button
+            size="small"
+            variant="contained"
+            disabled={
+              !reason || !drinks || !foods || !description || !toastDate
+            }
+            sx={{ marginTop: '1rem' }}
+            onClick={() =>
+              handleCreate(toastDate, reason, drinks, foods, description)
+            }
+          >
+            Edit
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

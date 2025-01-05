@@ -4,3 +4,4 @@ export * from './change-credentials-modal';
 export * from './settings-modal';
 export * from './create-toast-modal';
 export * from './edit-toast-modal';
+export * from './info-toast-modal';

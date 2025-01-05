@@ -17,6 +17,7 @@
   --button-first-shadow-color: #242a31;
   --button-second-shadow-color: rgba(0, 0, 0, 0.19);
   --toast-shadow: #1e272d;
+  --info-toast-modal-title: #696e80;
 }
 
 body {

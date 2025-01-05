@@ -19,18 +19,13 @@ export const checkIconStyle = {
   backgroundColor: backgroundColor,
   fill: iconColor,
 
-  '&:hover': { cursor: 'pointer', transform: 'scale(1.5)' },
+  '&:hover': { cursor: 'pointer', transform: 'scale(1.2)' },
 };
 
 export const checkButtonStyle = {
-  width: 0,
-  height: 0,
+  width: '2rem',
+  display: 'relative',
+  height: '2rem',
 
-  marginLeft: '15rem',
-
-  '&:hover': {
-    backgroundColor: backgroundColor,
-    fill: iconColor,
-    cursor: 'pointer',
-  },
+  marginTop: '3rem',
 };

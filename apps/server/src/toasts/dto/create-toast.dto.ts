@@ -3,22 +3,22 @@ import { IsBoolean, IsDate, IsString, IsUUID } from 'class-validator';
 
 export class CreateToastDto {
   @IsUUID()
-  userId!: string;
+  userId: string;
 
   @IsDate()
-  toastDate!: Date;
+  toastDate: Date;
 
   @IsString()
-  reason!: string;
+  reason: string;
 
   @IsString()
-  drinks!: string;
+  drinks: string;
 
   @IsString()
-  foods!: string;
+  foods: string;
 
   @IsString()
-  description!: string;
+  description: string;
 
   @IsBoolean()
   hasDone?: boolean;

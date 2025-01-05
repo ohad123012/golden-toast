@@ -6,7 +6,7 @@ import {
   LogInModal,
   SettingsModal,
 } from '../../modals';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import { settingsStyle, userStyle } from '../../store';
 

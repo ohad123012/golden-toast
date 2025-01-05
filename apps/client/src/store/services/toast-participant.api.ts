@@ -23,7 +23,7 @@ export const toastParticipantApi = serverApi.injectEndpoints({
         method: 'POST',
         body: toastParticipants,
       }),
-      invalidatesTags: ['ToastParticipants'],
+      invalidatesTags: ['ToastParticipants', 'Toasts'],
     }),
 
     deleteToastParticipant: builder.mutation<ToastParticipantType, string>({
@@ -32,7 +32,7 @@ export const toastParticipantApi = serverApi.injectEndpoints({
         method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ['ToastParticipants'],
+      invalidatesTags: ['ToastParticipants', 'Toasts'],
     }),
 
     deleteToastParticipantByToastIdAndUserId: builder.mutation<
@@ -44,7 +44,7 @@ export const toastParticipantApi = serverApi.injectEndpoints({
         method: 'DELETE',
         body: toastId,
       }),
-      invalidatesTags: ['ToastParticipants'],
+      invalidatesTags: ['ToastParticipants', 'Toasts'],
     }),
 
     deleteAllToastParticipantsForToastId: builder.mutation<
