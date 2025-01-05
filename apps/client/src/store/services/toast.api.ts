@@ -1,5 +1,5 @@
 import { serverApi } from './server.api';
-import { ToastType } from '../types';
+import { ToastUpdateHasDone, ToastType } from '../types';
 
 export const toastApi = serverApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -56,6 +56,14 @@ export const toastApi = serverApi.injectEndpoints({
       }),
       invalidatesTags: ['Toasts'],
     }),
+    updateToastHasDone: builder.mutation<ToastType, ToastUpdateHasDone>({
+      query: (toast) => ({
+        url: `/toast/update-toast/${toast.id}`,
+        method: 'PUT',
+        body: toast,
+      }),
+      invalidatesTags: ['Toasts'],
+    }),
     deleteToast: builder.mutation<ToastType, string>({
       query: (id) => ({
         url: `toast/${id}`,
@@ -79,5 +87,6 @@ export const {
   useGetAmountToastsForCurrentPeriodPerUserQuery,
   useCreateToastMutation,
   useUpdateToastMutation,
+  useUpdateToastHasDoneMutation,
   useDeleteToastMutation,
 } = toastApi;

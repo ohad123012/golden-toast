@@ -8,3 +8,8 @@ export interface ToastType {
   description: string;
   hasDone?: boolean;
 }
+
+export interface ToastUpdateHasDone {
+  id: string;
+  hasDone: boolean;
+}

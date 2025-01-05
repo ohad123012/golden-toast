@@ -7,11 +7,14 @@ import { CreateCriminalDto } from './dto/create-criminal.dto';
 export class CriminalService {
   constructor(@InjectModel(Criminal) private criminalModel: typeof Criminal) {}
   findAll() {
+    // get all criminals persona non grata = false
     return this.criminalModel.findAll();
   }
+  // get all personag non grata = true
   createCriminal(newCriminalDto: CreateCriminalDto) {
     return this.criminalModel.create(newCriminalDto);
   }
+  // update criminal to persona non grata, and back to criminal
   updateCriminal(criminalToUpdate: CreateCriminalDto, id: string) {
     this.criminalModel.update(criminalToUpdate, {
       where: { id },
