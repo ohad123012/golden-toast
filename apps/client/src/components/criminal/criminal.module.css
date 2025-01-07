@@ -1,0 +1,37 @@
+.box {
+  background: var(--toast-background-gradient);
+  border-color: #29353c9e;
+  border-width: 0.2rem;
+  border-style: solid;
+  border-radius: 1rem;
+  min-height: 22%;
+  width: 90%;
+  box-shadow: 0rem 0rem 3rem var(--toast-shadow);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 7%;
+}
+
+.criminal {
+  display: flex;
+  width: 94%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icons {
+  background-color: transparent;
+
+  color: var(--till-frosted-palette);
+  fill: var(--till-frosted-palette);
+}
+
+.user {
+  background-color: transparent;
+  color: var(--black-frosted-board-background);
+  display: flex;
+  flex-direction: row;
+
+  gap: 0.8rem;
+}

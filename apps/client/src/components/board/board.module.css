@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
-  gap: 5%;
+  gap: 1.5rem;
   padding: 1%;
+  padding-bottom: 7%;
   background-color: var(--black-frosted-board-background);
   border-color: var(--black-frosted-board-background);
   align-items: center;

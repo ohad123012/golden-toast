@@ -1,5 +1,6 @@
 const backgroundColor = 'transparent';
 export const iconColor = '#29353c';
+
 export const iconStyles = {
   backgroundColor: backgroundColor,
   fill: iconColor,
@@ -24,8 +25,6 @@ export const checkIconStyle = {
 
 export const checkButtonStyle = {
   width: '2rem',
-  display: 'relative',
   height: '2rem',
-
   marginTop: '3rem',
 };

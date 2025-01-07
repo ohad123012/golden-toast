@@ -17,6 +17,17 @@ export class CriminalController {
   findAll() {
     return this.criminalService.findAll();
   }
+
+  @Get('get-criminals')
+  getAllCriminals() {
+    return this.criminalService.getAllCriminals();
+  }
+
+  @Get('get-persona-non-grata')
+  getAllPersonaNonGrata() {
+    return this.criminalService.getAllPersonaNonGrata();
+  }
+
   @Post()
   createCriminal(@Body() newCriminalDto: CreateCriminalDto) {
     return this.criminalService.createCriminal(newCriminalDto);
