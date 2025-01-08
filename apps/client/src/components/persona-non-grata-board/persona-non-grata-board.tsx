@@ -1,0 +1,24 @@
+import { useGetAllPersonaNonGrataQuery } from '../../store';
+import { Board } from '../board';
+import { PersonaNonGrata } from '../persona-non-grata';
+
+import styles from './persona-non-grata-board.module.css';
+export const PersonaNonGrataBoard = () => {
+  const { data: allPersonaNonGrata } = useGetAllPersonaNonGrataQuery();
+
+  return (
+    <Board gridArea="personaNonGrata" title="Persona non grata">
+      <div className={styles.personaNonGrataContainer}>
+        {allPersonaNonGrata ? (
+          allPersonaNonGrata.map((personaNonGrata) => {
+            return <PersonaNonGrata persona={personaNonGrata} />;
+          })
+        ) : (
+          <div className={styles.noPersonNonGrataMessage}>
+            there are no persona non grata!!
+          </div>
+        )}
+      </div>
+    </Board>
+  );
+};

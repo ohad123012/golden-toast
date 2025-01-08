@@ -3,3 +3,8 @@ export interface CriminalType {
   userId: string;
   isPersonaNonGrata: boolean;
 }
+
+export interface CriminalPersonaNonGrata {
+  id: string;
+  isPersonaNonGrata: boolean;
+}

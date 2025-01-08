@@ -1,4 +1,12 @@
-import { Board, ButtonsMenu, SearchBar, ToastsBoard } from '../components';
+import {
+  Board,
+  ButtonsMenu,
+  CriminalBoard,
+  PersonaNonGrata,
+  PersonaNonGrataBoard,
+  SearchBar,
+  ToastsBoard,
+} from '../components';
 
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './app.module.css';
@@ -12,9 +20,9 @@ export const App: FC = () => {
       </div>
       <Board gridArea="results" title="Leaderboard" />
       <ToastsBoard />
-      <Board gridArea="criminals" title="Criminals" />
+      <CriminalBoard />
       <ButtonsMenu />
-      <Board gridArea="personaNonGrata" title="Persona non grata" />
+      <PersonaNonGrataBoard />
     </div>
   );
 };

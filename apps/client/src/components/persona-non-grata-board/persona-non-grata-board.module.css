@@ -1,0 +1,13 @@
+.personaNonGrataContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+  padding-left: 3%;
+  width: 90%;
+  gap: 15%;
+}
+
+.noPersonNonGrataMessage {
+  padding-top: 10%;
+}
