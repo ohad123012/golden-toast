@@ -50,7 +50,7 @@ export const criminalApi = serverApi.injectEndpoints({
         method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ['Criminals'], // need to add delete criminal by userId
+      invalidatesTags: ['Criminals'],
     }),
   }),
 });

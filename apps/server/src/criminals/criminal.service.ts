@@ -21,7 +21,7 @@ export class CriminalService {
   createCriminal(newCriminalDto: CreateCriminalDto) {
     return this.criminalModel.create(newCriminalDto);
   }
-  // update criminal to persona non grata, and back to criminal
+
   updateCriminal(criminalToUpdate: CreateCriminalDto, id: string) {
     this.criminalModel.update(criminalToUpdate, {
       where: { id },

@@ -1,8 +1,7 @@
-const backgroundColor = 'transparent';
 export const iconColor = '#29353c';
 
 export const iconStyles = {
-  backgroundColor: backgroundColor,
+  backgroundColor: 'transparent',
   fill: iconColor,
 
   '&:hover': { cursor: 'pointer' },
@@ -17,7 +16,7 @@ export const buttonStyle = {
 };
 
 export const checkIconStyle = {
-  backgroundColor: backgroundColor,
+  backgroundColor: 'transparent',
   fill: iconColor,
 
   '&:hover': { cursor: 'pointer', transform: 'scale(1.2)' },

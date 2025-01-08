@@ -1,6 +1,6 @@
 .box {
   background: var(--toast-background-gradient);
-  border-color: #29353c9e;
+  border-color: var(--toast-criminal-background-color);
   border-width: 0.2rem;
   border-style: solid;
   border-radius: 1rem;

@@ -2,6 +2,8 @@ import { FC, PropsWithChildren } from 'react';
 import {
   criminalButtonStyle,
   criminalIconStyle,
+  criminalIconStyleButton,
+  personaNonGrataIconStyle,
   useGetUserByUserIdQuery,
   useUpdateCriminalPersonaNonGrataMutation,
 } from '../../store';
@@ -21,7 +23,7 @@ export const PersonaNonGrata: FC<Props & PropsWithChildren> = ({ persona }) => {
     <div className={styles.box}>
       <div className={styles.criminal}>
         <div className={styles.user}>
-          <PersonOff />
+          <PersonOff sx={personaNonGrataIconStyle} />
           {incriminatedUser?.username}
         </div>
         <IconButton
@@ -33,7 +35,7 @@ export const PersonaNonGrata: FC<Props & PropsWithChildren> = ({ persona }) => {
             });
           }}
         >
-          <Gavel sx={criminalIconStyle} />
+          <Gavel sx={criminalIconStyleButton} />
         </IconButton>
       </div>
     </div>

@@ -67,7 +67,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
         drinks,
         foods,
         description,
-        hasDone: false,
+        hasDone: undefined,
       });
 
       toastCreated.then((result) => {

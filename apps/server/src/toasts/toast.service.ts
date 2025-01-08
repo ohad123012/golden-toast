@@ -38,7 +38,7 @@ export class ToastService {
   getAllFutureToasts() {
     const currentDate = new Date();
     return this.toastModel.findAll({
-      where: { toastDate: { [Op.gt]: currentDate }, hasDone: false },
+      where: { toastDate: { [Op.gt]: currentDate } },
     });
   }
 
@@ -54,7 +54,6 @@ export class ToastService {
       },
       where: {
         toastDate: { [Op.gt]: currentDate },
-        hasDone: false,
       },
     });
   }
