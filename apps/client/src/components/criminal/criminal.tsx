@@ -23,7 +23,7 @@ interface Props {
   criminal: CriminalType;
 }
 export const Criminal: FC<Props & PropsWithChildren> = ({ criminal }) => {
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
 
   const { data: incriminatedUser } = useGetUserByUserIdQuery(criminal.userId);
   const [updateCriminalToPersonaNonGrata] =
@@ -37,25 +37,26 @@ export const Criminal: FC<Props & PropsWithChildren> = ({ criminal }) => {
           {incriminatedUser?.username}
         </div>
         {user?.isAdmin && (
-          <IconButton
-            onClick={() => deleteCriminal(criminal.id)}
-            sx={removeCriminalButtonStyle}
-          >
-            <PersonRemove sx={removeCriminalIconStyle} />
-          </IconButton>
-        )}
-        {user?.isAdmin && (
-          <IconButton
-            sx={criminalButtonStyle}
-            onClick={() => {
-              updateCriminalToPersonaNonGrata({
-                id: criminal.id,
-                isPersonaNonGrata: true,
-              });
-            }}
-          >
-            <PersonOff sx={personaNonGrataIconStyleButton} />
-          </IconButton>
+          <>
+            <IconButton
+              onClick={() => deleteCriminal(criminal.id)}
+              sx={removeCriminalButtonStyle}
+            >
+              <PersonRemove sx={removeCriminalIconStyle} />
+            </IconButton>
+
+            <IconButton
+              sx={criminalButtonStyle}
+              onClick={() => {
+                updateCriminalToPersonaNonGrata({
+                  id: criminal.id,
+                  isPersonaNonGrata: true,
+                });
+              }}
+            >
+              <PersonOff sx={personaNonGrataIconStyleButton} />
+            </IconButton>
+          </>
         )}
       </div>
     </div>

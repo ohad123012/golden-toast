@@ -35,7 +35,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [description, setDescription] = useState<string | null>(null);
   const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(null);
 
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
 
   const [createToastParticipants] = useCreateToastParticipantsMutation();
   const [createToast] = useCreateToastMutation();

@@ -11,7 +11,7 @@ import { IconButton } from '@mui/material';
 import { settingsStyle, userStyle } from '../../store';
 
 export const ButtonsMenu: React.FC = ({}) => {
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
   const adminColor = ' #76ba96';
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
   const [openChangeCredentials, setOpenChangeCredentials] =

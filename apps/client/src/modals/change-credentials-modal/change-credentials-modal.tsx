@@ -43,7 +43,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [usernameExists, setUsernameExists] = useState<boolean>(false);
 
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
 
   const [username, setUsername] = useState<string>(user!.username);
   const [password, setPassword] = useState<string>(user!.password);

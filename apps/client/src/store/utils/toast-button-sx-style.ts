@@ -11,7 +11,7 @@ export const iconStyles = {
 export const iconDisabledStyle = {
   backgroundColor: 'transparent',
   fill: disabledIconColor,
-
+  cursor: 'not-allowed',
   '&:hover': { cursor: 'pointer' },
   padding: '0 0.6rem',
 };

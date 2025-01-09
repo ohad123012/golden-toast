@@ -35,7 +35,8 @@ export const Board: React.FC<Props & PropsWithChildren> = ({
   };
 
   const [openAddToast, setOpenAddToast] = useState<boolean>(false);
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
+  user;
   const showTitles = title !== 'Toasts' || (title === 'Toasts' && !user);
   return (
     <div className={styles.board} style={{ gridArea }}>
