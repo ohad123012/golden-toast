@@ -4,6 +4,8 @@ import {
   criminalIconStyle,
   criminalIconStyleButton,
   personaNonGrataIconStyle,
+  RootState,
+  useAppSelector,
   useGetUserByUserIdQuery,
   useUpdateCriminalPersonaNonGrataMutation,
 } from '../../store';
@@ -16,6 +18,8 @@ interface Props {
   persona: CriminalType;
 }
 export const PersonaNonGrata: FC<Props & PropsWithChildren> = ({ persona }) => {
+  const user = useAppSelector((state: RootState) => state.user).value;
+
   const { data: incriminatedUser } = useGetUserByUserIdQuery(persona.userId);
   const [updateCriminalFromPersonaNonGrata] =
     useUpdateCriminalPersonaNonGrataMutation();
@@ -26,17 +30,19 @@ export const PersonaNonGrata: FC<Props & PropsWithChildren> = ({ persona }) => {
           <PersonOff sx={personaNonGrataIconStyle} />
           {incriminatedUser?.username}
         </div>
-        <IconButton
-          sx={criminalButtonStyle}
-          onClick={() => {
-            updateCriminalFromPersonaNonGrata({
-              id: persona.id,
-              isPersonaNonGrata: false,
-            });
-          }}
-        >
-          <Gavel sx={criminalIconStyleButton} />
-        </IconButton>
+        {user?.isAdmin && (
+          <IconButton
+            sx={criminalButtonStyle}
+            onClick={() => {
+              updateCriminalFromPersonaNonGrata({
+                id: persona.id,
+                isPersonaNonGrata: false,
+              });
+            }}
+          >
+            <Gavel sx={criminalIconStyleButton} />
+          </IconButton>
+        )}
       </div>
     </div>
   );

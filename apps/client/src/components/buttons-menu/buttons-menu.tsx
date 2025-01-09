@@ -12,7 +12,7 @@ import { settingsStyle, userStyle } from '../../store';
 
 export const ButtonsMenu: React.FC = ({}) => {
   const user = useAppSelector((state: RootState) => state.user).value;
-
+  const adminColor = ' #76ba96';
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
   const [openChangeCredentials, setOpenChangeCredentials] =
     useState<boolean>(false);
@@ -36,7 +36,15 @@ export const ButtonsMenu: React.FC = ({}) => {
           sx={userStyle}
           onClick={() => setOpenChangeCredentials(true)}
         >
-          <Person />
+          <Person
+            sx={
+              user.isAdmin
+                ? {
+                    color: adminColor,
+                  }
+                : {}
+            }
+          />
           {user.username}
         </IconButton>
       ) : (
