@@ -1,9 +1,17 @@
 export const iconColor = '#29353c';
+export const disabledIconColor = '#A8A8A8';
 
 export const iconStyles = {
   backgroundColor: 'transparent',
   fill: iconColor,
 
+  '&:hover': { cursor: 'pointer' },
+  padding: '0 0.6rem',
+};
+export const iconDisabledStyle = {
+  backgroundColor: 'transparent',
+  fill: disabledIconColor,
+  cursor: 'not-allowed',
   '&:hover': { cursor: 'pointer' },
   padding: '0 0.6rem',
 };

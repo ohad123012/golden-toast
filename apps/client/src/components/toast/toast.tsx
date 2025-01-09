@@ -8,6 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   ToastType,
+  UserType,
   useDeleteToastMutation,
   useGetUserByUserIdQuery,
   useDeleteAllToastParticipantsForToastIdMutation,
@@ -17,18 +18,25 @@ import {
   checkIconStyle,
   useUpdateToastHasDoneMutation,
   checkButtonStyle,
+  useCreateCriminalMutation,
+  iconDisabledStyle,
 } from '../../store';
 import { IconButton } from '@mui/material';
 import { EditToastModal, InfoToastModal } from '../../modals';
+import { Gavel } from '@mui/icons-material';
 
 interface Props {
   toast: ToastType;
+  user: UserType;
 }
 
-export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
+export const Toast: FC<Props & PropsWithChildren> = ({ toast, user }) => {
+  const greenHasDone = '#76ba96';
+  const redNotDoneInTime = '#C97B7B';
   const [openEditToast, setOpenEditToast] = useState<boolean>(false);
   const [openInfoToast, setOpenInfoToast] = useState<boolean>(false);
   const { data: userForToast } = useGetUserByUserIdQuery(toast.userId);
+  const [createCriminal] = useCreateCriminalMutation();
   const [deleteToast] = useDeleteToastMutation();
   const [deleteToastParticipants] =
     useDeleteAllToastParticipantsForToastIdMutation();
@@ -50,7 +58,16 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
     .replace(':00.000', '');
 
   return (
-    <div className={styles.box}>
+    <div
+      className={styles.box}
+      style={
+        user.isAdmin
+          ? toast.hasDone
+            ? { borderColor: greenHasDone }
+            : { borderColor: redNotDoneInTime }
+          : {}
+      }
+    >
       <div className={styles.toast}>
         <div className={styles.user}>
           <PersonIcon
@@ -67,8 +84,18 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
             <DeleteIcon sx={iconStyles} />
           </IconButton>
 
-          <IconButton sx={buttonStyle} onClick={() => setOpenEditToast(true)}>
-            <EditIcon sx={iconStyles} />
+          <IconButton
+            sx={buttonStyle}
+            disabled={user.id !== toast.userId && !user?.isAdmin}
+            onClick={() => setOpenEditToast(true)}
+          >
+            <EditIcon
+              sx={
+                user.id !== toast.userId && !user?.isAdmin
+                  ? iconDisabledStyle
+                  : iconStyles
+              }
+            />
           </IconButton>
 
           <IconButton sx={buttonStyle} onClick={() => setOpenInfoToast(true)}>
@@ -97,17 +124,31 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast }) => {
           />
         )}
       </div>
-      <IconButton sx={checkButtonStyle}>
-        <CheckIcon
-          sx={checkIconStyle}
-          onClick={() =>
-            updateToastHasDone({
-              id: toast.id,
-              hasDone: true,
-            })
-          }
-        />
-      </IconButton>
+
+      {user.isAdmin && (
+        <IconButton sx={checkButtonStyle}>
+          <CheckIcon
+            sx={checkIconStyle}
+            onClick={() =>
+              updateToastHasDone({
+                id: toast.id,
+                hasDone: true,
+              })
+            }
+          />
+        </IconButton>
+      )}
+
+      {user.isAdmin && (
+        <IconButton sx={checkButtonStyle}>
+          <Gavel
+            sx={checkIconStyle}
+            onClick={() =>
+              createCriminal({ userId: toast.userId, isPersonaNonGrata: false })
+            }
+          />
+        </IconButton>
+      )}
     </div>
   );
 };

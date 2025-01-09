@@ -18,10 +18,19 @@ export class ToastService {
   getToastByToastId(id: string) {
     return this.toastModel.findOne({ where: { id } });
   }
-  getPastToastForUser(userId: string) {
+  getPastToastForUser(userIdToCheck: string) {
     const currentDate = new Date();
     return this.toastModel.findAll({
-      where: { userId, toastDate: { [Op.lt]: currentDate } },
+      include: {
+        model: ToastParticipants,
+        attributes: [],
+        where: {
+          userId: userIdToCheck,
+        },
+      },
+      where: {
+        toastDate: { [Op.lt]: currentDate },
+      },
     });
   }
 

@@ -45,7 +45,7 @@ export const EditToastModal: FC<Props> = ({
   const [foods, setFoods] = useState<string>(toast.foods);
   const [description, setDescription] = useState<string>(toast.description);
 
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
   const { data: usersInvitedToToast, isLoading: loadingUsers } =
     useGetAllParticipantsForToastIdQuery(toast.id);
 

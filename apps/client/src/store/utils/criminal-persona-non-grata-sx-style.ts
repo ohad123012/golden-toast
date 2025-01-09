@@ -3,8 +3,6 @@ const iconPersonaColor = '#8B0000';
 export const criminalIconStyle = {
   backgroundColor: 'transparent',
   fill: iconCriminalColor,
-
-  // '&:hover': { cursor: 'pointer', transform: 'scale(1.2)' },
 };
 
 export const criminalIconStyleButton = {
@@ -29,4 +27,16 @@ export const personaNonGrataIconStyleButton = {
   fill: iconPersonaColor,
 
   '&:hover': { cursor: 'pointer', transform: 'scale(1.2)' },
+};
+
+export const removeCriminalIconStyle = {
+  backgroundColor: 'transparent',
+  fill: iconPersonaColor,
+
+  '&:hover': { cursor: 'pointer', transform: 'scale(1.2)' },
+};
+
+export const removeCriminalButtonStyle = {
+  width: '2rem',
+  height: '2rem',
 };

@@ -21,7 +21,7 @@ export const InfoToastModal: FC<Props> = ({
   setOpenModal,
   toast,
 }) => {
-  const user = useAppSelector((state: RootState) => state.user).value;
+  const user = useAppSelector((state: RootState) => state.user.value);
   const { data: usersInvitedToToast } = useGetAllParticipantsForToastIdQuery(
     toast.id
   );

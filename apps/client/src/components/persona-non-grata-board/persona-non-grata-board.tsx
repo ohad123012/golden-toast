@@ -5,11 +5,15 @@ import { PersonaNonGrata } from '../persona-non-grata';
 import styles from './persona-non-grata-board.module.css';
 export const PersonaNonGrataBoard = () => {
   const { data: allPersonaNonGrata } = useGetAllPersonaNonGrataQuery();
+  if (!allPersonaNonGrata) {
+    return;
+  }
+  const areThereNoPersona = allPersonaNonGrata.length !== 0;
 
   return (
     <Board gridArea="personaNonGrata" title="Persona non grata">
       <div className={styles.personaNonGrataContainer}>
-        {allPersonaNonGrata ? (
+        {areThereNoPersona ? (
           allPersonaNonGrata.map((personaNonGrata) => {
             return <PersonaNonGrata persona={personaNonGrata} />;
           })
