@@ -46,4 +46,10 @@ export class ToastParticipantsController {
       toastId
     );
   }
+  @Delete('for-user-id/:userId')
+  deleteAllToastParticipantsForUserId(@Param('userId') userId: string) {
+    return this.toastParticipantsService.deleteAllToastParticipantsForUserId(
+      userId
+    );
+  }
 }

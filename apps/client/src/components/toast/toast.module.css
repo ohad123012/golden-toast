@@ -30,7 +30,7 @@ p {
   font-weight: 300;
   color: var(--black-frosted-board-background);
   margin: 0;
-  padding-left: 8%;
+  padding-left: 12%;
 }
 
 .date p {
@@ -38,7 +38,7 @@ p {
   font-size: 0.6rem;
   margin-bottom: 1rem;
   color: var(--date-in-toast-grey);
-  padding-left: 8%;
+  padding-left: 12%;
 }
 
 .icons {
@@ -52,5 +52,5 @@ p {
 }
 
 .buttonsContainer {
-  padding-left: 10%;
+  padding-left: 14%;
 }

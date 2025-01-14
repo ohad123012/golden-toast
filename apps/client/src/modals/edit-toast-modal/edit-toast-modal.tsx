@@ -30,12 +30,14 @@ interface Props {
   openModal: boolean;
   setOpenModal: Dispatch<React.SetStateAction<boolean>>;
   toast: ToastType;
+  usersInvitedToToast: UserType[] | undefined;
 }
 
 export const EditToastModal: FC<Props> = ({
   openModal,
   setOpenModal,
   toast,
+  usersInvitedToToast,
 }) => {
   const [toastDate, setToastDate] = useState<Date | null>(
     new Date(toast.toastDate)
@@ -46,8 +48,6 @@ export const EditToastModal: FC<Props> = ({
   const [description, setDescription] = useState<string>(toast.description);
 
   const user = useAppSelector((state: RootState) => state.user.value);
-  const { data: usersInvitedToToast, isLoading: loadingUsers } =
-    useGetAllParticipantsForToastIdQuery(toast.id);
 
   const [invitedUsers, setInvitedUsers] = useState<UserType[]>(
     usersInvitedToToast ?? []
@@ -138,8 +138,6 @@ export const EditToastModal: FC<Props> = ({
           sx: {
             background: gradientBackgroundColor,
             width: '70%',
-            minHeight: '80%',
-            maxHeight: '85%',
           },
         }}
       >
@@ -163,7 +161,7 @@ export const EditToastModal: FC<Props> = ({
           >
             <TextField
               type="text"
-              label="reason"
+              label="Reason"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -174,7 +172,7 @@ export const EditToastModal: FC<Props> = ({
             />
             <TextField
               type="text"
-              label="drinks"
+              label="Drinks"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -186,7 +184,7 @@ export const EditToastModal: FC<Props> = ({
 
             <TextField
               type="text"
-              label="foods"
+              label="Foods"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -198,7 +196,7 @@ export const EditToastModal: FC<Props> = ({
 
             <TextField
               type="text"
-              label="description"
+              label="Description"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -212,7 +210,7 @@ export const EditToastModal: FC<Props> = ({
               <DateTimePicker
                 timezone="system"
                 disablePast={!user?.isAdmin}
-                label="toast date"
+                label="Date"
                 sx={{ fontSize: '100rem' }}
                 timeSteps={{ minutes: 15 }}
                 onChange={(date: Date | null) => {
@@ -235,7 +233,7 @@ export const EditToastModal: FC<Props> = ({
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="invited users"
+                  label="Invited Users"
                   placeholder="User"
                 />
               )}

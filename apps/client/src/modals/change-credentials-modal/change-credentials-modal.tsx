@@ -105,7 +105,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
               color: 'black',
             }}
           >
-            change user credentials
+            Change user credentials
           </DialogTitle>
           <DialogContent>
             <Box
@@ -133,7 +133,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
               />
               <FormControl>
                 <InputLabel htmlFor="outlined-adornment-password">
-                  password
+                  Password
                 </InputLabel>
                 <OutlinedInput
                   defaultValue={user?.password}
@@ -173,7 +173,7 @@ export const ChangeCredentialsModal: FC<Props> = ({
               }}
               sx={{ marginTop: '1rem' }}
             >
-              confirm
+              Confirm
             </Button>
           </DialogContent>
         </Dialog>

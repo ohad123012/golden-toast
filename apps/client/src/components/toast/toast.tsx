@@ -20,6 +20,7 @@ import {
   checkButtonStyle,
   useCreateCriminalMutation,
   iconDisabledStyle,
+  useGetAllParticipantsForToastIdQuery,
 } from '../../store';
 import { IconButton } from '@mui/material';
 import { EditToastModal, InfoToastModal } from '../../modals';
@@ -28,9 +29,17 @@ import { Gavel } from '@mui/icons-material';
 interface Props {
   toast: ToastType;
   user: UserType;
+  isFutureToasts: boolean;
 }
 
-export const Toast: FC<Props & PropsWithChildren> = ({ toast, user }) => {
+export const Toast: FC<Props & PropsWithChildren> = ({
+  toast,
+  user,
+  isFutureToasts,
+}) => {
+  const { data: usersInvitedToToast, isLoading: loadingUsers } =
+    useGetAllParticipantsForToastIdQuery(toast.id);
+
   const greenHasDone = '#76ba96';
   const redNotDoneInTime = '#C97B7B';
   const [openEditToast, setOpenEditToast] = useState<boolean>(false);
@@ -58,97 +67,111 @@ export const Toast: FC<Props & PropsWithChildren> = ({ toast, user }) => {
     .replace(':00.000', '');
 
   return (
-    <div
-      className={styles.box}
-      style={
-        user.isAdmin
-          ? toast.hasDone
-            ? { borderColor: greenHasDone }
-            : { borderColor: redNotDoneInTime }
-          : {}
-      }
-    >
-      <div className={styles.toast}>
-        <div className={styles.user}>
-          <PersonIcon
-            sx={{ backgroundColor: 'transparent', fill: iconColor }}
-          />
-          {userForToast?.username}
-        </div>
-        <p> {toast.reason} </p>
-        <div className={styles.date}>
-          <p>{dateDispay}</p>
-        </div>
-        <div className={styles.buttonsContainer}>
-          <IconButton sx={buttonStyle} onClick={() => handleDeleteToast()}>
-            <DeleteIcon sx={iconStyles} />
-          </IconButton>
+    <>
+      <div
+        className={styles.box}
+        style={
+          user.isAdmin && !isFutureToasts
+            ? toast.hasDone
+              ? { borderColor: greenHasDone }
+              : { borderColor: redNotDoneInTime }
+            : {}
+        }
+      >
+        <div className={styles.toast}>
+          <div className={styles.user}>
+            <PersonIcon
+              sx={{ backgroundColor: 'transparent', fill: iconColor }}
+            />
+            {userForToast?.username}
+          </div>
+          <p> {toast.reason} </p>
+          <div className={styles.date}>
+            <p>{dateDispay}</p>
+          </div>
+          <div className={styles.buttonsContainer}>
+            <IconButton
+              sx={buttonStyle}
+              onClick={() => handleDeleteToast()}
+              disabled={user.id !== toast.userId && !user?.isAdmin}
+            >
+              <DeleteIcon
+                sx={
+                  user.id !== toast.userId && !user?.isAdmin
+                    ? iconDisabledStyle
+                    : iconStyles
+                }
+              />
+            </IconButton>
 
-          <IconButton
-            sx={buttonStyle}
-            disabled={user.id !== toast.userId && !user?.isAdmin}
-            onClick={() => setOpenEditToast(true)}
-          >
-            <EditIcon
-              sx={
-                user.id !== toast.userId && !user?.isAdmin
-                  ? iconDisabledStyle
-                  : iconStyles
+            <IconButton
+              sx={buttonStyle}
+              disabled={user.id !== toast.userId && !user?.isAdmin}
+              onClick={() => setOpenEditToast(true)}
+            >
+              <EditIcon
+                sx={
+                  user.id !== toast.userId && !user?.isAdmin
+                    ? iconDisabledStyle
+                    : iconStyles
+                }
+              />
+            </IconButton>
+
+            <IconButton sx={buttonStyle} onClick={() => setOpenInfoToast(true)}>
+              <InfoIcon sx={iconStyles} />
+            </IconButton>
+          </div>
+
+          {openEditToast && (
+            <EditToastModal
+              openModal={openEditToast}
+              setOpenModal={setOpenEditToast}
+              toast={toast}
+              usersInvitedToToast={usersInvitedToToast}
+            />
+          )}
+          {openInfoToast && (
+            <InfoToastModal
+              openModal={openInfoToast}
+              setOpenModal={setOpenInfoToast}
+              toast={toast}
+            />
+          )}
+        </div>
+
+        {user.isAdmin && !isFutureToasts ? (
+          <IconButton sx={checkButtonStyle}>
+            <CheckIcon
+              sx={checkIconStyle}
+              onClick={() =>
+                updateToastHasDone({
+                  id: toast.id,
+                  hasDone: true,
+                })
               }
             />
           </IconButton>
+        ) : (
+          <IconButton sx={checkButtonStyle} disabled></IconButton>
+        )}
 
-          <IconButton sx={buttonStyle} onClick={() => setOpenInfoToast(true)}>
-            <InfoIcon sx={iconStyles} />
+        {user.isAdmin && !isFutureToasts ? (
+          <IconButton sx={checkButtonStyle}>
+            <Gavel
+              sx={checkIconStyle}
+              onClick={() =>
+                createCriminal({
+                  userId: toast.userId,
+                  isPersonaNonGrata: false,
+                })
+              }
+            />
           </IconButton>
-        </div>
-        {openEditToast && (
-          <EditToastModal
-            openModal={openEditToast}
-            setOpenModal={setOpenEditToast}
-            toast={toast}
-          />
-        )}
-        {openEditToast && (
-          <EditToastModal
-            openModal={openEditToast}
-            setOpenModal={setOpenEditToast}
-            toast={toast}
-          />
-        )}
-        {openInfoToast && (
-          <InfoToastModal
-            openModal={openInfoToast}
-            setOpenModal={setOpenInfoToast}
-            toast={toast}
-          />
+        ) : (
+          <IconButton sx={checkButtonStyle} disabled></IconButton>
         )}
       </div>
-
-      {user.isAdmin && (
-        <IconButton sx={checkButtonStyle}>
-          <CheckIcon
-            sx={checkIconStyle}
-            onClick={() =>
-              updateToastHasDone({
-                id: toast.id,
-                hasDone: true,
-              })
-            }
-          />
-        </IconButton>
-      )}
-
-      {user.isAdmin && (
-        <IconButton sx={checkButtonStyle}>
-          <Gavel
-            sx={checkIconStyle}
-            onClick={() =>
-              createCriminal({ userId: toast.userId, isPersonaNonGrata: false })
-            }
-          />
-        </IconButton>
-      )}
-    </div>
+    </>
   );
 };

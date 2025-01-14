@@ -19,7 +19,7 @@ export const PersonaNonGrataBoard = () => {
           })
         ) : (
           <div className={styles.noPersonNonGrataMessage}>
-            there are no persona non grata!!
+            There are no persona non grata!!
           </div>
         )}
       </div>

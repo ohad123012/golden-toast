@@ -33,14 +33,18 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [drinks, setDrinks] = useState<string | null>(null);
   const [foods, setFoods] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(null);
 
   const user = useAppSelector((state: RootState) => state.user.value);
+  const [invitedUsers, setInvitedUsers] = useState<UserType[] | null>(null);
 
   const [createToastParticipants] = useCreateToastParticipantsMutation();
   const [createToast] = useCreateToastMutation();
   const { data: users } = useGetAllUsersQuery();
-
+  const usersWithoutCreatingUser = users?.filter((userFromAllUsers) => {
+    if (userFromAllUsers.id !== user?.id) {
+      return userFromAllUsers;
+    }
+  });
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -73,6 +77,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
       toastCreated.then((result) => {
         const toastId = result.data ? result.data.id : '';
 
+        createToastParticipants([{ userId: user.id, toastId }]);
         const allToastParticipants = invitedUsers?.map(
           (invitedUser: UserType) => {
             const userId = invitedUser.id;
@@ -99,8 +104,6 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
           sx: {
             background: gradientBackgroundColor,
             width: '70%',
-            minHeight: '80%',
-            maxHeight: '85%',
           },
         }}
       >
@@ -124,7 +127,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
           >
             <TextField
               type="text"
-              label="reason"
+              label="Reason"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -135,7 +138,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
             />
             <TextField
               type="text"
-              label="drinks"
+              label="Drinks"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -147,7 +150,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
 
             <TextField
               type="text"
-              label="foods"
+              label="Foods"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -159,7 +162,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
 
             <TextField
               type="text"
-              label="description"
+              label="Description"
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -172,7 +175,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 disablePast={!user?.isAdmin}
-                label="toast date"
+                label="Date"
                 sx={{ fontSize: '100rem' }}
                 timeSteps={{ minutes: 15 }}
                 onChange={(date: Date | null) => {
@@ -185,7 +188,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
             <Autocomplete
               multiple
               id="tags-outlined"
-              options={users ?? []}
+              options={usersWithoutCreatingUser ?? []}
               getOptionLabel={({ username }) => username}
               filterSelectedOptions
               value={invitedUsers ?? []}
@@ -195,7 +198,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="invited users"
+                  label="Invited Users"
                   placeholder="User"
                 />
               )}
@@ -212,7 +215,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
             }
             sx={{ marginTop: '1rem' }}
           >
-            create
+            Create
           </Button>
         </DialogContent>
       </Dialog>

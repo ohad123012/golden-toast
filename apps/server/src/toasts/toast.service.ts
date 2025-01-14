@@ -31,6 +31,7 @@ export class ToastService {
       where: {
         toastDate: { [Op.lt]: currentDate },
       },
+      order: ['toastDate'],
     });
   }
 
@@ -39,6 +40,7 @@ export class ToastService {
 
     const allPast = this.toastModel.findAll({
       where: { toastDate: { [Op.lt]: currentDate } },
+      order: ['toastDate'],
     });
 
     return allPast;
@@ -48,6 +50,7 @@ export class ToastService {
     const currentDate = new Date();
     return this.toastModel.findAll({
       where: { toastDate: { [Op.gt]: currentDate } },
+      order: ['toastDate'],
     });
   }
 
@@ -64,6 +67,7 @@ export class ToastService {
       where: {
         toastDate: { [Op.gt]: currentDate },
       },
+      order: ['toastDate'],
     });
   }
 
