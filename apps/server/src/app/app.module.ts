@@ -18,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       database: 'trunk-management',
       autoLoadModels: true,
       synchronize: true,
-      define: { schema: 'golden-toast', paranoid: true },
+      define: { schema: 'golden-toast', paranoid: false },
     }),
     UserModule,
     CriminalModule,

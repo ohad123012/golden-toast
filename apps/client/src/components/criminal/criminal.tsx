@@ -1,10 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import {
-  buttonStyle,
   criminalButtonStyle,
   criminalIconStyle,
-  iconColor,
-  iconStyles,
   personaNonGrataIconStyleButton,
   removeCriminalButtonStyle,
   removeCriminalIconStyle,
@@ -37,7 +34,7 @@ export const Criminal: FC<Props & PropsWithChildren> = ({ criminal }) => {
           {incriminatedUser?.username}
         </div>
         {user?.isAdmin && (
-          <>
+          <div className={styles.criminalbuttons}>
             <IconButton
               onClick={() => deleteCriminal(criminal.id)}
               sx={removeCriminalButtonStyle}
@@ -56,7 +53,7 @@ export const Criminal: FC<Props & PropsWithChildren> = ({ criminal }) => {
             >
               <PersonOff sx={personaNonGrataIconStyleButton} />
             </IconButton>
-          </>
+          </div>
         )}
       </div>
     </div>

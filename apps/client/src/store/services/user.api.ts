@@ -1,5 +1,5 @@
 import { serverApi } from './server.api';
-import { UserType } from '../types';
+import { UserType, userUpdateToAdmin } from '../types';
 
 export const userApi = serverApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -33,13 +33,21 @@ export const userApi = serverApi.injectEndpoints({
       }),
       invalidatesTags: ['Users'],
     }),
+    updateUserToAdmin: builder.mutation<UserType, userUpdateToAdmin>({
+      query: (user) => ({
+        url: `/user/update-user/${user.id}`,
+        method: 'PUT',
+        body: user,
+      }),
+      invalidatesTags: ['Users'],
+    }),
     deleteUser: builder.mutation<UserType, string>({
       query: (id) => ({
         url: `user/${id}`,
         method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Toasts', 'ToastParticipants'],
     }),
   }),
 });
@@ -51,5 +59,6 @@ export const {
   useGetAllParticipantsForToastIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useUpdateUserToAdminMutation,
   useDeleteUserMutation,
 } = userApi;

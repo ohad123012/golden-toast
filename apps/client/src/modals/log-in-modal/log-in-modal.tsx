@@ -106,7 +106,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
               display: 'flex',
               gridTemplateColumns: { sm: '1fr 1fr' },
               gap: 2,
-              margin: '0.2rem',
+              margin: '0.3rem 0.3rem 0.1rem 0.3rem',
             }}
           >
             <TextField
@@ -114,6 +114,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
               type="text"
               label="username"
               helperText={!doesUserExist ? 'Invalid username' : ' '}
+              slotProps={{ formHelperText: { sx: { marginLeft: '0' } } }}
               variant="outlined"
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -123,7 +124,10 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
               value={username}
             />
             <FormControl>
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel
+                htmlFor="outlined-adornment-password"
+                error={!doesUserExist || userExistPasswordWrong}
+              >
                 password
               </InputLabel>
               <OutlinedInput
@@ -153,7 +157,9 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
                 }}
                 value={password}
               />
-              <FormHelperText sx={{ color: formHelperTextRedColor }}>
+              <FormHelperText
+                sx={{ color: formHelperTextRedColor, marginLeft: '0' }}
+              >
                 {!doesUserExist || userExistPasswordWrong
                   ? 'Invalid password'
                   : ' '}

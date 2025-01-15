@@ -1,5 +1,9 @@
 import { Dispatch, PropsWithChildren, useState } from 'react';
-import { AddCircleOutline, HistoryToggleOff } from '@mui/icons-material';
+import {
+  AddCircleOutline,
+  HistoryToggleOff,
+  Rotate90DegreesCcw,
+} from '@mui/icons-material';
 import styles from './board.module.css';
 
 import { RootState, useAppSelector } from '../../store';
@@ -39,36 +43,40 @@ export const Board: React.FC<Props & PropsWithChildren> = ({
   user;
   const showTitles = title !== 'Toasts' || (title === 'Toasts' && !user);
   return (
-    <div className={styles.board} style={{ gridArea }}>
+    <div className={styles.box} style={{ gridArea }}>
       {title === 'Toasts' && user && (
-        <div className={styles.titleButtonBox}>
-          <div className={styles.toastTitle}>{title}</div>
-          <IconButton onClick={() => setOpenAddToast(true)}>
-            <AddCircleOutline
-              sx={{
-                color: titleColors,
-                paddingTop: '3.5%',
-                height: '2rem',
-                width: '2rem',
-                '&:hover': { transform: 'scale(1.2)' },
-              }}
-            />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              if (setGetPastToasts) {
-                setGetPastToasts(!getPastToasts);
-              }
-            }}
-          >
-            <HistoryToggleOff
-              sx={
-                getPastToasts
-                  ? pastToastButtonPressed
-                  : pastToastButtonNotPressed
-              }
-            />
-          </IconButton>
+        <div className={styles.board}>
+          <div className={styles.titleButtonBox}>
+            <div className={styles.historyButton}>
+              <IconButton
+                onClick={() => {
+                  if (setGetPastToasts) {
+                    setGetPastToasts(!getPastToasts);
+                  }
+                }}
+              >
+                <HistoryToggleOff
+                  sx={
+                    getPastToasts
+                      ? pastToastButtonPressed
+                      : pastToastButtonNotPressed
+                  }
+                />
+              </IconButton>
+            </div>
+            <div className={styles.toastTitle}>{title}</div>
+            <IconButton onClick={() => setOpenAddToast(true)}>
+              <AddCircleOutline
+                sx={{
+                  color: titleColors,
+                  paddingTop: '3.5%',
+                  height: '2rem',
+                  width: '2rem',
+                  '&:hover': { transform: 'scale(1.2)' },
+                }}
+              />
+            </IconButton>
+          </div>
         </div>
       )}
       {showTitles && <div className={styles.title}>{title}</div>}

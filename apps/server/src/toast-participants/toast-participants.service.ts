@@ -40,4 +40,8 @@ export class ToastParticipantsService {
   deleteAllToastParticipantsForToastId(toastId: string) {
     return this.toastParticipantsModel.destroy({ where: { toastId } });
   }
+
+  deleteAllToastParticipantsForUserId(userId: string) {
+    return this.toastParticipantsModel.destroy({ where: { userId } });
+  }
 }

@@ -4,3 +4,8 @@ export interface UserType {
   password: string;
   isAdmin: boolean;
 }
+
+export interface userUpdateToAdmin {
+  id: string;
+  isAdmin: boolean;
+}

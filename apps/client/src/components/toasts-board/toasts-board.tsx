@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, useState } from 'react';
 import { Board } from '../board';
 import { Toast } from '../toast';
 import {
@@ -44,14 +44,20 @@ export const ToastsBoard: FC = () => {
             return (
               <div className={styles.toastsContainer}>
                 {allFutureToastsForAdmin.map((futureToastForAdmin) => {
-                  return <Toast toast={futureToastForAdmin} user={user} />;
+                  return (
+                    <Toast
+                      toast={futureToastForAdmin}
+                      user={user}
+                      isFutureToasts={true}
+                    />
+                  );
                 })}
               </div>
             );
           } else {
             return (
               <div className={styles.noToastsWarning}>
-                no future toasts for admin to show
+                No future toasts for admin to show
               </div>
             );
           }
@@ -60,14 +66,20 @@ export const ToastsBoard: FC = () => {
             return (
               <div className={styles.toastsContainer}>
                 {allPastToastForAdmin.map((pastToastForAdmin) => {
-                  return <Toast toast={pastToastForAdmin} user={user} />;
+                  return (
+                    <Toast
+                      toast={pastToastForAdmin}
+                      user={user}
+                      isFutureToasts={false}
+                    />
+                  );
                 })}
               </div>
             );
           } else {
             return (
               <div className={styles.noToastsWarning}>
-                no past toasts for admin to show
+                No past toasts for admin to show
               </div>
             );
           }
@@ -78,14 +90,20 @@ export const ToastsBoard: FC = () => {
             return (
               <div className={styles.toastsContainer}>
                 {futureToastsForUser.map((futureToast) => {
-                  return <Toast toast={futureToast} user={user} />;
+                  return (
+                    <Toast
+                      toast={futureToast}
+                      user={user}
+                      isFutureToasts={true}
+                    />
+                  );
                 })}
               </div>
             );
           } else {
             return (
               <div className={styles.noToastsWarning}>
-                no future toasts for user to show
+                No future toasts for user to show
               </div>
             );
           }
@@ -94,21 +112,27 @@ export const ToastsBoard: FC = () => {
             return (
               <div className={styles.toastsContainer}>
                 {pastToastsForUser.map((pastToast) => {
-                  return <Toast toast={pastToast} user={user} />;
+                  return (
+                    <Toast
+                      toast={pastToast}
+                      user={user}
+                      isFutureToasts={false}
+                    />
+                  );
                 })}
               </div>
             );
           } else {
             return (
               <div className={styles.noToastsWarning}>
-                no past toasts for user to show
+                No past toasts for user to show
               </div>
             );
           }
         }
       }
     } else {
-      return <div className={styles.noToastsWarning}>no user logged in!</div>;
+      return <div className={styles.noToastsWarning}>No user logged in!</div>;
     }
   };
   return (

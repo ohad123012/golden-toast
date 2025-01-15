@@ -1,4 +1,4 @@
-.board {
+.box {
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
@@ -10,22 +10,31 @@
   align-items: center;
 }
 
+.board {
+  display: flex;
+  flex-direction: row;
+  width: 98%;
+}
+
 .title {
-  padding-top: 2%;
+  padding-top: 1.25rem;
   height: 1rem;
   text-align: center;
 }
 
+.historyButton {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .toastTitle {
-  padding-top: 2%;
   height: 1rem;
   text-align: center;
-  padding-right: 15rem;
-  padding-left: 40%;
 }
 .titleButtonBox {
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
   justify-content: space-between;
 }

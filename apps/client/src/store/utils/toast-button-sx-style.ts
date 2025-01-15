@@ -1,5 +1,5 @@
 export const iconColor = '#29353c';
-export const disabledIconColor = '#A8A8A8';
+export const disabledIconColor = '#00000061';
 
 export const iconStyles = {
   backgroundColor: 'transparent',

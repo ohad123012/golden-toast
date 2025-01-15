@@ -31,6 +31,7 @@ export class ToastService {
       where: {
         toastDate: { [Op.lt]: currentDate },
       },
+      order: ['toastDate'],
     });
   }
 
@@ -39,6 +40,7 @@ export class ToastService {
 
     const allPast = this.toastModel.findAll({
       where: { toastDate: { [Op.lt]: currentDate } },
+      order: ['toastDate'],
     });
 
     return allPast;
@@ -48,6 +50,7 @@ export class ToastService {
     const currentDate = new Date();
     return this.toastModel.findAll({
       where: { toastDate: { [Op.gt]: currentDate } },
+      order: ['toastDate'],
     });
   }
 
@@ -64,23 +67,24 @@ export class ToastService {
       where: {
         toastDate: { [Op.gt]: currentDate },
       },
+      order: ['toastDate'],
     });
   }
 
   getAmountToastsForCurrentPeriod() {
     const currentDate = new Date();
-    const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
-    const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
-    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 2);
-
+    const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 2);
+    const endingDateJuly = new Date(currentDate.getFullYear(), 6, 2);
+    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
+    console.log(beginningDateJanuary, endingDateJuly, endingDateJanuary);
     if (currentDate.getMonth() + 1 < 7) {
       return this.toastModel.count({
         where: {
           hasDone: true,
 
           toastDate: {
-            [Op.gt]: beginningDateJanuary,
-            [Op.lt]: endingDateJuly,
+            [Op.gte]: beginningDateJanuary,
+            [Op.lte]: endingDateJuly,
           },
         },
       });
@@ -90,7 +94,7 @@ export class ToastService {
           hasDone: true,
           toastDate: {
             [Op.gt]: endingDateJuly,
-            [Op.lt]: endingDateJanuary,
+            [Op.lte]: endingDateJanuary,
           },
         },
       });
@@ -169,10 +173,9 @@ export class ToastService {
 
   getAmountToastsForCurrentPeriodPerUser() {
     const currentDate = new Date();
-    const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 1);
-    const endingDateJuly = new Date(currentDate.getFullYear(), 6, 1);
-    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 2);
-
+    const beginningDateJanuary = new Date(currentDate.getFullYear(), 0, 2);
+    const endingDateJuly = new Date(currentDate.getFullYear(), 6, 2);
+    const endingDateJanuary = new Date(currentDate.getFullYear() + 1, 0, 1);
     const currentMonth = currentDate.getMonth() + 1;
     const juneNumber = 7;
     if (currentMonth < juneNumber) {
@@ -181,8 +184,8 @@ export class ToastService {
         where: {
           hasDone: true,
           toastDate: {
-            [Op.gt]: beginningDateJanuary,
-            [Op.lt]: endingDateJuly,
+            [Op.gte]: beginningDateJanuary,
+            [Op.lte]: endingDateJuly,
           },
         },
         group: ['userId'],
@@ -194,7 +197,7 @@ export class ToastService {
           hasDone: true,
           toastDate: {
             [Op.gt]: endingDateJuly,
-            [Op.lt]: endingDateJanuary,
+            [Op.lte]: endingDateJanuary,
           },
         },
         group: ['userId'],

@@ -58,6 +58,17 @@ export const toastParticipantApi = serverApi.injectEndpoints({
       }),
       invalidatesTags: ['ToastParticipants'],
     }),
+    deleteAllToastParticipantsForUserId: builder.mutation<
+      ToastParticipantType,
+      string
+    >({
+      query: (userId) => ({
+        url: `toast-participants/for-user-id/${userId}`,
+        method: 'DELETE',
+        body: userId,
+      }),
+      invalidatesTags: ['ToastParticipants'],
+    }),
   }),
 });
 export const {
@@ -67,4 +78,5 @@ export const {
   useDeleteToastParticipantMutation,
   useDeleteToastParticipantByToastIdAndUserIdMutation,
   useDeleteAllToastParticipantsForToastIdMutation,
+  useDeleteAllToastParticipantsForUserIdMutation,
 } = toastParticipantApi;

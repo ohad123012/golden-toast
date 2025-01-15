@@ -19,7 +19,11 @@
   justify-content: space-between;
   align-items: center;
 }
-
+.criminalbuttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30%;
+}
 .icons {
   background-color: transparent;
 

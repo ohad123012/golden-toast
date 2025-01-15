@@ -40,8 +40,8 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
 
   const [areSamePasswords, setAreSamePasswords] = useState<boolean>(true);
   const [usernameExists, setUsernameExists] = useState<boolean>(false);
+  const [usernameForbidden, setUsernameForbidden] = useState<boolean>(false);
 
-  const [areAllFieldsTyped, setAreAllFieldsTyped] = useState<boolean>(true);
   const { data: users } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
 
@@ -64,10 +64,17 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
     password: string | null,
     validationPassword: string | null
   ) => {
+    const specialChars = /[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/;
+    const letters = /[a-zA-Z]/;
+
     const existingUsernames = users?.map((user) => {
       return user.username;
     });
     if (username && password && validationPassword) {
+      const forbiddenUsername =
+        username.length < 3 ||
+        specialChars.test(username) ||
+        !letters.test(username);
       if (
         existingUsernames?.includes(username ?? '') &&
         password !== validationPassword
@@ -75,6 +82,14 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
         setPassword('');
         setValidationPassword('');
         setUsernameExists(true);
+        setUsernameForbidden(false);
+        setAreSamePasswords(false);
+      } else if (forbiddenUsername && password !== validationPassword) {
+        setUsername('');
+        setPassword('');
+        setValidationPassword('');
+        setUsernameExists(false);
+        setUsernameForbidden(true);
         setAreSamePasswords(false);
       } else if (existingUsernames?.includes(username ?? '')) {
         setPassword('');
@@ -86,11 +101,15 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
         setValidationPassword('');
         setUsernameExists(false);
         setAreSamePasswords(false);
-      }
-
-      if (
+      } else if (forbiddenUsername && password === validationPassword) {
+        setUsername('');
+        setUsernameForbidden(true);
+        setUsernameExists(false);
+        setAreSamePasswords(true);
+      } else if (
         !existingUsernames?.includes(username ?? '') &&
-        password === validationPassword
+        password === validationPassword &&
+        !forbiddenUsername
       ) {
         createUser({ username, password, isAdmin: false });
         handleMoveToLogIn();
@@ -115,7 +134,7 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
           },
         }}
       >
-        <DialogTitle sx={{ color: 'black' }}>sign up</DialogTitle>
+        <DialogTitle sx={{ color: 'black' }}>Sign Up</DialogTitle>
         <DialogContent>
           <Box
             sx={{
@@ -126,6 +145,7 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
           'username username'
           'password confirmPassword'`,
               gap: 2,
+              marginTop: '0.3rem',
               marginBottom: '0.2rem',
             }}
           >
@@ -136,8 +156,15 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
               type="text"
               label="username"
               variant="outlined"
-              error={usernameExists}
-              helperText={usernameExists ? 'Username already exists' : ' '}
+              error={usernameExists || usernameForbidden}
+              slotProps={{ formHelperText: { sx: { marginLeft: '-5%' } } }}
+              helperText={
+                usernameExists
+                  ? 'Username already exists'
+                  : usernameForbidden
+                  ? 'Username forbidden - You can only use letters and digits'
+                  : ' '
+              }
               onChange={(
                 e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
               ) => {
@@ -146,7 +173,10 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
               value={username}
             />
             <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel
+                htmlFor="outlined-adornment-password"
+                error={!areSamePasswords}
+              >
                 password
               </InputLabel>
               <OutlinedInput
@@ -179,12 +209,17 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
                 }}
                 value={password}
               />
-              <FormHelperText sx={{ color: formHelperTextRedColor }}>
-                {!areSamePasswords ? 'Passwords are the same' : ' '}
+              <FormHelperText
+                sx={{ color: formHelperTextRedColor, marginLeft: '0' }}
+              >
+                {!areSamePasswords ? 'Passwords are not the same' : ' '}
               </FormHelperText>
             </FormControl>
             <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel
+                htmlFor="outlined-adornment-password"
+                error={!areSamePasswords}
+              >
                 same password
               </InputLabel>
               <OutlinedInput
@@ -202,8 +237,10 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
                 }}
                 value={validationPassword}
               />
-              <FormHelperText sx={{ color: formHelperTextRedColor }}>
-                {!areSamePasswords ? 'Passwords are the same' : ' '}
+              <FormHelperText
+                sx={{ color: formHelperTextRedColor, marginLeft: '0' }}
+              >
+                {!areSamePasswords ? 'Passwords are not the same' : ' '}
               </FormHelperText>
             </FormControl>
           </Box>
@@ -221,6 +258,7 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
             <Button
               size="small"
               variant="contained"
+              disabled={!username || !password || !validationPassword}
               onClick={() =>
                 handleSignUp(username, password, validationPassword)
               }

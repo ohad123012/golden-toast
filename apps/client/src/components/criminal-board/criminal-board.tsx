@@ -17,7 +17,7 @@ export const CriminalBoard = () => {
           })
         ) : (
           <div className={styles.noCriminalsMessage}>
-            there are no criminals!!
+            There are no criminals!!
           </div>
         )}
       </div>

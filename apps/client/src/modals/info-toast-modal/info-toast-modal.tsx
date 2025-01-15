@@ -4,8 +4,6 @@ import {
   RootState,
   ToastType,
   useAppSelector,
-  useGetAllUsersQuery,
-  UserType,
   useGetAllParticipantsForToastIdQuery,
 } from '../../store';
 import { Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
@@ -53,7 +51,6 @@ export const InfoToastModal: FC<Props> = ({
           sx: {
             background: gradientBackgroundColor,
             width: '70%',
-
             maxHeight: '85%',
           },
         }}
@@ -67,22 +64,22 @@ export const InfoToastModal: FC<Props> = ({
         </DialogTitle>
         <DialogContent>
           <div className={styles.infoContainer}>
-            <p className={styles.infoTitle}> reason</p>
+            <p className={styles.infoTitle}> Reason</p>
             <p className={styles.infoContent}> {toast.reason}</p>
 
-            <p className={styles.infoTitle}> drinks</p>
+            <p className={styles.infoTitle}> Drinks</p>
             <p className={styles.infoContent}> {toast.drinks}</p>
 
-            <p className={styles.infoTitle}> foods</p>
+            <p className={styles.infoTitle}> Foods</p>
             <p className={styles.infoContent}> {toast.foods}</p>
 
-            <p className={styles.infoTitle}> description</p>
+            <p className={styles.infoTitle}> Description</p>
             <p className={styles.infoContent}> {toast.description}</p>
 
-            <p className={styles.infoTitle}> date</p>
+            <p className={styles.infoTitle}> Date</p>
             <p className={styles.infoContent}> {dateDispay}</p>
 
-            <p className={styles.infoTitle}> users invited</p>
+            <p className={styles.infoTitle}> Users Invited</p>
             <p className={styles.infoContent}> {allUsernamesInvited}</p>
           </div>
 
