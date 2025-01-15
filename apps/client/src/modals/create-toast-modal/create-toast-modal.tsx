@@ -40,7 +40,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
   const [createToastParticipants] = useCreateToastParticipantsMutation();
   const [createToast] = useCreateToastMutation();
   const { data: users } = useGetAllUsersQuery();
-  const usersWithoutCreatingUser = users?.filter((userFromAllUsers) => {
+  const usersWithoutLoggedInUser = users?.filter((userFromAllUsers) => {
     if (userFromAllUsers.id !== user?.id) {
       return userFromAllUsers;
     }
@@ -188,7 +188,7 @@ export const CreateToastModal: FC<Props> = ({ openModal, setOpenModal }) => {
             <Autocomplete
               multiple
               id="tags-outlined"
-              options={usersWithoutCreatingUser ?? []}
+              options={usersWithoutLoggedInUser ?? []}
               getOptionLabel={({ username }) => username}
               filterSelectedOptions
               value={invitedUsers ?? []}

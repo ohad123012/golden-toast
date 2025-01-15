@@ -19,6 +19,7 @@
   --toast-shadow: #1e272d;
   --info-toast-modal-title: #696e80;
   --toast-criminal-background-color: #29353c9e;
+  --leaderboard-gold-color: #ffd700;
 }
 
 body {
@@ -39,7 +40,6 @@ body {
 .app {
   display: grid;
   grid-gap: 0.7rem;
-
   grid-template-rows: repeat(7, 6rem);
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:

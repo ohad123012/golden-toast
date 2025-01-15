@@ -4,8 +4,6 @@ import {
   RootState,
   ToastType,
   useAppSelector,
-  useGetAllUsersQuery,
-  UserType,
   useGetAllParticipantsForToastIdQuery,
 } from '../../store';
 import { Button, Dialog, DialogContent, DialogTitle } from '@mui/material';

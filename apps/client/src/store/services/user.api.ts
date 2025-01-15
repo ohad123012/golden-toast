@@ -47,7 +47,7 @@ export const userApi = serverApi.injectEndpoints({
         method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Toasts', 'ToastParticipants'],
     }),
   }),
 });

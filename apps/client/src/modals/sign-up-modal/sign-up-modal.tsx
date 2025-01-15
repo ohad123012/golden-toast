@@ -162,7 +162,7 @@ export const SignUpModal: FC<Props> = ({ logInState, setLogInState }) => {
                 usernameExists
                   ? 'Username already exists'
                   : usernameForbidden
-                  ? 'Username forbidden'
+                  ? 'Username forbidden - You can only use letters and digits'
                   : ' '
               }
               onChange={(

@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import { settingsStyle, userStyle } from '../../store';
 
-export const ButtonsMenu: React.FC = ({}) => {
+export const ButtonsMenu: React.FC = () => {
   const user = useAppSelector((state: RootState) => state.user.value);
   const adminColor = ' #76ba96';
   const [openLogIn, setOpenLogIn] = useState<boolean>(false);
@@ -26,7 +26,10 @@ export const ButtonsMenu: React.FC = ({}) => {
           size="large"
           onClick={() => setOpenSettings(true)}
         >
-          <Settings fontSize={'large'} />
+          <Settings
+            fontSize={'large'}
+            sx={{ '&:hover': { transform: 'rotate(-90deg)' } }}
+          />
         </IconButton>
       ) : (
         ''

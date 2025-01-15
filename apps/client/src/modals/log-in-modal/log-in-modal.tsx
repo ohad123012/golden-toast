@@ -106,8 +106,7 @@ export const LogInModal: FC<Props> = ({ openModal, setOpenModal }) => {
               display: 'flex',
               gridTemplateColumns: { sm: '1fr 1fr' },
               gap: 2,
-              margin: '0.3rem',
-              marginBottom: '0.1rem',
+              margin: '0.3rem 0.3rem 0.1rem 0.3rem',
             }}
           >
             <TextField

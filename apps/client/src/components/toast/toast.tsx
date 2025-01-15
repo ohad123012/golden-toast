@@ -52,7 +52,6 @@ export const Toast: FC<Props & PropsWithChildren> = ({
   const [updateToastHasDone] = useUpdateToastHasDoneMutation();
   const handleDeleteToast = () => {
     deleteToast(toast.id);
-    deleteToastParticipants(toast.id);
   };
   const removeSecondsMillis = new Date(
     new Date(toast.toastDate).setSeconds(0, 0)

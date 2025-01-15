@@ -16,7 +16,6 @@ import {
   useGetAllUsersQuery,
   useDeleteUserMutation,
   useDeleteAllToastParticipantsForUserIdMutation,
-  useUpdateUserMutation,
   useUpdateUserToAdminMutation,
 } from '../../store';
 
@@ -34,7 +33,9 @@ export const SettingsModal: FC<Props> = ({
   user,
 }) => {
   const dispatch = useAppDispatch();
-  const [usersToAdmin, setUsersToAdmin] = useState<UserType[] | null>(null);
+  const [usersChangedToAdmin, setUsersChangedToAdmin] = useState<
+    UserType[] | null
+  >(null);
   const [usersToDelete, setUsersToDelete] = useState<UserType[] | null>(null);
   const [DeleteUser] = useDeleteUserMutation();
   const [deleteToastParticipantsUser] =
@@ -54,11 +55,10 @@ export const SettingsModal: FC<Props> = ({
   const handleConfirm = () => {
     usersToDelete?.map((userToDelete) => {
       DeleteUser(userToDelete.id);
-      deleteToastParticipantsUser(userToDelete.id);
     });
 
-    usersToAdmin?.map((userToAdmin) => {
-      updateUserToAdmin({ id: userToAdmin.id, isAdmin: true });
+    usersChangedToAdmin?.map((userChangedToAdmin) => {
+      updateUserToAdmin({ id: userChangedToAdmin.id, isAdmin: true });
     });
     setOpenModal(false);
   };
@@ -128,12 +128,12 @@ export const SettingsModal: FC<Props> = ({
                   options={users ?? []}
                   getOptionLabel={({ username }) => username}
                   filterSelectedOptions
-                  value={usersToAdmin ?? []}
+                  value={usersChangedToAdmin ?? []}
                   onChange={(
                     _,
                     newValue: SetStateAction<UserType[] | null>
                   ) => {
-                    setUsersToAdmin(newValue);
+                    setUsersChangedToAdmin(newValue);
                   }}
                   renderInput={(params) => (
                     <TextField

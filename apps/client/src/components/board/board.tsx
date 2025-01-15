@@ -1,5 +1,9 @@
 import { Dispatch, PropsWithChildren, useState } from 'react';
-import { AddCircleOutline, HistoryToggleOff } from '@mui/icons-material';
+import {
+  AddCircleOutline,
+  HistoryToggleOff,
+  Rotate90DegreesCcw,
+} from '@mui/icons-material';
 import styles from './board.module.css';
 
 import { RootState, useAppSelector } from '../../store';

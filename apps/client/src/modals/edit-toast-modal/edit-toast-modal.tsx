@@ -6,7 +6,6 @@ import {
   useAppSelector,
   useGetAllUsersQuery,
   UserType,
-  useGetAllParticipantsForToastIdQuery,
   useUpdateToastMutation,
   useCreateToastParticipantsMutation,
   useDeleteToastParticipantByToastIdAndUserIdMutation,
@@ -46,9 +45,7 @@ export const EditToastModal: FC<Props> = ({
   const [drinks, setDrinks] = useState<string>(toast.drinks);
   const [foods, setFoods] = useState<string>(toast.foods);
   const [description, setDescription] = useState<string>(toast.description);
-
   const user = useAppSelector((state: RootState) => state.user.value);
-
   const [invitedUsers, setInvitedUsers] = useState<UserType[]>(
     usersInvitedToToast ?? []
   );

@@ -1,10 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import {
-  buttonStyle,
   criminalButtonStyle,
   criminalIconStyle,
-  iconColor,
-  iconStyles,
   personaNonGrataIconStyleButton,
   removeCriminalButtonStyle,
   removeCriminalIconStyle,
