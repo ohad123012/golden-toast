@@ -13,3 +13,11 @@ export interface ToastUpdateHasDone {
   id: string;
   hasDone: boolean;
 }
+
+export interface AmountToastForUser {
+  userId: string;
+  count: number;
+  user: {
+    username: string;
+  };
+}

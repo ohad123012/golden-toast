@@ -2,6 +2,7 @@ import {
   Board,
   ButtonsMenu,
   CriminalBoard,
+  Leaderboard,
   PersonaNonGrata,
   PersonaNonGrataBoard,
   SearchBar,
@@ -18,7 +19,7 @@ export const App: FC = () => {
       <div className={styles.searchBar}>
         <SearchBar />
       </div>
-      <Board gridArea="results" title="Leaderboard" />
+      <Leaderboard />
       <ToastsBoard />
       <CriminalBoard />
       <ButtonsMenu />

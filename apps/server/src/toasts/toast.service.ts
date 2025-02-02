@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateToastDto } from './dto/create-toast.dto';
 import { Op, Sequelize } from 'sequelize';
 import { ToastParticipants } from '../toast-participants/entities/toast-participants.entity';
+import { User } from '../users/entites/user.entities';
 @Injectable()
 export class ToastService {
   constructor(
@@ -103,6 +104,7 @@ export class ToastService {
 
   getAllTimeRecord() {
     const juneMonthNumber = 6;
+    const currentYear = new Date().getFullYear();
     const firstHalfRecord = this.toastModel.findAll({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'amountOfToasts'],
@@ -123,6 +125,10 @@ export class ToastService {
             Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
             { [Op.lte]: juneMonthNumber }
           ),
+          Sequelize.where(
+            Sequelize.fn('date_part', 'year', Sequelize.col('toastDate')),
+            { [Op.ne]: currentYear }
+          ),
           { hasDone: true },
         ],
       },
@@ -137,7 +143,10 @@ export class ToastService {
         ],
       ],
 
-      group: ['toastDate'],
+      group: [
+        Sequelize.fn('DATE_TRUNC', 'year', Sequelize.col('toastDate')),
+        'date',
+      ],
       order: [[Sequelize.fn('COUNT', Sequelize.col('toastDate')), 'DESC']],
       where: {
         [Op.and]: [
@@ -145,6 +154,12 @@ export class ToastService {
             Sequelize.fn('date_part', 'month', Sequelize.col('toastDate')),
             { [Op.gt]: juneMonthNumber }
           ),
+
+          Sequelize.where(
+            Sequelize.fn('date_part', 'year', Sequelize.col('toastDate')),
+            { [Op.ne]: currentYear }
+          ),
+
           { hasDone: true },
         ],
       },
@@ -161,6 +176,12 @@ export class ToastService {
           return records[0][0].dataValues['amountOfToasts'];
         }
 
+        if (
+          !records[1][0].dataValues['amountOfToasts'] &&
+          records[0][0].dataValues['amountOfToasts']
+        ) {
+          return 0;
+        }
         return Math.max(
           records[0][0].dataValues['amountOfToasts'],
           records[1][0].dataValues['amountOfToasts']
@@ -179,8 +200,16 @@ export class ToastService {
     const currentMonth = currentDate.getMonth() + 1;
     const juneNumber = 7;
     if (currentMonth < juneNumber) {
-      return this.toastModel.count({
-        attributes: ['userId'],
+      return this.toastModel.findAll({
+        attributes: [
+          'userId',
+          [Sequelize.fn('COUNT', Sequelize.col('userId')), 'count'],
+        ],
+
+        include: {
+          model: User,
+          attributes: ['username'],
+        },
         where: {
           hasDone: true,
           toastDate: {
@@ -188,11 +217,20 @@ export class ToastService {
             [Op.lte]: endingDateJuly,
           },
         },
-        group: ['userId'],
+        order: [['count', 'DESC']],
+        group: ['user.id', 'userId'],
       });
     } else {
-      return this.toastModel.count({
-        attributes: ['userId'],
+      return this.toastModel.findAll({
+        attributes: [
+          'userId',
+          [Sequelize.fn('COUNT', Sequelize.col('userId')), 'count'],
+        ],
+
+        include: {
+          model: User,
+          attributes: ['username'],
+        },
         where: {
           hasDone: true,
           toastDate: {
@@ -200,10 +238,12 @@ export class ToastService {
             [Op.lte]: endingDateJanuary,
           },
         },
-        group: ['userId'],
+        order: [['count', 'DESC']],
+        group: ['user.id', 'userId'],
       });
     }
   }
+
   createToast(newToastDto: CreateToastDto) {
     return this.toastModel.create(newToastDto);
   }

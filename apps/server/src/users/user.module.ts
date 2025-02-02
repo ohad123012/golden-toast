@@ -9,5 +9,6 @@ import { ToastParticipantsModule } from '../toast-participants/toast-participant
   imports: [SequelizeModule.forFeature([User]), ToastParticipantsModule],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserModule],
 })
 export class UserModule {}

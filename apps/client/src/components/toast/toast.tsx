@@ -4,7 +4,7 @@ import styles from './toast.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
-
+import { ChevronLeft } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   ToastType,
@@ -47,8 +47,7 @@ export const Toast: FC<Props & PropsWithChildren> = ({
   const { data: userForToast } = useGetUserByUserIdQuery(toast.userId);
   const [createCriminal] = useCreateCriminalMutation();
   const [deleteToast] = useDeleteToastMutation();
-  const [deleteToastParticipants] =
-    useDeleteAllToastParticipantsForToastIdMutation();
+
   const [updateToastHasDone] = useUpdateToastHasDoneMutation();
   const handleDeleteToast = () => {
     deleteToast(toast.id);
@@ -65,6 +64,11 @@ export const Toast: FC<Props & PropsWithChildren> = ({
     .replace('T', ' ')
     .replace(':00.000', '');
 
+  console.log(
+    toast.reason,
+    user.isAdmin && !isFutureToasts && toast.hasDone === true,
+    user.isAdmin && !isFutureToasts && !toast.hasDone
+  );
   return (
     <>
       <div
@@ -139,7 +143,7 @@ export const Toast: FC<Props & PropsWithChildren> = ({
           )}
         </div>
 
-        {user.isAdmin && !isFutureToasts ? (
+        {user.isAdmin && !isFutureToasts && !toast.hasDone ? (
           <IconButton sx={checkButtonStyle}>
             <CheckIcon
               sx={checkIconStyle}
@@ -147,6 +151,18 @@ export const Toast: FC<Props & PropsWithChildren> = ({
                 updateToastHasDone({
                   id: toast.id,
                   hasDone: true,
+                })
+              }
+            />
+          </IconButton>
+        ) : user.isAdmin && !isFutureToasts && toast.hasDone === true ? (
+          <IconButton sx={checkButtonStyle}>
+            <ChevronLeft
+              sx={checkIconStyle}
+              onClick={() =>
+                updateToastHasDone({
+                  id: toast.id,
+                  hasDone: false,
                 })
               }
             />
