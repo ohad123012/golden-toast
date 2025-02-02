@@ -1,5 +1,5 @@
 import { serverApi } from './server.api';
-import { ToastUpdateHasDone, ToastType } from '../types';
+import { ToastUpdateHasDone, ToastType, AmountToastForUser } from '../types';
 
 export const toastApi = serverApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,15 +28,18 @@ export const toastApi = serverApi.injectEndpoints({
       query: (userId) => `/toast/all-future-toasts/${userId}`,
       providesTags: ['Toasts'],
     }),
-    getAmountToastsForCurrentPeriod: builder.query<ToastType[], void>({
+    getAmountToastsForCurrentPeriod: builder.query<number, void>({
       query: () => '/toast/amount-toasts-period',
       providesTags: ['Toasts'],
     }),
-    getAllTimeRecord: builder.query<ToastType[], void>({
+    getAllTimeRecord: builder.query<number, void>({
       query: () => '/toast/all-time-record',
       providesTags: ['Toasts'],
     }),
-    getAmountToastsForCurrentPeriodPerUser: builder.query<ToastType[], void>({
+    getAmountToastsForCurrentPeriodPerUser: builder.query<
+      AmountToastForUser[],
+      void
+    >({
       query: () => '/toast/amount-toasts-period-per-user',
       providesTags: ['Toasts'],
     }),

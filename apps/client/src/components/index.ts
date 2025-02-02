@@ -8,3 +8,4 @@ export * from './criminal';
 export * from './criminal-board';
 export * from './persona-non-grata';
 export * from './persona-non-grata-board';
+export * from './leaderboard';
